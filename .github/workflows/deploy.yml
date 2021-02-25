@@ -24,21 +24,14 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v1
-      - uses: actions/upload-artifact@v2
-        with:
-          name: jar
-          path: ./target/SkyLands-SkyPvP.jar
       - name: Build
         shell: bash
         run: |
           mvn clean package
-          ls target
       - name: Deployment
         uses: garygrossgarten/github-action-scp@release
         with:
-          name: jar
-          path: ./target/SkyLands-SkyPvP.jar
-          local: ./target/SkyLands-SkyPvP.jar
+          local: target/SkyLands-SkyPvP.jar
           remote: /home/spigot/plugins/
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USER }}
