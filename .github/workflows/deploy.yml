@@ -30,7 +30,6 @@ jobs:
           mvn clean package
       - name: Deployment
         run: |
-          mkdir -p ~/.ssh/
           echo "$SSH_PRIVATE_KEY" > ../private.key
           sudo chmod 600 ../private.key
           scp -i $SSH_KEY_PATH ./target/SkyLands-SkyPvP.jar root@skylands.me:/home/spigot/plugins/
