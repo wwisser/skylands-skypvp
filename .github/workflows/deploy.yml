@@ -23,16 +23,18 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v1
+      - uses: actions/upload-artifact@v1
+      - with:
+          name: skylands
+          path: target/SkyLands-SkyPvP.jar
       - name: Build
         shell: bash
         run: |
           mvn clean package
-          mv target/SkyLands-SkyPvP.jar /github/home/SkyLands-SkyPvP.jar
       - name: Deployment
         uses: garygrossgarten/github-action-scp@release
         with:
-          local: /github/home/SkyLands-SkyPvP.jar
+          local: skylands
           remote: /home/spigot/plugins/
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USER }}
