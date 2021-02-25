@@ -45,5 +45,5 @@ jobs:
       - name: Deploy
         shell: bash
         run: |
-          scp -i $SSH_KEY_PATH ./target/SkyLands-SkyPvP.jar root@skylands.me:/home/spigot/plugins
+          scp ./target/SkyLands-SkyPvP.jar root@skylands.me:/home/spigot/plugins/
           ssh -i $SSH_KEY_PATH root@skylands.me docker exec spigot mc_send plugman reload SkyLands-SkyPvP
