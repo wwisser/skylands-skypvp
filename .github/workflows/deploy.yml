@@ -45,6 +45,5 @@ jobs:
       - name: Deploy
         shell: bash
         run: |
-          ssh -i $SSH_KEY_PATH root@skylands.me "docker exec spigot mc_send bc &7[&6&lSL&7] &aGitHub Update detected, performing Deployment..."
           scp -i $SSH_KEY_PATH ./target/SkyLands-SkyPvP.jar root@skylands.me:/home/spigot/plugins
           ssh -i $SSH_KEY_PATH root@skylands.me docker exec spigot mc_send plugman reload SkyLands-SkyPvP
