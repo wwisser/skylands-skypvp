@@ -28,10 +28,11 @@ jobs:
         shell: bash
         run: |
           mvn clean package
+          mv target/SkyLands-SkyPvP.jar /github/home/SkyLands-SkyPvP.jar
       - name: Deployment
         uses: garygrossgarten/github-action-scp@release
         with:
-          local: target/SkyLands-SkyPvP.jar
+          local: /github/home/SkyLands-SkyPvP.jar
           remote: /home/spigot/plugins/
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USER }}
