@@ -24,26 +24,20 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
-      - name: Create SSH key
+      - name: Build
+        shell: bash
+        run: |
+          mvn clean package
+      - name: Deployment
         run: |
           mkdir -p ~/.ssh/
           echo "$SSH_PRIVATE_KEY" > ../private.key
           sudo chmod 600 ../private.key
           echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          scp -i $SSH_KEY_PATH ./target/SkyLands-SkyPvP.jar root@skylands.me:/home/spigot/plugins/
+          ssh -i $SSH_KEY_PATH root@skylands.me docker exec spigot mc_send plugman reload SkyLands-SkyPvP
         shell: bash
         env:
           SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
           SSH_KNOWN_HOSTS: ${{secrets.SSH_KNOWN_HOSTS}}
           SSH_KEY_PATH: ${{ github.workspace }}/../private.key
-
-      # Runs a set of commands using the runners shell
-      - name: Build
-        shell: bash
-        run: |
-          mvn clean package
-      - name: Deploy
-        shell: bash
-        run: |
-          scp ./target/SkyLands-SkyPvP.jar root@skylands.me:/home/spigot/plugins/
-          ssh -i $SSH_KEY_PATH root@skylands.me docker exec spigot mc_send plugman reload SkyLands-SkyPvP
