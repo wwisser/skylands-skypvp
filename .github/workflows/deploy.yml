@@ -27,7 +27,7 @@ jobs:
       - name: Build
         run: |
           mvn clean package
-          chmod -R 600 target/
+          sudo chmod -R 600 target/
       - uses: actions/checkout@v2
       - name: Build
         run: |
