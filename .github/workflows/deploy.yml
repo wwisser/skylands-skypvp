@@ -40,6 +40,9 @@ jobs:
           END
           mvn clean package
           scp ./target/SkyLands-SkyPvP.jar staging:/home/spigot/plugins
+          ssh staging "docker exec spigot /etc/init.d/minecraft_server send \"rawbc &7&l[&6&lSL&7&l] &bGitHub Update triggered - Deployment started\""
+          ssh staging "docker exec spigot /etc/init.d/minecraft_server send \"plugman reload SkyLands-SkyPvP\""
+          ssh staging "docker exec spigot /etc/init.d/minecraft_server send \"rawbc &7&l[&6&lSL&7&l] &bDeployment successful: &a${{ github.event.head_commit.message }}\""
         env:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
