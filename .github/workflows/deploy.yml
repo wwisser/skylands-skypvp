@@ -25,10 +25,9 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       - name: Build
-        run: |
-          mvn clean package
-		  cp target/SkyLands-SkyPvP.jar ./SkyLands-SkyPvP.jar
-          sudo chmod -R 600 SkyLands-SkyPvP.jar
+      - run: mvn clean package
+      - run: cp target/SkyLands-SkyPvP.jar ./SkyLands-SkyPvP.jar
+      - run: chmod -R 600 SkyLands-SkyPvP.jar
       - uses: actions/checkout@v2
       - name: Build
         run: |
