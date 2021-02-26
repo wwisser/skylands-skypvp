@@ -31,7 +31,7 @@ jobs:
       - name: Deployment
         uses: garygrossgarten/github-action-scp@release
         with:
-          local: "./target/SkyLands-SkyPvP.jar"
+          local: "/home/runner/work/skylands-skypvp/skylands-skypvp/target/SkyLands-SkyPvP.jar"
           remote: "/home/spigot/plugins/"
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USER }}
