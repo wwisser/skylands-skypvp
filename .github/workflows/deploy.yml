@@ -25,7 +25,7 @@ jobs:
       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh/
-          echo "$SSH_KEY" > ~/.ssh/id_rsa
+          echo "$SSH_KEY" | tr -d '\r' > ~/.ssh/id_rsa
           echo $'' >> ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           eval "$(ssh-agent -s)"
