@@ -24,6 +24,7 @@ jobs:
     steps:
       - name: Configure SSH
         run: |
+          mvn clean package
           mkdir -p ~/.ssh/
           echo "$SSH_KEY" | tr -d '\r' > ~/.ssh/id_rsa
           echo $'' >> ~/.ssh/id_rsa
@@ -37,10 +38,8 @@ jobs:
             IdentityFile ~/.ssh/id_rsa
             StrictHostKeyChecking no
           END
-          cat ~/.ssh/config
+          scp target/SkyLands-SkyPvP.jar staging:/home/spigot/plugins
         env:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_HOST: ${{ secrets.HOST }}
-      - name: Check out the source
-        run: ssh staging 'docker exec spigot mc_send bc &a&lGitHub Action Triggered'
