@@ -29,11 +29,6 @@ jobs:
           mvn clean package
           cp target/SkyLands-SkyPvP.jar ./SkyLands-SkyPvP.jar
           chmod -R 600 SkyLands-SkyPvP.jar
-      - uses: actions/checkout@v2
-      - name: Build
-        run: |
-          ls
-          ls target     
       - name: Deployment
         uses: garygrossgarten/github-action-scp@release
         with:
