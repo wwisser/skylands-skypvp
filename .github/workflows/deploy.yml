@@ -25,15 +25,16 @@ jobs:
       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh/
-          echo "$SSH_KEY" > ~/.ssh/staging.key
-          chmod 600 ~/.ssh/staging.key
+          echo "$SSH_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
           cat >>~/.ssh/config <<END
           Host staging
             HostName $SSH_HOST
             User $SSH_USER
-            IdentityFile ~/.ssh/staging.key
+            IdentityFile ~/.ssh/id_rsa
             StrictHostKeyChecking no
           END
+          cat ~/.ssh/config
         env:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
