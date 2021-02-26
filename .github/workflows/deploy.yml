@@ -22,9 +22,8 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Configure SSH
+      - name: Build & Deploy
         run: |
-          mvn clean package
           mkdir -p ~/.ssh/
           echo "$SSH_KEY" | tr -d '\r' > ~/.ssh/id_rsa
           echo $'' >> ~/.ssh/id_rsa
@@ -38,7 +37,8 @@ jobs:
             IdentityFile ~/.ssh/id_rsa
             StrictHostKeyChecking no
           END
-          scp target/SkyLands-SkyPvP.jar staging:/home/spigot/plugins
+          mvn clean package
+          scp ./target/SkyLands-SkyPvP.jar staging:/home/spigot/plugins
         env:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
