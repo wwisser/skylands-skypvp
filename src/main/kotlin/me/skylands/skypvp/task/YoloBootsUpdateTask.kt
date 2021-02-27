@@ -21,7 +21,7 @@ class YoloBootsUpdateTask : BukkitRunnable() {
                 )
             ) {
 
-                Particles.play(player.location, EnumParticle.FIREWORKS_SPARK, 0, 0, 0, 0, 0)
+                Particles.play(player.location, EnumParticle.FIREWORKS_SPARK, 0f, 0f, 0f, 0f, 0)
                 val boots = ItemStack(Material.LEATHER_BOOTS, 1)
                 val bootsMeta = boots.itemMeta as LeatherArmorMeta
                 when (randInt(1, 25)) {
