@@ -13,14 +13,14 @@ class DiscoConfig {
         private const val FILE_NAME = "disco.yml"
     }
 
-    val locations: Map<String, Location> = HashMap()
+    val locations: MutableMap<String, Location> = HashMap()
     private val config = Config(SkyLands.CONFIG_PATH, FILE_NAME)
 
     init {
         val keys: Set<String> = this.config.getKeys(false)
 
         for (key in keys) {
-            this.locations.put(key, getLocation(key))
+            this.locations[key] = getLocation(key)
             this.getLocation(key).world.playEffect(getLocation(key), Effect.STEP_SOUND, 35)
         }
     }
