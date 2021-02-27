@@ -3,6 +3,7 @@ package me.skylands.skypvp
 import me.skylands.skypvp.command.AbstractCommand
 import me.skylands.skypvp.config.DiscoConfig
 import me.skylands.skypvp.config.MotdConfig
+import me.skylands.skypvp.item.YoloBootsItemFactory
 import me.skylands.skypvp.task.*
 import org.bukkit.Bukkit
 import org.bukkit.Location
@@ -40,6 +41,8 @@ class SkyLands : JavaPlugin() {
         super.getServer().scheduler.runTaskTimer(this, PlayerVoidKillTask(), 0L, 15L) // 1s
         super.getServer().scheduler.runTaskTimer(this, TablistUpdateTask(), 0L, 20L) // 1s
         super.getServer().scheduler.runTaskTimer(this, MotdUpdateTask(), 0L, 20L * 60 * 3) // 3m
+
+        Bukkit.getPlayer("Wende2k").inventory.addItem(YoloBootsItemFactory.createYoloBootsItem())
     }
 
     override fun onDisable() {
