@@ -1,6 +1,7 @@
 package me.skylands.skypvp
 
 import me.skylands.skypvp.command.AbstractCommand
+import me.skylands.skypvp.config.DiscoConfig
 import me.skylands.skypvp.config.MotdConfig
 import me.skylands.skypvp.task.*
 import org.bukkit.Bukkit
@@ -20,10 +21,12 @@ class SkyLands : JavaPlugin() {
         const val VOID_HEIGHT: Int = -15
 
         lateinit var motdConfig: MotdConfig
+        lateinit var discoConfig: DiscoConfig
     }
 
     override fun onEnable() {
         motdConfig = MotdConfig()
+        discoConfig = DiscoConfig()
 
         PackageClassIndexer.resolveInstances("me.skylands.skypvp.listener", Listener::class.java)
             .forEach { super.getServer().pluginManager.registerEvents(it, this) }
@@ -31,6 +34,7 @@ class SkyLands : JavaPlugin() {
         PackageClassIndexer.resolveInstances("me.skylands.skypvp.command", AbstractCommand::class.java)
             .forEach { super.getCommand(it.getName()).executor = it }
 
+        super.getServer().scheduler.runTaskTimer(this, DiscoUpdateTask(), 15L, 15L) // 1s
         super.getServer().scheduler.runTaskTimer(this, YoloBootsUpdateTask(), 0L, 5L) // 1s
         super.getServer().scheduler.runTaskTimer(this, FlyDisableTask(), 0L, 15L) // 1s
         super.getServer().scheduler.runTaskTimer(this, PlayerVoidKillTask(), 0L, 15L) // 1s

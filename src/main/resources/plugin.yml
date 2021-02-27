@@ -5,3 +5,4 @@ depend: [Vault, Votifier]
 commands:
   rawbc:
   motd:
+  disco:
