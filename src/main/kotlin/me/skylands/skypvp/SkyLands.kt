@@ -3,7 +3,6 @@ package me.skylands.skypvp
 import me.skylands.skypvp.command.AbstractCommand
 import me.skylands.skypvp.config.DiscoConfig
 import me.skylands.skypvp.config.MotdConfig
-import me.skylands.skypvp.item.YoloBootsItemFactory
 import me.skylands.skypvp.task.*
 import org.bukkit.Bukkit
 import org.bukkit.Location
@@ -17,7 +16,7 @@ class SkyLands : JavaPlugin() {
         const val CONFIG_PATH: String = "plugins/SkyLands-SkyPvP"
 
         val WORLD_SKYPVP: World = Bukkit.getWorld("world")
-        val LOCATION_SPAWN: Location = Location(WORLD_SKYPVP, -53.5, 183.0, -351.5, 0f, 0f)
+        val LOCATION_SPAWN: Location = Location(WORLD_SKYPVP, 57.5, 123.0, 137.5, 0f, 0f)
         val SPAWN_HEIGHT: Int = WORLD_SKYPVP.spawnLocation.blockY - 20
         const val VOID_HEIGHT: Int = -15
 
@@ -41,8 +40,6 @@ class SkyLands : JavaPlugin() {
         super.getServer().scheduler.runTaskTimer(this, PlayerVoidKillTask(), 0L, 15L) // 1s
         super.getServer().scheduler.runTaskTimer(this, TablistUpdateTask(), 0L, 20L) // 1s
         super.getServer().scheduler.runTaskTimer(this, MotdUpdateTask(), 0L, 20L * 60 * 3) // 3m
-
-        Bukkit.getPlayer("Wende2k").inventory.addItem(YoloBootsItemFactory.createYoloBootsItem())
     }
 
     override fun onDisable() {
