@@ -1,12 +1,12 @@
 package me.skylands.skypvp.task
 
-import me.skylands.skypvp.config.MotdConfig
+import me.skylands.skypvp.SkyLands
 import org.bukkit.scheduler.BukkitRunnable
 
-class MotdUpdateTask(private val config: MotdConfig) : BukkitRunnable() {
+class MotdUpdateTask() : BukkitRunnable() {
 
     override fun run() {
-        this.config.reloadConfig()
+        SkyLands.motdConfig.reloadConfig()
     }
 
 }

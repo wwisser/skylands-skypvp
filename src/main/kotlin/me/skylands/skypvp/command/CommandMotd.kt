@@ -1,17 +1,20 @@
 package me.skylands.skypvp.command
 
 import me.skylands.skypvp.Messages;
+import me.skylands.skypvp.SkyLands
 import me.skylands.skypvp.command.exception.CommandException
 import me.skylands.skypvp.config.MotdConfig
 import net.md_5.bungee.api.ChatColor
 import org.bukkit.command.CommandSender
 import kotlin.jvm.Throws
 
-class CommandMotd(private val config: MotdConfig) : AbstractCommand() {
+class CommandMotd() : AbstractCommand() {
 
     companion object {
         private const val USAGE = "/motd <reload|header|footer> <Text>"
     }
+
+    private val config: MotdConfig = SkyLands.motdConfig
 
     @Throws(CommandException::class)
     override fun process(sender: CommandSender, label: String, args: Array<String>) {
