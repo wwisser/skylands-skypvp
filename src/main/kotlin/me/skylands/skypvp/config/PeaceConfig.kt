@@ -9,14 +9,14 @@ import kotlin.collections.set
 
 class PeaceConfig {
 
-    private lateinit var database: Config
+    private var database: Config
     private var invites: MutableMap<String, MutableList<String>> = HashMap()
 
-    fun initialize() {
+    init{
         database = Config(SkyLands.CONFIG_PATH, "peace.yml")
     }
 
-    fun disable() {
+    fun save() {
         database.saveFile()
     }
 

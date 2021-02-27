@@ -55,6 +55,7 @@ class SkyLands : JavaPlugin() {
     override fun onDisable() {
         Bukkit.getOnlinePlayers().forEach { userService.unloadUser(it) }
         discoConfig.save()
+        peaceConfig.save()
     }
 
 }
