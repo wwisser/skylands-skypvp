@@ -3,6 +3,9 @@ package me.skylands.skypvp
 import me.skylands.skypvp.command.AbstractCommand
 import me.skylands.skypvp.config.MotdConfig
 import me.skylands.skypvp.task.TablistUpdateTask
+import org.bukkit.Bukkit
+import org.bukkit.Location
+import org.bukkit.World
 import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -10,6 +13,11 @@ class SkyLands : JavaPlugin() {
 
     companion object {
         const val CONFIG_PATH: String = "plugins/SkyLands-SkyPvP"
+
+        val WORLD_SKYPVP: World = Bukkit.getWorld("world")
+        val LOCATION_SPAWN: Location = Location(WORLD_SKYPVP, -53.5, 183.0, -351.5, 0f, 0f)
+        val SPAWN_HEIGHT: Int = WORLD_SKYPVP.spawnLocation.blockY - 20
+        const val VOID_HEIGHT: Int = -15
 
         lateinit var motdConfig: MotdConfig
     }

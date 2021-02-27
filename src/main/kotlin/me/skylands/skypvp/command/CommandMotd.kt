@@ -11,7 +11,7 @@ import kotlin.jvm.Throws
 class CommandMotd() : AbstractCommand() {
 
     companion object {
-        private const val USAGE = "/motd <reload|header|footer> <Text>"
+        private const val USAGE = "/motd <show|reload|header|footer> <Text>"
     }
 
     private val config: MotdConfig = SkyLands.motdConfig
@@ -31,14 +31,16 @@ class CommandMotd() : AbstractCommand() {
             "header" -> this.config.updateHeader(joinText(args))
             "footer" -> this.config.updateFooter(joinText(args))
             "reload" -> this.config.reloadConfig()
+            "show" -> {
+                this.showMotd(sender)
+                return
+            }
             else -> {
                 sender.sendMessage(Messages.PREFIX + USAGE)
                 return
             }
         }
-        sender.sendMessage(Messages.PREFIX + "Du hast die §fMOTD §7erfolgreich aktualisiert")
-        sender.sendMessage("")
-        this.showMotd(sender)
+        sender.sendMessage(Messages.PREFIX + "§eMOTD §7erfolgreich aktualisiert")
     }
 
     private fun showMotd(sender: CommandSender) {
