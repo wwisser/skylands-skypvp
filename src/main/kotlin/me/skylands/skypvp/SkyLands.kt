@@ -15,6 +15,8 @@ class SkyLands : JavaPlugin() {
     }
 
     override fun onEnable() {
+        motdConfig = MotdConfig()
+
         PackageClassIndexer.resolveInstances("me.skylands.skypvp.listener", Listener::class.java)
             .forEach { super.getServer().pluginManager.registerEvents(it, this) }
 
@@ -23,7 +25,6 @@ class SkyLands : JavaPlugin() {
 
         super.getServer().scheduler.runTaskTimer(this, TablistUpdateTask(), 0L, 20L) // 1s
         super.getServer().scheduler.runTaskTimer(this, TablistUpdateTask(), 0L, 20L * 60 * 3) // 3m
-        motdConfig = MotdConfig()
     }
 
 }
