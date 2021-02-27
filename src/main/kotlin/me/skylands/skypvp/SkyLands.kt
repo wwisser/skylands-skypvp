@@ -10,7 +10,7 @@ class SkyLands : JavaPlugin() {
         PackageClassIndexer.resolveInstances("me.skylands.skypvp.listener", Listener::class.java)
             .forEach { super.getServer().pluginManager.registerEvents(it, this) }
 
-        PackageClassIndexer.resolveInstances("me.skylands.skypvp.commands", AbstractCommand::class.java)
+        PackageClassIndexer.resolveInstances("me.skylands.skypvp.command", AbstractCommand::class.java)
             .forEach { super.getCommand(it.getName()).executor = it }
     }
 
