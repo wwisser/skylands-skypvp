@@ -7,3 +7,5 @@ commands:
   motd:
   disco:
   rename:
+  peace:
+    aliases: [friede]

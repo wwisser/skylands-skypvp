@@ -4,12 +4,19 @@ import me.skylands.skypvp.SkyLands
 import me.skylands.skypvp.nms.Tablist
 import org.bukkit.Bukkit
 import org.bukkit.World
+import org.bukkit.entity.Player
 import org.bukkit.scheduler.BukkitRunnable
 
 class TablistUpdateTask : BukkitRunnable() {
 
     override fun run() {
         Bukkit.getOnlinePlayers().forEach {
+           updateTablist(it)
+        }
+    }
+
+    companion object {
+        fun updateTablist(it: Player) {
             var footer = "§7Du befindest dich gerade "
             val world: World = it.world
 
