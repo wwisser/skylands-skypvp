@@ -42,4 +42,8 @@ class SkyLands : JavaPlugin() {
         super.getServer().scheduler.runTaskTimer(this, MotdUpdateTask(), 0L, 20L * 60 * 3) // 3m
     }
 
+    override fun onDisable() {
+        discoConfig.save()
+    }
+
 }
