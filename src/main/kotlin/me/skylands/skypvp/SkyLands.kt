@@ -1,6 +1,7 @@
 package me.skylands.skypvp
 
 import me.skylands.skypvp.command.AbstractCommand
+import me.skylands.skypvp.task.TablistUpdateTask
 import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -12,6 +13,8 @@ class SkyLands : JavaPlugin() {
 
         PackageClassIndexer.resolveInstances("me.skylands.skypvp.command", AbstractCommand::class.java)
             .forEach { super.getCommand(it.getName()).executor = it }
+
+        super.getServer().scheduler.runTaskTimer(this, TablistUpdateTask(), 0L, 20L)
     }
 
 }
