@@ -27,4 +27,6 @@ abstract class AbstractCommand : CommandExecutor {
     @Throws(CommandException::class)
     abstract fun process(sender: CommandSender, label: String, args: Array<String>)
 
+    abstract fun getName(): String
+
 }
