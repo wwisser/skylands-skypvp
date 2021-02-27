@@ -2,7 +2,7 @@ package me.skylands.skypvp
 
 import me.skylands.skypvp.command.AbstractCommand
 import me.skylands.skypvp.config.MotdConfig
-import me.skylands.skypvp.task.TablistUpdateTask
+import me.skylands.skypvp.task.*
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.World
@@ -31,8 +31,11 @@ class SkyLands : JavaPlugin() {
         PackageClassIndexer.resolveInstances("me.skylands.skypvp.command", AbstractCommand::class.java)
             .forEach { super.getCommand(it.getName()).executor = it }
 
+        super.getServer().scheduler.runTaskTimer(this, YoloBootsUpdateTask(), 0L, 5L) // 1s
+        super.getServer().scheduler.runTaskTimer(this, FlyDisableTask(), 0L, 15L) // 1s
+        super.getServer().scheduler.runTaskTimer(this, PlayerVoidKillTask(), 0L, 15L) // 1s
         super.getServer().scheduler.runTaskTimer(this, TablistUpdateTask(), 0L, 20L) // 1s
-        super.getServer().scheduler.runTaskTimer(this, TablistUpdateTask(), 0L, 20L * 60 * 3) // 3m
+        super.getServer().scheduler.runTaskTimer(this, MotdUpdateTask(), 0L, 20L * 60 * 3) // 3m
     }
 
 }
