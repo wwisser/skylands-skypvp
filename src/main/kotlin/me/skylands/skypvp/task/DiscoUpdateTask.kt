@@ -10,10 +10,10 @@ class DiscoUpdateTask : BukkitRunnable() {
         for (location in SkyLands.discoConfig.locations.values) {
             val wool = location.block
             if (wool.type == Material.WOOL) {
-                if (wool.data.toInt() == 13) {
-                    wool.data = 0.toByte()
+                if (wool.data.toInt() == 4) {
+                    wool.data = 11.toByte()
                 } else {
-                    wool.data = 13.toByte()
+                    wool.data = 4.toByte()
                 }
             }
         }
