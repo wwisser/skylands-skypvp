@@ -34,7 +34,7 @@ class UserService {
         return if (result.isEmpty()) {
             try {
                 userRepository.fetchByName(name)
-            } catch (e: IllegalArgumentException) {
+            } catch (e: Exception) {
                 null
             }
         } else {

@@ -20,7 +20,7 @@ class CommandPeace : AbstractCommand() {
         val player = ValidateCommand.onlyPlayer(sender)
         val uuid = player.uniqueId.toString()
 
-        if (args.size == 0) {
+        if (args.isEmpty()) {
             val peaceList: List<String> = this.config.getPeaceList(uuid)
             if (peaceList.isEmpty()) {
                 player.sendMessage(Messages.PREFIX + "§cDu hast mit niemandem Frieden geschlossen.")
@@ -38,7 +38,7 @@ class CommandPeace : AbstractCommand() {
             } else if (user.name == player.name) {
                 throw SelfInteractionException()
             }
-            val target: Player? = Bukkit.getPlayer(user.name)
+            val target: Player? = Bukkit.getPlayerExact(user.name)
             if (this.config.hasPeace(uuid, user.uuid)) {
                 this.config.removePeace(uuid, user.uuid)
                 player.sendMessage(Messages.PREFIX + "§cDu hast den Frieden mit §e" + user.name + " §caufgelöst.")
