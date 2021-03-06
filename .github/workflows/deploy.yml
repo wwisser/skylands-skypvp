@@ -22,17 +22,17 @@ jobs:
           eval "$(ssh-agent -s)"
           ssh-add ~/.ssh/id_rsa
           cat >>~/.ssh/config <<END
-          Host staging
+          Host skylands
             HostName $SSH_HOST
             User $SSH_USER
             IdentityFile ~/.ssh/id_rsa
             StrictHostKeyChecking no
           END
           mvn clean package
-          scp ./target/SkyLands-SkyPvP.jar staging:/home/spigot/plugins
-          ssh staging "docker exec spigot /etc/init.d/minecraft_server send \"rawbc &7&l[&6SL&7&l] &7GitHub Action triggered, starting deployment\""
-          ssh staging "docker exec spigot /etc/init.d/minecraft_server send \"plugman reload SkyLands-SkyPvP\""
-          ssh staging "docker exec spigot /etc/init.d/minecraft_server send \"rawbc &7&l[&6SL&7&l] &7Deployment successful: &e${{ github.event.head_commit.message }}\""
+          scp ./target/SkyLands-SkyPvP.jar skylands:/home/spigot/plugins
+          ssh skylands "docker exec spigot /etc/init.d/minecraft_server send \"rawbc &7&l[&6SL&7&l] &7GitHub Action triggered, starting deployment\""
+          ssh skylands "docker exec spigot /etc/init.d/minecraft_server send \"plugman reload SkyLands-SkyPvP\""
+          ssh skylands "docker exec spigot /etc/init.d/minecraft_server send \"rawbc &7&l[&6SL&7&l] &7Deployment successful: &e${{ github.event.head_commit.message }}\""
         env:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
