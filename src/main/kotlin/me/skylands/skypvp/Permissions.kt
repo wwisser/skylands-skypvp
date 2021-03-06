@@ -1,10 +1,8 @@
 package me.skylands.skypvp
 
-interface Permissions {
+object Permissions {
 
-    companion object {
-        const val ADMIN: String = "skylands.admin"
-        const val TEAM: String = "skylands.team"
-    }
+    const val ADMIN: String = "skylands.admin"
+    const val TEAM: String = "skylands.team"
 
 }

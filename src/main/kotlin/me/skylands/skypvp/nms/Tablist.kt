@@ -7,27 +7,23 @@ import org.bukkit.ChatColor
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer
 import org.bukkit.entity.Player
 
-class Tablist {
+object Tablist {
 
-    companion object {
-
-        fun send(player: Player, header: String, footer: String) {
-            val packet = PacketPlayOutPlayerListHeaderFooter()
-            ImmutableMap
-                .of("a", header, "b", footer)
-                .forEach { (fieldName: String?, line: String?) ->
-                    try {
-                        val field = packet.javaClass.getDeclaredField(fieldName)
-                        field.isAccessible = true
-                        field[packet] = IChatBaseComponent.ChatSerializer
-                            .a("{\"text\":\"" + ChatColor.translateAlternateColorCodes('&', line) + "\"}")
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
+    fun send(player: Player, header: String, footer: String) {
+        val packet = PacketPlayOutPlayerListHeaderFooter()
+        ImmutableMap
+            .of("a", header, "b", footer)
+            .forEach { (fieldName: String?, line: String?) ->
+                try {
+                    val field = packet.javaClass.getDeclaredField(fieldName)
+                    field.isAccessible = true
+                    field[packet] = IChatBaseComponent.ChatSerializer
+                        .a("{\"text\":\"" + ChatColor.translateAlternateColorCodes('&', line) + "\"}")
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
-            (player as CraftPlayer).handle.playerConnection.sendPacket(packet)
-        }
-
+            }
+        (player as CraftPlayer).handle.playerConnection.sendPacket(packet)
     }
 
 }
