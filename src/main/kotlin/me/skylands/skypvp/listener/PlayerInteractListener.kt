@@ -15,11 +15,10 @@ import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.ItemStack
 import java.util.concurrent.TimeUnit
 
-
 class PlayerInteractListener : Listener {
 
     companion object {
-        val CONFIG: DelayConfig = DelayConfig("Bitte warte noch %time", TimeUnit.SECONDS.toMillis(10))
+        val CONFIG: DelayConfig = DelayConfig("§cBitte warte 3 Sekunden", TimeUnit.SECONDS.toMillis(3))
         const val PREFIX: String = "§1[Kostenlos]"
     }
 
