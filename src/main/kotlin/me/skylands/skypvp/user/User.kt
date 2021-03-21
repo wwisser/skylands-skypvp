@@ -22,4 +22,8 @@ data class User(
         } else Double.NaN
 
     }
+
+    fun increasePlaytime() {
+        playtime++
+    }
 }
