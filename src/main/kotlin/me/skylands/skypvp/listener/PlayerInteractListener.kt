@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit
 class PlayerInteractListener : Listener {
 
     companion object {
-        val CONFIG: DelayConfig = DelayConfig("§cBitte warte 1 Sekunden", TimeUnit.SECONDS.toMillis(1))
+        val CONFIG: DelayConfig = DelayConfig("§cBitte warte noch 1 Sekunde(n)", TimeUnit.SECONDS.toMillis(1))
         const val PREFIX: String = "§1[Kostenlos]"
     }
 
