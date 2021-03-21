@@ -11,6 +11,7 @@ import org.bukkit.Location
 import org.bukkit.World
 import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
+import java.lang.RuntimeException
 
 class SkyLands : JavaPlugin() {
 
@@ -30,33 +31,43 @@ class SkyLands : JavaPlugin() {
     }
 
     override fun onEnable() {
-        motdConfig = MotdConfig()
-        discoConfig = DiscoConfig()
-        peaceConfig = PeaceConfig()
-        userService = UserService()
+        try {
+            motdConfig = MotdConfig()
+            discoConfig = DiscoConfig()
+            peaceConfig = PeaceConfig()
+            userService = UserService()
 
-        PackageClassIndexer.resolveInstances("me.skylands.skypvp.listener", Listener::class.java)
-            .forEach { super.getServer().pluginManager.registerEvents(it, this) }
+            PackageClassIndexer.resolveInstances("me.skylands.skypvp.listener", Listener::class.java)
+                .forEach { super.getServer().pluginManager.registerEvents(it, this) }
 
-        PackageClassIndexer.resolveInstances("me.skylands.skypvp.command", AbstractCommand::class.java)
-            .forEach { super.getCommand(it.getName()).executor = it }
+            PackageClassIndexer.resolveInstances("me.skylands.skypvp.command", AbstractCommand::class.java)
+                .forEach { super.getCommand(it.getName()).executor = it }
 
-        super.getServer().scheduler.runTaskTimer(this, DiscoUpdateTask(), 15L, 15L) // 1s
-        super.getServer().scheduler.runTaskTimer(this, YoloBootsUpdateTask(), 0L, 5L) // 1s
-        super.getServer().scheduler.runTaskTimer(this, FlyDisableTask(), 0L, 15L) // 1s
-        super.getServer().scheduler.runTaskTimer(this, PlayerVoidKillTask(), 0L, 15L) // 1s
-        super.getServer().scheduler.runTaskTimer(this, TablistUpdateTask(), 0L, 20L) // 1s
-        super.getServer().scheduler.runTaskTimer(this, MotdUpdateTask(), 0L, 20L * 60 * 3) // 3m
-        super.getServer().scheduler.runTaskTimer(this, MotdUpdateTask(), 0L, 20L * 60 * 3) // 3m
-        super.getServer().scheduler.runTaskTimer(this, PlaytimeUpdateTask(), 20L * 60, 20L * 60) // 1m
+            super.getServer().scheduler.runTaskTimer(this, DiscoUpdateTask(), 15L, 15L) // 1s
+            super.getServer().scheduler.runTaskTimer(this, YoloBootsUpdateTask(), 0L, 5L) // 1s
+            super.getServer().scheduler.runTaskTimer(this, FlyDisableTask(), 0L, 15L) // 1s
+            super.getServer().scheduler.runTaskTimer(this, PlayerVoidKillTask(), 0L, 15L) // 1s
+            super.getServer().scheduler.runTaskTimer(this, TablistUpdateTask(), 0L, 20L) // 1s
+            super.getServer().scheduler.runTaskTimer(this, MotdUpdateTask(), 0L, 20L * 60 * 3) // 3m
+            super.getServer().scheduler.runTaskTimer(this, MotdUpdateTask(), 0L, 20L * 60 * 3) // 3m
+            super.getServer().scheduler.runTaskTimer(this, PlaytimeUpdateTask(), 20L * 60, 20L * 60) // 1m
 
-        Bukkit.getOnlinePlayers().forEach { userService.loadUser(it) }
+            Bukkit.getOnlinePlayers().forEach { userService.loadUser(it) }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            throw RuntimeException(e)
+        }
     }
 
     override fun onDisable() {
-        Bukkit.getOnlinePlayers().forEach { userService.unloadUser(it) }
-        discoConfig.save()
-        peaceConfig.save()
+        try {
+            Bukkit.getOnlinePlayers().forEach { userService.unloadUser(it) }
+            discoConfig.save()
+            peaceConfig.save()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            throw RuntimeException(e)
+        }
     }
 
 }
