@@ -39,7 +39,7 @@ class SkyLands : JavaPlugin() {
             peaceConfig = PeaceConfig()
             userService = UserService()
 
-            vaultChat = Bukkit.getServer().servicesManager.getRegistration(Chat::class.java).provider
+            //vaultChat = Bukkit.getServer().servicesManager.getRegistration(Chat::class.java).provider
 
             PackageClassIndexer.resolveInstances("me.skylands.skypvp.listener", Listener::class.java)
                 .forEach { super.getServer().pluginManager.registerEvents(it, this) }
