@@ -22,7 +22,7 @@ class TablistUpdateTask : BukkitRunnable() {
 
 
             footer += if (world == SkyLands.WORLD_SKYPVP) {
-                if (it.location.blockY < SkyLands.SPAWN_HEIGHT) {
+                if (it.location.blockY < SkyLands.getSpawnHeight()) {
                     "im §eSkyPvP §7Bereich."
                 } else {
                     "am §eSpawn§7."

@@ -12,7 +12,7 @@ class FlyDisableTask : BukkitRunnable() {
         Bukkit.getOnlinePlayers()
             .stream()
             .filter {
-                it.world == SkyLands.WORLD_SKYPVP && it.location.blockY < SkyLands.SPAWN_HEIGHT
+                it.world == SkyLands.WORLD_SKYPVP && it.location.blockY < SkyLands.getSpawnHeight()
                         && !it.hasPermission(Permissions.TEAM)
             }
             .forEach { player: Player ->

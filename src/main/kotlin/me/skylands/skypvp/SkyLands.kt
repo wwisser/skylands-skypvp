@@ -19,9 +19,8 @@ class SkyLands : JavaPlugin() {
     companion object {
         const val CONFIG_PATH: String = "plugins/SkyLands-SkyPvP"
 
-        val WORLD_SKYPVP: World = Bukkit.getWorld("world")
-        val LOCATION_SPAWN: Location = Location(WORLD_SKYPVP, 57.5, 123.0, 137.5, 0f, 0f)
-        val SPAWN_HEIGHT: Int = WORLD_SKYPVP.spawnLocation.blockY - 20
+        lateinit var WORLD_SKYPVP: World
+        lateinit var LOCATION_SPAWN: Location
         const val VOID_HEIGHT: Int = -15
 
         lateinit var motdConfig: MotdConfig
@@ -34,6 +33,10 @@ class SkyLands : JavaPlugin() {
         fun getChat(): Chat {
             return vaultChat!!
         }
+
+        fun getSpawnHeight(): Int {
+            return WORLD_SKYPVP.spawnLocation.blockY - 20
+        }
     }
 
     override fun onEnable() {
@@ -44,6 +47,8 @@ class SkyLands : JavaPlugin() {
             userService = UserService()
 
             vaultChat = Bukkit.getServer().servicesManager.getRegistration(Chat::class.java).provider
+            WORLD_SKYPVP = Bukkit.getWorld("world")
+            LOCATION_SPAWN = Location(WORLD_SKYPVP, 57.5, 123.0, 137.5, 0f, 0f)
 
             PackageClassIndexer.resolveInstances("me.skylands.skypvp.listener", Listener::class.java)
                 .forEach { super.getServer().pluginManager.registerEvents(it, this) }

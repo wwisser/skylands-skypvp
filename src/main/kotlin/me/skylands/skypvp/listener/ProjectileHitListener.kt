@@ -11,7 +11,7 @@ class ProjectileHitListener : Listener {
     fun onHit(event: ProjectileHitEvent) {
         val entity = event.entity
 
-        if (entity.location.world == SkyLands.WORLD_SKYPVP && entity.location.blockY >= SkyLands.SPAWN_HEIGHT) {
+        if (entity.location.world == SkyLands.WORLD_SKYPVP && entity.location.blockY >= SkyLands.getSpawnHeight()) {
             entity.remove()
         }
     }
