@@ -31,10 +31,12 @@ class AsyncPlayerChatListener : Listener {
     private val sentMessages: MutableMap<Player, Deque<String>> = HashMap()
 
     private var userService: UserService = SkyLands.userService
-    private var vaultChat: Chat = Bukkit.getServer().servicesManager.getRegistration(Chat::class.java).provider
+    private var vaultChat: Chat = SkyLands.vaultChat
 
     @EventHandler
     fun onAsyncPlayerChat(event: AsyncPlayerChatEvent) {
+        var vaultChat: Chat = Bukkit.getServer().servicesManager.getRegistration(Chat::class.java).provider
+
         val player = event.player
         val message = event.message
         val formattedMessage = (fetchPrefix(player) + " §7" + player.name + "§8: §r" + formatMessage(player, message))

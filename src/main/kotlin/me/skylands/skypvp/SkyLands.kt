@@ -6,6 +6,7 @@ import me.skylands.skypvp.config.MotdConfig
 import me.skylands.skypvp.config.PeaceConfig
 import me.skylands.skypvp.task.*
 import me.skylands.skypvp.user.UserService
+import net.milkbowl.vault.chat.Chat
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.World
@@ -28,6 +29,7 @@ class SkyLands : JavaPlugin() {
         lateinit var peaceConfig: PeaceConfig
 
         lateinit var userService: UserService
+        lateinit var vaultChat: Chat
     }
 
     override fun onEnable() {
@@ -36,6 +38,8 @@ class SkyLands : JavaPlugin() {
             discoConfig = DiscoConfig()
             peaceConfig = PeaceConfig()
             userService = UserService()
+
+            vaultChat = Bukkit.getServer().servicesManager.getRegistration(Chat::class.java).provider
 
             PackageClassIndexer.resolveInstances("me.skylands.skypvp.listener", Listener::class.java)
                 .forEach { super.getServer().pluginManager.registerEvents(it, this) }
