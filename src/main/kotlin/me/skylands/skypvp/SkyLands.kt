@@ -29,18 +29,21 @@ class SkyLands : JavaPlugin() {
         lateinit var peaceConfig: PeaceConfig
 
         lateinit var userService: UserService
-        lateinit var vaultChat: Chat
+        var vaultChat: Chat? = null
+
+        fun getChat(): Chat {
+            return vaultChat!!
+        }
     }
 
     override fun onEnable() {
         try {
-            println("enabled")
             motdConfig = MotdConfig()
             discoConfig = DiscoConfig()
             peaceConfig = PeaceConfig()
             userService = UserService()
 
-            //vaultChat = Bukkit.getServer().servicesManager.getRegistration(Chat::class.java).provider
+            vaultChat = Bukkit.getServer().servicesManager.getRegistration(Chat::class.java).provider
 
             PackageClassIndexer.resolveInstances("me.skylands.skypvp.listener", Listener::class.java)
                 .forEach { super.getServer().pluginManager.registerEvents(it, this) }

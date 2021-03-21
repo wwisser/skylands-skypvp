@@ -31,7 +31,7 @@ class AsyncPlayerChatListener : Listener {
     private val sentMessages: MutableMap<Player, Deque<String>> = HashMap()
 
     private var userService: UserService = SkyLands.userService
-    private var vaultChat: Chat = SkyLands.vaultChat
+    private var vaultChat: Chat = SkyLands.getChat()
 
     @EventHandler
     fun onAsyncPlayerChat(event: AsyncPlayerChatEvent) {
