@@ -34,6 +34,7 @@ class SkyLands : JavaPlugin() {
 
     override fun onEnable() {
         try {
+            println("enabled")
             motdConfig = MotdConfig()
             discoConfig = DiscoConfig()
             peaceConfig = PeaceConfig()
