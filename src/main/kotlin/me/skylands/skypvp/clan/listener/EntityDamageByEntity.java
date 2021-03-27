@@ -10,9 +10,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class EntityDamageByEntity implements Listener {
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent ev) {
-        if (!ev.isCancelled()) {
             if (ev.getEntity() instanceof Player) {
                 Player entity = (Player) ev.getEntity();
                 Player damager = null;
@@ -39,7 +38,6 @@ public class EntityDamageByEntity implements Listener {
                     }
                 }
             }
-        }
     }
 
 }
