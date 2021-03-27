@@ -28,7 +28,7 @@ public class EntityDamageByEntityListenerLegacy implements Listener {
         }
     }
 
-    private void showHeal(final Player receiver, final Player entity) {
+    private void showHeal(final Player entity, final Player receiver) {
         final double maxHealth = entity.getMaxHealth();
 
         double health = entity.getHealth();
