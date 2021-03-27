@@ -3,6 +3,7 @@ package me.skylands.skypvp.listener
 import me.skylands.skypvp.SkyLands
 import me.skylands.skypvp.config.PeaceConfig
 import me.skylands.skypvp.nms.ActionBar
+import me.skylands.skypvp.stats.LastHitCache
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
 import org.bukkit.event.EventHandler
@@ -41,4 +42,28 @@ class EntityDamageByEntityListener : Listener {
             }
         }
     }
+
+    @EventHandler
+    fun onEntityDamageByEntityStats(event: EntityDamageByEntityEvent) {
+        if (event.entity.world != SkyLands.WORLD_SKYPVP || event.entity !is Player) {
+            return
+        }
+        val damager = event.damager
+        val victim = event.entity as Player
+        if (damager is Player && damager !== victim) {
+            LastHitCache.lastHits.put(victim, damager)
+        }
+        if (damager !is Projectile) {
+            return
+        }
+        val projectile = damager
+        if (projectile.shooter is Player) {
+            val shooter = projectile.shooter as Player
+
+            if (shooter !== victim) {
+                LastHitCache.lastHits.put(victim, shooter)
+            }
+        }
+    }
+
 }

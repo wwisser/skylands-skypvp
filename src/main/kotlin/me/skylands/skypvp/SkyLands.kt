@@ -28,6 +28,7 @@ class SkyLands : JavaPlugin() {
         lateinit var peaceConfig: PeaceConfig
 
         lateinit var userService: UserService
+        lateinit var plugin: JavaPlugin
         var vaultChat: Chat? = null
 
         fun getChat(): Chat {
@@ -41,6 +42,7 @@ class SkyLands : JavaPlugin() {
 
     override fun onEnable() {
         try {
+            plugin = this
             motdConfig = MotdConfig()
             discoConfig = DiscoConfig()
             peaceConfig = PeaceConfig()
