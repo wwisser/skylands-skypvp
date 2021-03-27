@@ -44,13 +44,13 @@ class EntityDamageByEntityListener : Listener {
         }
     }
 
-    @EventHandler
+    /*@EventHandler
     fun onEntityDamageByEntityBlood(event: EntityDamageByEntityEvent) {
         if (event.entity is Player && event.damager is Player) {
             val player = event.entity as Player
             player.world.playEffect<Int>(event.damager.location, Effect.STEP_SOUND, 152)
         }
-    }
+    }*/
 
     @EventHandler
     fun onEntityDamageByEntityStats(event: EntityDamageByEntityEvent) {
