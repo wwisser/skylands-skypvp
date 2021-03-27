@@ -61,7 +61,7 @@ public class CommandLevel extends AbstractCommand {
                     Messages.PREFIX
                             + "Du hast §e"
                             + targetUser.getName()
-                            + " §d" + amount + " Level §7überwiesen."
+                            + " §a" + amount + " Level §7überwiesen."
             );
 
             final Player targetPlayer = Bukkit.getPlayer(targetUser.getName());
@@ -69,7 +69,7 @@ public class CommandLevel extends AbstractCommand {
             if (targetPlayer != null && targetPlayer.isOnline()) {
                 targetPlayer.sendMessage(
                         Messages.PREFIX
-                                + "Du hast §d"
+                                + "Du hast §a"
                                 + amount
                                 + " Level §7von §e"
                                 + player.getName()

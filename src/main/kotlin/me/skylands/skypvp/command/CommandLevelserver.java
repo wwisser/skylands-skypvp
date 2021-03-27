@@ -69,7 +69,7 @@ public class CommandLevelserver extends AbstractCommand {
                                 + user.getName()
                                 + " §7wurden §c"
                                 + amount
-                                + " §dLevel §7abgezogen."
+                                + " §aLevel §7abgezogen."
                 );
                 break;
             case "set":
