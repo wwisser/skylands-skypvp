@@ -9,3 +9,4 @@ commands:
   rename:
   peace:
     aliases: [friede]
+  stats:

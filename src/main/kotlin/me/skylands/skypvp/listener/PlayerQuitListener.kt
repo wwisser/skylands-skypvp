@@ -16,7 +16,6 @@ class PlayerQuitListener : Listener {
         val user = SkyLands.userService.getUser(player)
         user.level = player.level
         SkyLands.userService.unloadUser(player)
-
     }
 
 }
