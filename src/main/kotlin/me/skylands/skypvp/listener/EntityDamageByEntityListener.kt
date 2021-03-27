@@ -4,6 +4,7 @@ import me.skylands.skypvp.SkyLands
 import me.skylands.skypvp.config.PeaceConfig
 import me.skylands.skypvp.nms.ActionBar
 import me.skylands.skypvp.stats.LastHitCache
+import org.bukkit.Effect
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
 import org.bukkit.event.EventHandler
@@ -40,6 +41,14 @@ class EntityDamageByEntityListener : Listener {
                     ActionBar.send("§cDu hast mit " + victim.name + " Frieden geschlossen.", shooter)
                 }
             }
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    fun onEntityDamageByEntityStatsBlood(event: EntityDamageByEntityEvent) {
+        if (event.entity is Player && event.damager is Player) {
+            val player = event.entity as Player
+            player.world.playEffect<Int>(player.location, Effect.STEP_SOUND, 152)
         }
     }
 
