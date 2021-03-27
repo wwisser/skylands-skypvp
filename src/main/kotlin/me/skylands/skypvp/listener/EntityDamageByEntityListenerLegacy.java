@@ -30,14 +30,14 @@ public class EntityDamageByEntityListenerLegacy implements Listener {
 
     private void showHeal(Player pl, Player to) {
         StringBuilder toPlayer = new StringBuilder();
-        if (pl.getHealthScale() % 2.0 != 0.0) {
-            for (int i = 0; i < (pl.getHealthScale() - 1.0) / 2.0; ++i) {
+        if (pl.getHealthScale() % 2 != 0) {
+            for (int i = 0; i < (pl.getHealth() - 1) / 2; ++i) {
                 toPlayer.append("|");
             }
             toPlayer.append(":");
         }
         else {
-            for (int i = 0; i < pl.getHealthScale() / 2.0; ++i) {
+            for (int i = 0; i < pl.getHealth() / 2; ++i) {
                 toPlayer.append("|");
             }
         }
