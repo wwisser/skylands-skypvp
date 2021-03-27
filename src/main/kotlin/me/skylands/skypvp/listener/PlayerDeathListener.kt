@@ -45,7 +45,7 @@ class PlayerDeathListener : Listener {
         if (killer != null && killer !== victim) {
             val killerUser: User = userService.getUser(killer)
             killerUser.kills = killerUser.kills + 1
-            killer.sendMessage(Messages.PREFIX + "Du hast §e" + victim.name + " §7getötet! +§f3 Level")
+            killer.sendMessage(Messages.PREFIX + "Du hast §e" + victim.name + " §7getötet! +§a3 Level")
             killer.playSound(killer.location, Sound.SUCCESSFUL_HIT, 100f, 100f)
             killer.addPotionEffect(PotionEffect(PotionEffectType.REGENERATION, 10, 5))
             killer.level = killer.level + 3

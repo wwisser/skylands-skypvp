@@ -31,17 +31,19 @@ public class CommandStats extends AbstractCommand {
             return;
         }
 
+        final Player targetPlayer = Bukkit.getPlayer(user.getName());
+
+
         player.sendMessage(Messages.PREFIX + "Stats von §e" + user.getName());
         player.sendMessage(" §7Kills: §e" + user.getKills());
         player.sendMessage(" §7Tode: §e" + user.getDeaths());
         player.sendMessage(" §7KD/r: §e" + user.getKdr());
-        player.sendMessage(" §7Level: §e" + user.getLevel());
+        player.sendMessage(" §7Level: §e" + ((targetPlayer != null && targetPlayer.isOnline()) ? targetPlayer.getLevel() : user.getLevel()));
         player.sendMessage(" §7Spielzeit: §e" + (user.getPlaytime() / 60) + "h");
         player.sendMessage(" §7Votes: §e" + user.getVotes());
         player.sendMessage(" §7Registriert seit: §e" + DATE_FORMAT.format(new Date(user.getFirstSeen())));
 
         if (player.isOp()) {
-            final Player targetPlayer = Bukkit.getPlayer(user.getName());
             String lastSeen;
 
             if (targetPlayer != null && targetPlayer.isOnline()) {
