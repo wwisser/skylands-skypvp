@@ -10,3 +10,5 @@ commands:
   peace:
     aliases: [friede]
   stats:
+  level:
+  levelserver:
