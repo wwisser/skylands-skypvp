@@ -4,6 +4,6 @@ import org.bukkit.entity.Player
 
 object LastHitCache {
 
-    val lastHits: Map<Player, Player> = HashMap()
+    val lastHits: MutableMap<Player, Player> = HashMap()
 
 }
