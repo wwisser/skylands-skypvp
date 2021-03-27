@@ -1,5 +1,7 @@
 package me.skylands.skypvp
 
+import me.skylands.skypvp.clan.Clans
+import me.skylands.skypvp.clan.util.clan.Clan
 import me.skylands.skypvp.command.AbstractCommand
 import me.skylands.skypvp.config.DiscoConfig
 import me.skylands.skypvp.config.MotdConfig
@@ -68,6 +70,9 @@ class SkyLands : JavaPlugin() {
             super.getServer().scheduler.runTaskTimer(this, PlaytimeUpdateTask(), 20L * 60, 20L * 60) // 1m
 
             Bukkit.getOnlinePlayers().forEach { userService.loadUser(it) }
+
+
+            Clans().onEnable(this)
         } catch (e: Exception) {
             e.printStackTrace()
             throw RuntimeException(e)

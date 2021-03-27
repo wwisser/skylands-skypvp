@@ -3,9 +3,12 @@ package me.skylands.skypvp.listener
 import me.skylands.skypvp.Messages
 import me.skylands.skypvp.Permissions
 import me.skylands.skypvp.SkyLands
+import me.skylands.skypvp.clan.util.clan.Clan
+import me.skylands.skypvp.clan.util.clan.ClanManager
 import me.skylands.skypvp.delay.DelayConfig
 import me.skylands.skypvp.delay.DelayService
 import me.skylands.skypvp.user.UserService
+import net.md_5.bungee.api.chat.TextComponent
 import net.milkbowl.vault.chat.Chat
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
@@ -39,7 +42,15 @@ class AsyncPlayerChatListener : Listener {
 
         val player = event.player
         val message = event.message
-        val formattedMessage = (fetchPrefix(player) + " §7" + player.name + "§8: §r" + formatMessage(player, message))
+
+        var formattedMessage = (fetchPrefix(player) + " §7" + player.name + "§8: §r" + formatMessage(player, message))
+
+        if (ClanManager.hasClan(player)) {
+            val clan: Clan = ClanManager.getClanByTag(ClanManager.getClanTag(player))
+            clan.updateStats()
+            formattedMessage = ClanManager.getClanColor(clan) + clan.tagCase.toString() + " §8* §7" + formattedMessage
+        }
+
         event.format = formattedMessage
         if (player.hasPermission(Permissions.TEAM)) {
             return
