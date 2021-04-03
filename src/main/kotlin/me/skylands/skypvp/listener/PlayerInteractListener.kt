@@ -37,47 +37,47 @@ class PlayerInteractListener : Listener {
 
         const val CRATE_TITLE = "§0§lVoteCrate §0| /vote"
 
-        val VOTE_WINNINGS = ImmutableList.of(
-            ItemStack(Material.WOOD, 64),
-            ItemStack(Material.BREWING_STAND_ITEM, 1),
-            ItemStack(Material.POTION, 8),
-            ItemStack(Material.POTION, 8, 16453.toShort()),
-            ItemStack(Material.POTION, 1, 8265.toShort()),
-            ItemStack(Material.NETHER_WARTS, 3),
-            ItemStack(Material.GLASS_BOTTLE, 8),
-            ItemStack(Material.POTION, 8),
-            ItemStack(Material.NETHER_STALK, 3),
-            ItemStack(Material.EMERALD, 32),
-            ItemStack(Material.GOLDEN_APPLE, 10),
-            ItemStack(Material.REDSTONE, 8),
-            ItemStack(Material.GLOWSTONE_DUST, 1),
-            YoloBootsItemFactory.createYoloBootsItem(),
-            ItemBuilder(Material.FEATHER).name("§c§lBoostfeder").glow().build(),
-            ItemBuilder(Material.IRON_SWORD)
-                .enchant(Enchantment.DURABILITY, 1)
-                .enchant(Enchantment.FIRE_ASPECT, 1)
-                .enchant(Enchantment.KNOCKBACK, 1)
-                .enchant(Enchantment.DAMAGE_ALL, 3)
-                .enchant(Enchantment.DAMAGE_UNDEAD, 3)
-                .enchant(Enchantment.DAMAGE_ARTHROPODS, 3)
-                .enchant(Enchantment.LOOT_BONUS_MOBS, 2).build(),
-            ItemBuilder(Material.DIAMOND_SWORD).build(),
-            ItemBuilder(Material.DIAMOND_HELMET).build(),
-            ItemBuilder(Material.DIAMOND_CHESTPLATE).build(),
-            ItemBuilder(Material.DIAMOND_LEGGINGS).build(),
-            ItemBuilder(Material.DIAMOND_BOOTS).build(),
-            ItemBuilder(Material.GOLDEN_APPLE).amount(6).build(),
-            ItemStack(Material.ENDER_PEARL, 5),
-            ItemBuilder(Material.DIAMOND_SWORD).enchant(Enchantment.DAMAGE_ALL, 1).build(),
-            ItemBuilder(Material.DIAMOND_HELMET).enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).build(),
-            ItemBuilder(Material.DIAMOND_CHESTPLATE).enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).build(),
-            ItemBuilder(Material.DIAMOND_LEGGINGS).enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).build(),
-            ItemBuilder(Material.DIAMOND_BOOTS).enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).build()
-        )
+
     }
 
     private val inAnimation: MutableList<Player> = ArrayList()
-
+    val VOTE_WINNINGS = ImmutableList.of(
+        ItemStack(Material.WOOD, 64),
+        ItemStack(Material.BREWING_STAND_ITEM, 1),
+        ItemStack(Material.POTION, 8),
+        ItemStack(Material.POTION, 8, 16453.toShort()),
+        ItemStack(Material.POTION, 1, 8265.toShort()),
+        ItemStack(Material.NETHER_WARTS, 3),
+        ItemStack(Material.GLASS_BOTTLE, 8),
+        ItemStack(Material.POTION, 8),
+        ItemStack(Material.NETHER_STALK, 3),
+        ItemStack(Material.EMERALD, 32),
+        ItemStack(Material.GOLDEN_APPLE, 10),
+        ItemStack(Material.REDSTONE, 8),
+        ItemStack(Material.GLOWSTONE_DUST, 1),
+        YoloBootsItemFactory.createYoloBootsItem(),
+        ItemBuilder(Material.FEATHER).name("§c§lBoostfeder").glow().build(),
+        ItemBuilder(Material.IRON_SWORD)
+            .enchant(Enchantment.DURABILITY, 1)
+            .enchant(Enchantment.FIRE_ASPECT, 1)
+            .enchant(Enchantment.KNOCKBACK, 1)
+            .enchant(Enchantment.DAMAGE_ALL, 3)
+            .enchant(Enchantment.DAMAGE_UNDEAD, 3)
+            .enchant(Enchantment.DAMAGE_ARTHROPODS, 3)
+            .enchant(Enchantment.LOOT_BONUS_MOBS, 2).build(),
+        ItemBuilder(Material.DIAMOND_SWORD).build(),
+        ItemBuilder(Material.DIAMOND_HELMET).build(),
+        ItemBuilder(Material.DIAMOND_CHESTPLATE).build(),
+        ItemBuilder(Material.DIAMOND_LEGGINGS).build(),
+        ItemBuilder(Material.DIAMOND_BOOTS).build(),
+        ItemBuilder(Material.GOLDEN_APPLE).amount(6).build(),
+        ItemStack(Material.ENDER_PEARL, 5),
+        ItemBuilder(Material.DIAMOND_SWORD).enchant(Enchantment.DAMAGE_ALL, 1).build(),
+        ItemBuilder(Material.DIAMOND_HELMET).enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).build(),
+        ItemBuilder(Material.DIAMOND_CHESTPLATE).enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).build(),
+        ItemBuilder(Material.DIAMOND_LEGGINGS).enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).build(),
+        ItemBuilder(Material.DIAMOND_BOOTS).enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).build()
+    )
 
     @EventHandler
     fun onPlayerInteract(event: PlayerInteractEvent) {
