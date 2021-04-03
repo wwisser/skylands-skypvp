@@ -33,6 +33,10 @@ class InventoryClickListener : Listener {
                 player.playSound(player.location, Sound.CREEPER_HISS, 1f, 1f)
             }
         }
+
+        if (inventory.title.equals(PlayerInteractListener.CRATE_TITLE)) {
+            event.isCancelled = true
+        }
     }
 
 }

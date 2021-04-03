@@ -120,7 +120,7 @@ class ItemBuilder {
         return this
     }
 
-    fun build(): ItemStack? {
+    fun build(): ItemStack {
         var item: ItemStack = ItemStack(material!!, amount, damage)
         if (name != null) {
             val meta = item.itemMeta

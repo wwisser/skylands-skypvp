@@ -9,9 +9,11 @@ import org.bukkit.Sound
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.PlayerDeathEvent
+import org.bukkit.inventory.ItemStack
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import org.bukkit.scheduler.BukkitRunnable
+import java.util.*
 import kotlin.math.roundToInt
 
 class PlayerDeathListener : Listener {
@@ -58,6 +60,22 @@ class PlayerDeathListener : Listener {
             )
         }
         LastHitCache.lastHits.remove(victim)
+
+
+        val drops: MutableList<ItemStack> = ArrayList(event.drops)
+
+        event.drops
+            .stream()
+            .filter { itemStack: ItemStack ->
+                (itemStack.hasItemMeta()
+                        && itemStack.itemMeta.hasDisplayName()
+                        && !itemStack.itemMeta.hasEnchants()
+                        && itemStack.itemMeta.displayName == PlayerRespawnListener.AUTO_KIT_NAME)
+            }
+            .forEach { o: ItemStack -> drops.remove(o) }
+
+        event.drops.clear()
+        event.drops.addAll(drops)
     }
 
     private fun formatHealth(health: Double): String {

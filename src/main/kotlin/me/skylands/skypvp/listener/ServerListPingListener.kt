@@ -6,7 +6,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.server.ServerListPingEvent
 
-class ServerListPingListener() : Listener {
+class ServerListPingListener : Listener {
 
     private val config: MotdConfig = SkyLands.motdConfig
 

@@ -13,6 +13,7 @@ object YoloBootsItemFactory {
             .add("§7Die offiziellen §6§lSkyLands §7Boots.")
             .add("§7Anziehen, um die Effekte zu aktivieren.")
             .finish()
+            .glow()
             .build()
     }
 
