@@ -18,7 +18,7 @@ class CommandVote : AbstractCommand() {
         }
 
         sender.sendMessage(Messages.PREFIX + "Jetzt voten und eine Belohnung erhalten:")
-        sender.sendMessage(" " + Messages.getVoteUrl(sender.name))
+        sender.sendMessage(" §e" + Messages.getVoteUrl(sender.name))
         sender.sendMessage(" §cWichtig: Du musst dazu online sein!")
     }
 

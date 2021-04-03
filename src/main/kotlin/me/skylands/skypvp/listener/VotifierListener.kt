@@ -1,6 +1,7 @@
 package me.skylands.skypvp.listener
 
 import com.vexsoftware.votifier.model.VotifierEvent
+import me.skylands.skypvp.Messages
 import me.skylands.skypvp.item.ItemBuilder
 import org.bukkit.Bukkit
 import org.bukkit.Material
@@ -27,7 +28,7 @@ class VotifierListener : Listener {
     fun onVote(voteEvent: VotifierEvent) {
         val player = Bukkit.getPlayerExact(voteEvent.vote.username) ?: return
 
-        Bukkit.broadcastMessage("§8§m---------------------------------------------")
+        Bukkit.broadcastMessage(Messages.PREFIX_LONG)
         Bukkit.broadcastMessage("")
         Bukkit.broadcastMessage("   §7Der Spieler §e" + player.name + " §7hat gevotet!")
         Bukkit.broadcastMessage("   §7Seine Belohnung:")
@@ -36,7 +37,7 @@ class VotifierListener : Listener {
         Bukkit.broadcastMessage("    §8- §a3x Vote-Crate Schlüssel")
         Bukkit.broadcastMessage("   §7Du willst auch eine Belohnung? §8§l=> §e/vote")
         Bukkit.broadcastMessage("")
-        Bukkit.broadcastMessage("§8§m---------------------------------------------")
+        Bukkit.broadcastMessage(Messages.PREFIX_LONG)
 
         player.inventory.addItem(
             ItemBuilder(Material.TRIPWIRE_HOOK)
