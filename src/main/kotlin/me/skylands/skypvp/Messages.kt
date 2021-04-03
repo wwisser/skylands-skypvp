@@ -10,7 +10,7 @@ object Messages {
     const val NOT_A_PLAYER: String = "§cDiesen Befehl dürfen nur Spieler verwenden."
     const val NO_HELD_ITEM: String = "§cDu musst ein Item in deiner Hand halten."
 
-    fun getVoteUrl(player: Player): String {
-        return "https://www.serverliste.net/vote/1173/" + player.name
+    fun getVoteUrl(name: String): String {
+        return "https://www.serverliste.net/vote/1173/" + name
     }
 }

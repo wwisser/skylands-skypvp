@@ -159,7 +159,7 @@ class PlayerInteractListener : Listener {
                     )
                     base.clickEvent = ClickEvent(
                         ClickEvent.Action.OPEN_URL,
-                        Messages.getVoteUrl(player)
+                        Messages.getVoteUrl(player.name)
                     )
                     player.spigot().sendMessage(base)
                     player.sendMessage(Messages.PREFIX_LONG)
