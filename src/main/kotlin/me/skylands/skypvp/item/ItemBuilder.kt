@@ -27,7 +27,7 @@ class ItemBuilder {
     private var amount: Int = 1
     private var name: String? = null
     private var owner: String? = null
-    private lateinit var itemLore: ItemLore
+    private var itemLore: ItemLore? = null
     private var enchantments: MutableMap<Enchantment, Int>? = null
     private var enchantmentStorage: MutableMap<Enchantment, Int>? = null
     private var glow = false
