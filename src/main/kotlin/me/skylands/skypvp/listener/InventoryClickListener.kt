@@ -19,6 +19,9 @@ class InventoryClickListener : Listener {
         if (event.inventory.type == InventoryType.ENCHANTING && event.rawSlot == 1) {
             event.isCancelled = true
         }
+        if (inventory.title == PlayerInteractListener.CRATE_TITLE) {
+            event.isCancelled = true
+        }
         if (inventory !is AnvilInventory) {
             return
         }
@@ -32,10 +35,6 @@ class InventoryClickListener : Listener {
                 player.sendMessage(Messages.PREFIX + "§cDu darfst keine gestackten Items im Amboss verwenden.")
                 player.playSound(player.location, Sound.CREEPER_HISS, 1f, 1f)
             }
-        }
-
-        if (inventory.title.equals(PlayerInteractListener.CRATE_TITLE)) {
-            event.isCancelled = true
         }
     }
 
