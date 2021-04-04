@@ -24,8 +24,15 @@ public class ScoreboardUpdateTask extends BukkitRunnable {
 
     UserService userService = SkyLands.userService;
 
-    @Getter @Setter
     private static boolean showTopList = false;
+
+    public static boolean isShowTopList() {
+        return showTopList;
+    }
+
+    public static void setShowTopList(boolean showTopList) {
+        ScoreboardUpdateTask.showTopList = showTopList;
+    }
 
     private static Class<? extends DynamicScoreboard> getTypeByState() {
         return showTopList ? ToplistScoreboard.class : UserScoreboard.class;
