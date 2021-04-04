@@ -14,6 +14,7 @@ import org.bukkit.Location
 import org.bukkit.World
 import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
+import org.bukkit.scheduler.BukkitRunnable
 import java.lang.RuntimeException
 
 class SkyLands : JavaPlugin() {
@@ -71,6 +72,18 @@ class SkyLands : JavaPlugin() {
 
             Bukkit.getOnlinePlayers().forEach { userService.loadUser(it) }
 
+            super.getServer().scheduler.runTaskTimer(
+                this,
+                { ScoreboardUpdateTask.setShowTopList(!ScoreboardUpdateTask.isShowTopList()) },
+                20L * 60,
+                20L * 60 * 2
+            ) // 2m
+            super.getServer().scheduler.runTaskTimer(
+                this,
+                ScoreboardUpdateTask(),
+                0L,
+                10L
+            )
 
             Clans().onEnable(this)
         } catch (e: Exception) {

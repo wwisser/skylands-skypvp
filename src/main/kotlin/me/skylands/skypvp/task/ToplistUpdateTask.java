@@ -1,65 +1,32 @@
 package me.skylands.skypvp.task;
 
 import lombok.RequiredArgsConstructor;
-import me.skylands.skypvp.SkyLands;
 import me.skylands.skypvp.stats.context.ToplistContext;
 import me.skylands.skypvp.stats.label.StatsLabel;
-import org.bukkit.Location;
-import org.bukkit.block.Sign;
-import org.bukkit.block.Skull;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @RequiredArgsConstructor
-@Deprecated
 public class ToplistUpdateTask extends BukkitRunnable {
 
-    private static final long DELAY = 20L * 10;
-    private static final long PERIOD = 20L * 60 * 2;
-
-    private static final int POSITION_Z_START = -355;
-    private static final int HEAD_AMOUNT = 5;
-    private static final Location LABEL_LOCATION = new Location(SkyLands.WORLD_SKYPVP, -47, 186, -353);
+    private static final int TOP_LIST_SIZE = 10;
+    private static ConcurrentHashMap<StatsLabel, LinkedHashMap<String, ? super Number>> topLists = new ConcurrentHashMap<>();
 
     private final ToplistContext[] toplistContexts;
     private int currentIndex = 0;
-
 
     @Override
     public void run() {
         ToplistContext toplistContext = this.toplistContexts[this.currentIndex];
 
         StatsLabel statsLabel = toplistContext.getLabel();
-        Sign labelSign = (Sign) LABEL_LOCATION.getBlock().getState();
+        LinkedHashMap<String, ? super Number> topList = this.sort(toplistContext.getData());
 
-        labelSign.setLine(2, "§l" + statsLabel.getDisplayName());
-        labelSign.update();
-
-        Map<String, ? super Number> topList = this.sort(toplistContext.getData());
-        Location currentHead = new Location(SkyLands.WORLD_SKYPVP, -46, 185, POSITION_Z_START);
-        int count = 0;
-
-        for (Map.Entry<String, ? super Number> entry : topList.entrySet()) {
-            Skull skull = (Skull) currentHead.getBlock().getState();
-
-            skull.setOwner(entry.getKey());
-            skull.update();
-
-            Location lowerLoc = currentHead.clone().add(0, -1, 0);
-
-            Sign sign = (Sign) lowerLoc.getBlock().getState();
-
-            sign.setLine(0, "§l#" + (count + 1));
-            sign.setLine(1, entry.getKey());
-            sign.setLine(2, String.valueOf(entry.getValue()));
-            sign.setLine(3, statsLabel.getAdditive());
-            sign.update();
-
-            currentHead.add(0, 0, 1);
-            count++;
-        }
+        topLists.put(statsLabel, topList);
 
         if (this.currentIndex >= (this.toplistContexts.length - 1)) {
             this.currentIndex = 0;
@@ -68,10 +35,10 @@ public class ToplistUpdateTask extends BukkitRunnable {
         }
     }
 
-    private Map<String, ? super Number> sort(Map<String, ? super Number> data) {
-        Map<String, ? super Number> topList = new LinkedHashMap<>();
+    private LinkedHashMap<String, ? super Number> sort(Map<String, ? super Number> data) {
+        LinkedHashMap<String, ? super Number> topList = new LinkedHashMap<>();
 
-        for (int i = 0; i < HEAD_AMOUNT; i++) {
+        for (int i = 0; i < TOP_LIST_SIZE; i++) {
             Number maxValue = 0;
             String maxValueKey = "";
 
@@ -87,6 +54,10 @@ public class ToplistUpdateTask extends BukkitRunnable {
         }
 
         return topList;
+    }
+
+    public static LinkedHashMap<String, ? super Number> getTopListByLabel(final StatsLabel label) {
+        return topLists.getOrDefault(label, new LinkedHashMap<>());
     }
 
 }
