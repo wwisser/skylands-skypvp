@@ -3,7 +3,7 @@ package me.skylands.skypvp.stats.context.impl.internal;
 import lombok.AllArgsConstructor;
 import me.skylands.skypvp.stats.context.ToplistContext;
 import me.skylands.skypvp.stats.label.StatsLabel;
-import me.skylands.skypvp.user.UserRepository;
+import me.skylands.skypvp.user.UserService;
 
 import java.util.Map;
 
@@ -12,7 +12,7 @@ public class KillToplistContext implements ToplistContext {
 
     private static final StatsLabel STATS_LABEL = StatsLabel.KILLS;
 
-    private UserRepository userRepository;
+    private UserService service;
 
     @Override
     public StatsLabel getLabel() {
@@ -21,7 +21,7 @@ public class KillToplistContext implements ToplistContext {
 
     @Override
     public Map<String, ? super Number> getData() {
-        return this.userRepository.fetchByColumn(STATS_LABEL.getDatabaseColumn());
+        return this.service.getUserRepository().fetchByColumn(STATS_LABEL.getDatabaseColumn());
     }
 
 }

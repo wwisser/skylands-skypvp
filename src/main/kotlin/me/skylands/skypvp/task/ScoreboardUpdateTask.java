@@ -1,7 +1,5 @@
 package me.skylands.skypvp.task;
 
-import lombok.Getter;
-import lombok.Setter;
 import me.skylands.skypvp.SkyLands;
 import me.skylands.skypvp.scoreboard.DynamicScoreboard;
 import me.skylands.skypvp.scoreboard.ToplistScoreboard;

@@ -6,6 +6,7 @@ import me.skylands.skypvp.command.AbstractCommand
 import me.skylands.skypvp.config.DiscoConfig
 import me.skylands.skypvp.config.MotdConfig
 import me.skylands.skypvp.config.PeaceConfig
+import me.skylands.skypvp.stats.context.impl.internal.KillToplistContext
 import me.skylands.skypvp.task.*
 import me.skylands.skypvp.user.UserService
 import net.milkbowl.vault.chat.Chat
@@ -69,6 +70,12 @@ class SkyLands : JavaPlugin() {
             super.getServer().scheduler.runTaskTimer(this, MotdUpdateTask(), 0L, 20L * 60 * 3) // 3m
             super.getServer().scheduler.runTaskTimer(this, MotdUpdateTask(), 0L, 20L * 60 * 3) // 3m
             super.getServer().scheduler.runTaskTimer(this, PlaytimeUpdateTask(), 20L * 60, 20L * 60) // 1m
+            super.getServer().scheduler.runTaskTimerAsynchronously(
+                this,
+                ToplistUpdateTask(arrayOf(KillToplistContext(userService))),
+                0L,
+                20L * 60 * 5
+            ) // 5m
 
             Bukkit.getOnlinePlayers().forEach { userService.loadUser(it) }
 

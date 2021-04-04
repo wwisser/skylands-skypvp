@@ -10,7 +10,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-@RequiredArgsConstructor
 public class ToplistUpdateTask extends BukkitRunnable {
 
     private static final int TOP_LIST_SIZE = 10;
@@ -18,6 +17,10 @@ public class ToplistUpdateTask extends BukkitRunnable {
 
     private final ToplistContext[] toplistContexts;
     private int currentIndex = 0;
+
+    public ToplistUpdateTask(ToplistContext[] toplistContexts) {
+        this.toplistContexts = toplistContexts;
+    }
 
     @Override
     public void run() {
