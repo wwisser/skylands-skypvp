@@ -20,7 +20,7 @@ public class UserScoreboard extends DynamicScoreboard {
     }
 
     public void update(User user, Player player) {
-        super.updateLine("online", "  §e► §c" + Bukkit.getOnlinePlayers());
+        super.updateLine("online", "  §e► §c" + Bukkit.getOnlinePlayers().size());
         super.updateLine("kills", "  §e► §c" + user.getKills());
         super.updateLine("deaths", "  §e► §c" + user.getDeaths());
         super.updateLine("level", "  §e► §c" + player.getLevel());
