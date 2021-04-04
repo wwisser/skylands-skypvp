@@ -1,11 +1,9 @@
 package me.skylands.skypvp.task;
 
-import lombok.RequiredArgsConstructor;
 import me.skylands.skypvp.stats.context.ToplistContext;
 import me.skylands.skypvp.stats.label.StatsLabel;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
