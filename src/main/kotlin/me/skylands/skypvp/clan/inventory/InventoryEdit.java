@@ -92,7 +92,7 @@ public class InventoryEdit implements Listener {
                     "§6> " + ClanAccess.CLOSED.getName()}).damage((byte) 14).build();
 
 
-    private static class ItemBuilderLegacy {
+    public static class ItemBuilderLegacy {
 
         private Material material;
         private int amount;

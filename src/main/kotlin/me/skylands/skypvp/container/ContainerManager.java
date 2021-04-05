@@ -1,6 +1,8 @@
 package me.skylands.skypvp.container;
 
 import me.skylands.skypvp.SkyLands;
+import me.skylands.skypvp.container.legacy.InventoryKit;
+import me.skylands.skypvp.container.legacy.InventoryTrade;
 import me.skylands.skypvp.container.listener.InventoryClickListener;
 import me.skylands.skypvp.container.listener.InventoryCloseListener;
 import org.bukkit.plugin.PluginManager;
@@ -18,7 +20,8 @@ public class ContainerManager {
 
         pluginManager.registerEvents(new InventoryClickListener(this), SkyLands.plugin);
         pluginManager.registerEvents(new InventoryCloseListener(this), SkyLands.plugin);
-
+        pluginManager.registerEvents(new InventoryKit(), SkyLands.plugin);
+        pluginManager.registerEvents(new InventoryTrade(), SkyLands.plugin);
     }
 
     public void destroyContainer(final Container container) {

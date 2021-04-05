@@ -14,7 +14,7 @@ public enum PremiumRank {
 
     DIAMOND("diamond", 20000, Material.DIAMOND, "§b§l", "§8► §7Rechte von §eGold", "§8► §bBis zu 6 Inselmitglieder", "§8► §bKit Diamond", "§8► §bFarbig auf Schildern schreiben", "§8► §b/stack", "§8► §b/workbench", "§8► §b/anvil", "§8► §b/cook"),
 
-    EMERALD("emerald", 30000, Material.EMERALD, "§a§l", "§8► §7Rechte von §eGold§7, §bDiamond", "§8► §aBis zu 7 Inselmitglieder", "§8► §aKit Emerald", "§8► §a/invsee", "§8► §e/fly", "§8► §a/enderchest", "§8► §a/bottle", "§8► §a/fill", "§8► §a/top");
+    EMERALD("emerald", 30000, Material.EMERALD, "§a§l", "§8► §7Rechte von §eGold§7, §bDiamond", "§8► §aBis zu 7 Inselmitglieder", "§8► §aKit Emerald", "§8► §a/invsee", "§8► §a/fly", "§8► §a/enderchest", "§8► §a/bottle", "§8► §a/fill", "§8► §a/top");
  
     public static final String[] PERMISSIONS_DEFAULT = {
         "§8► §7Prefix im Chat und Tab",

@@ -89,20 +89,21 @@ public class PermissionShopContainerTemplate extends ContainerTemplate {
     @AllArgsConstructor
     @Getter
     private enum ShopPermission {
-        WORKBENCH(Material.WORKBENCH, 2000),
-        ENCHANTER(Material.ENCHANTMENT_TABLE, 2000),
-        ENDERCHEST(Material.ENDER_CHEST, 5000),
-        REPAIR(Material.ANVIL, 5000);
+        REPAIR(Material.ANVIL, 5000, "essentials.repair"),
+        STACK(Material.GLASS_BOTTLE, 5000, "worldguard.stack"),
+        INVSEE(Material.SIGN, 5000, "essentials.invsee"),
+        FLY(Material.FEATHER, 7500, "essentials.fly");
 
         private Material material;
         private int costs;
+        private String permission;
 
         public String getCommand() {
             return this.toString().toLowerCase();
         }
 
         public String getPermission() {
-            return "soulhive." + this.getCommand();
+            return this.permission;
         }
 
         public String getName() {

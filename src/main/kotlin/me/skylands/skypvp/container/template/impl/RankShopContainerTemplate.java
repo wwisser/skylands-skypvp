@@ -62,7 +62,7 @@ public class RankShopContainerTemplate extends ContainerTemplate {
 
             builder.addAction(count, itemStack, action);
 
-            count += 2;
+            count += 3;
         }
 
         final Container builtContainer = builder.build();

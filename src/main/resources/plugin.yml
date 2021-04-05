@@ -21,3 +21,4 @@ commands:
     aliases: [spec]
   teamchat:
     aliases: [tc]
+  kit:
