@@ -1,7 +1,6 @@
 package me.skylands.skypvp
 
 import me.skylands.skypvp.clan.Clans
-import me.skylands.skypvp.clan.util.clan.Clan
 import me.skylands.skypvp.command.AbstractCommand
 import me.skylands.skypvp.config.DiscoConfig
 import me.skylands.skypvp.config.MotdConfig
@@ -10,13 +9,16 @@ import me.skylands.skypvp.stats.context.impl.internal.KillToplistContext
 import me.skylands.skypvp.task.*
 import me.skylands.skypvp.user.UserService
 import net.milkbowl.vault.chat.Chat
+import net.minecraft.server.v1_8_R3.EnumParticle
+import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.World
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer
+import org.bukkit.entity.Player
 import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
-import org.bukkit.scheduler.BukkitRunnable
-import java.lang.RuntimeException
+import java.util.*
 
 class SkyLands : JavaPlugin() {
 
@@ -77,7 +79,6 @@ class SkyLands : JavaPlugin() {
                 20L * 60 * 5
             ) // 5m
 
-            Bukkit.getOnlinePlayers().forEach { userService.loadUser(it) }
 
             super.getServer().scheduler.runTaskTimer(
                 this,
@@ -99,6 +100,33 @@ class SkyLands : JavaPlugin() {
                 5L
             )
 
+            super.getServer().scheduler.runTaskTimer(
+                this,
+                {
+                    Bukkit.getOnlinePlayers().forEach { player: Player ->
+                        if (player.world == WORLD_SKYPVP && player.location.blockY > getSpawnHeight()) {
+                            for (i in 0..2) {
+                                val loc = player.location.add(
+                                    this.rdmDouble(10 * -1, 10),
+                                    this.rdmDouble(10 * -1, 10),
+                                    this.rdmDouble(10 * -1, 10)
+                                )
+                                val packet = PacketPlayOutWorldParticles(
+                                    EnumParticle.VILLAGER_HAPPY, true,
+                                    loc.x.toFloat(),
+                                    loc.y.toFloat(), loc.z.toFloat(), 0f, 0f, 0f, 0f, 1
+                                )
+                                (player as CraftPlayer).handle.playerConnection.sendPacket(packet)
+                            }
+                        }
+                    }
+                },
+                3L,
+                3L
+            )
+
+            Bukkit.getOnlinePlayers().forEach { userService.loadUser(it) }
+
             Clans().onEnable(this)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -115,6 +143,11 @@ class SkyLands : JavaPlugin() {
             e.printStackTrace()
             throw RuntimeException(e)
         }
+    }
+
+    private fun rdmDouble(min: Int, max: Int): Double {
+        val random = Random()
+        return min + (max - min) * random.nextDouble()
     }
 
 }
