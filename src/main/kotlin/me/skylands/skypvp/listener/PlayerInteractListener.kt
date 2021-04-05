@@ -23,6 +23,8 @@ import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.ItemStack
+import org.bukkit.potion.Potion
+import org.bukkit.potion.PotionEffectType
 import org.bukkit.scheduler.BukkitRunnable
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -163,6 +165,37 @@ class PlayerInteractListener : Listener {
                     )
                     player.spigot().sendMessage(base)
                     player.sendMessage(Messages.PREFIX_LONG)
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    fun onPlayerInteractStrengthAndAnvil(ev: PlayerInteractEvent) {
+        val player = ev.player
+        if (ev.action == Action.RIGHT_CLICK_BLOCK) {
+            if (ev.clickedBlock != null) {
+                val block = ev.clickedBlock
+                if (block.type == Material.ANVIL) {
+                    for (i in 0..1) {
+                        if (block.data >= 4) {
+                            block.data = (ev.clickedBlock.data - 4.toByte()).toByte()
+                        }
+                    }
+                }
+            }
+        }
+        if (ev.action == Action.RIGHT_CLICK_AIR
+            || ev.action == Action.RIGHT_CLICK_BLOCK
+        ) {
+            if (player.itemInHand != null && player.itemInHand.type != Material.AIR) {
+                val itemStack = player.itemInHand
+                if (itemStack.type == Material.POTION && (itemStack.durability.toInt() == 8233 || itemStack.durability.toInt() == 16425)) {
+                    val potion = Potion.fromItemStack(itemStack)
+                    if (potion.type.effectType == PotionEffectType.INCREASE_DAMAGE) {
+                        ev.isCancelled = true
+                        player.sendMessage(Messages.PREFIX + "§cStärke II ist deaktiviert.")
+                    }
                 }
             }
         }

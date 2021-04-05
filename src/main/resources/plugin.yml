@@ -12,6 +12,7 @@ commands:
   stats:
   level:
   levelserver:
+  levelshop:
   clan:
   vote:
   discord:

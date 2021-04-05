@@ -5,6 +5,7 @@ import me.skylands.skypvp.command.AbstractCommand
 import me.skylands.skypvp.config.DiscoConfig
 import me.skylands.skypvp.config.MotdConfig
 import me.skylands.skypvp.config.PeaceConfig
+import me.skylands.skypvp.container.ContainerManager
 import me.skylands.skypvp.stats.context.impl.internal.KillToplistContext
 import me.skylands.skypvp.task.*
 import me.skylands.skypvp.user.UserService
@@ -34,6 +35,7 @@ class SkyLands : JavaPlugin() {
         lateinit var peaceConfig: PeaceConfig
 
         lateinit var userService: UserService
+        lateinit var containerManager: ContainerManager
         lateinit var plugin: JavaPlugin
         var vaultChat: Chat? = null
 
@@ -53,6 +55,7 @@ class SkyLands : JavaPlugin() {
             discoConfig = DiscoConfig()
             peaceConfig = PeaceConfig()
             userService = UserService()
+            containerManager = ContainerManager()
 
             vaultChat = Bukkit.getServer().servicesManager.getRegistration(Chat::class.java).provider
             WORLD_SKYPVP = Bukkit.getWorld("world")

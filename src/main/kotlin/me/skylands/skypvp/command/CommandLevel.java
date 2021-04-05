@@ -30,7 +30,7 @@ public class CommandLevel extends AbstractCommand {
             player.sendMessage(" §7Deine Level: §e" + player.getLevel());
             player.sendMessage(" §7Transferieren: §e/level pay <name> <anzahl>");
             player.sendMessage(" §7Shop: §e/levelshop");
-          //  player.sendMessage(" §7Juwelen kaufen: §e/buy");
+          //  player.sendMessage(" §7Level kaufen: §e/buy");
             return;
         }
 
@@ -81,7 +81,7 @@ public class CommandLevel extends AbstractCommand {
                     Messages.PREFIX
                             + "Dir fehlen "
                             + (amount - player.getLevel())
-                            + " Juwelen, um diese Transaktion durchzuführen."
+                            + " Level, um diese Transaktion durchzuführen."
             );
           //  player.sendMessage(Messages.PREFIX + "Jetzt §a§lLevel §7kaufen §8> §e/buy");
         }
