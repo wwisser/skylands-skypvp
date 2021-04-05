@@ -15,3 +15,7 @@ commands:
   clan:
   vote:
   discord:
+  report:
+  spec:
+  teamchat:
+    aliases: [tc]
