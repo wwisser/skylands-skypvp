@@ -54,7 +54,7 @@ public class InventoryKit implements Listener {
 
     private void handleKit(Player player, String kit, String required) {
         if (player.hasPermission("essentials.kits." + kit)) {
-            player.performCommand("kit " + kit);
+            player.performCommand("essentials:kit " + kit);
             player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0F, 1.0F);
             player.closeInventory();
         } else {

@@ -1,5 +1,6 @@
 package me.skylands.skypvp.container.legacy;
 
+import me.skylands.skypvp.Messages;
 import me.skylands.skypvp.clan.inventory.InventoryEdit;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -50,7 +51,7 @@ public class InventoryTrade implements Listener {
                             player.getInventory().removeItem(
                                     cleanItem(currentItem, currentItem.getData().getData()));
                             player.playSound(player.getLocation(), Sound.VILLAGER_YES, 1, 1);
-                            player.sendMessage(String.format("Du hast §e%sx %s §7für §a%s §7Level verkauft.",
+                            player.sendMessage(String.format(Messages.PREFIX + "Du hast §e%sx %s §7für §a%s §7Level verkauft.",
                                     String.valueOf(currentItem.getAmount()),
                                     currentItem.getType().toString(),
                                     String.valueOf(price)));
@@ -59,7 +60,7 @@ public class InventoryTrade implements Listener {
                                     String.valueOf(currentItem.getAmount())));
                         } else {
                             player.playSound(player.getLocation(), Sound.VILLAGER_NO, 1, 1);
-                            player.sendMessage(String.format("Dafür brauchst du §e%s %s§7.",
+                            player.sendMessage(String.format(Messages.PREFIX + "Dafür brauchst du §e%s %s§7.",
                                     String.valueOf(currentItem.getAmount()),
                                     currentItem.getType().toString()));
                         }
