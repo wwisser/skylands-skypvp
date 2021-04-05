@@ -16,6 +16,7 @@ commands:
   vote:
   discord:
   report:
-  spec:
+  spectate:
+    aliases: [spec]
   teamchat:
     aliases: [tc]
