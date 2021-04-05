@@ -152,6 +152,7 @@ class PlayerInteractListener : Listener {
                 } else {
                     player.sendMessage(Messages.PREFIX_LONG)
                     player.sendMessage("  §7Vote, um einen Schlüssel zu erhalten.")
+                    player.sendMessage(Messages.PREFIX_LONG)
                     val base = TextComponent()
                     base.text = "  §7Klicke §ehier§7, um für SkyLands zu voten."
                     base.hoverEvent = HoverEvent(
