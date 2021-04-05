@@ -2,6 +2,7 @@ package me.skylands.skypvp.listener
 
 import me.skylands.skypvp.Messages
 import me.skylands.skypvp.SkyLands
+import me.skylands.skypvp.combat.CombatService
 import me.skylands.skypvp.stats.LastHitCache
 import me.skylands.skypvp.user.User
 import me.skylands.skypvp.user.UserService
@@ -33,6 +34,7 @@ class PlayerDeathListener : Listener {
         victim.playSound(victim.location, Sound.BLAZE_DEATH, 1f, 1f)
         val user: User = userService.getUser(victim)
         user.deaths = user.deaths + 1
+        CombatService.detachFight(victim, false)
 
         object : BukkitRunnable() {
             override fun run() {

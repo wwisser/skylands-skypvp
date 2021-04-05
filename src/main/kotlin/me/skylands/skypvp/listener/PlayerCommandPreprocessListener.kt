@@ -1,6 +1,8 @@
 package me.skylands.skypvp.listener
 
 import me.skylands.skypvp.Messages
+import me.skylands.skypvp.SkyLands
+import me.skylands.skypvp.combat.CombatService
 import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -17,6 +19,20 @@ class PlayerCommandPreprocessListener : Listener {
         if (!player.isOp && (rawCommand.startsWith("pex") || rawCommand.startsWith("permissionsex:"))) {
             event.isCancelled = true
             player.sendMessage(Messages.PREFIX + Messages.NO_PERMISSION)
+        }
+
+        val command = event.message
+
+        if (!player.isOp && CombatService.isFighting(player) && !CombatService.isCommandAllowed(command)) {
+            event.isCancelled = true
+            player.sendMessage(Messages.PREFIX + "§cDu darfst diesen Befehl im Kampf nicht verwenden.")
+        }
+
+        if (!player.isOp && CombatService.isCommandTeleportable(command)
+            && player.world == SkyLands.WORLD_SKYPVP && player.location.blockY < SkyLands.getSpawnHeight()
+        ) {
+            event.isCancelled = true
+            player.sendMessage(Messages.PREFIX + "§cDu darfst diesen Befehl hier nicht verwenden.")
         }
 
         if (!player.isOp) {

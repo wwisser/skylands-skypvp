@@ -92,6 +92,13 @@ class SkyLands : JavaPlugin() {
                 10L
             )
 
+            super.getServer().scheduler.runTaskTimer(
+                this,
+                CombatUpdateTask(),
+                5L,
+                5L
+            )
+
             Clans().onEnable(this)
         } catch (e: Exception) {
             e.printStackTrace()

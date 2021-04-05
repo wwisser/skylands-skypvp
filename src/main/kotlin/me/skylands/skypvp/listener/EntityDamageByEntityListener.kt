@@ -1,13 +1,14 @@
 package me.skylands.skypvp.listener
 
 import me.skylands.skypvp.SkyLands
+import me.skylands.skypvp.combat.CombatService
 import me.skylands.skypvp.config.PeaceConfig
 import me.skylands.skypvp.nms.ActionBar
 import me.skylands.skypvp.stats.LastHitCache
-import org.bukkit.Effect
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
 import org.bukkit.event.EventHandler
+import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 
@@ -72,6 +73,26 @@ class EntityDamageByEntityListener : Listener {
             if (shooter !== victim) {
                 LastHitCache.lastHits.put(victim, shooter)
             }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    fun onEntityDamageByEntityCombatLog(event: EntityDamageByEntityEvent) {
+        if (event.entity !is Player) {
+            return
+        }
+        val attacker = event.damager
+        val victim = event.entity as Player
+        if (attacker is Player) {
+            CombatService.setFighting(attacker)
+            CombatService.setFighting(victim)
+        }
+        if (attacker !is Projectile) {
+            return
+        }
+        if (attacker.shooter is Player && attacker.shooter !== victim) {
+            CombatService.setFighting(attacker.shooter as Player)
+            CombatService.setFighting(victim)
         }
     }
 
