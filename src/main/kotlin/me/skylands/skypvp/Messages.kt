@@ -1,7 +1,5 @@
 package me.skylands.skypvp
 
-import org.bukkit.entity.Player
-
 object Messages {
     const val PREFIX = "§7[§6§lSL§7] §7"
     const val PREFIX_LONG = "§6§l§m@§8§l§m=============================§6§l§m@"
