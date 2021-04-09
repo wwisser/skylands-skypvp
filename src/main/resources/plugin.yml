@@ -22,3 +22,5 @@ commands:
   teamchat:
     aliases: [tc]
   kit:
+  anvil:
+    aliases: [amboss]
