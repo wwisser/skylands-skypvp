@@ -33,6 +33,8 @@ class PlayerJoinListener : Listener {
                     )
                 }
 
+            player.teleport(SkyLands.LOCATION_SPAWN)
+            event.joinMessage = null
             PlayerRespawnListener.equipWithKit(player)
         } else {
             event.joinMessage = "§7[§6§l+§7] ${player.name}"
