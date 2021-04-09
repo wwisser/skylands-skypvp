@@ -37,6 +37,12 @@ public class RankShopContainerTemplate extends ContainerTemplate {
             ContainerAction action = permission
                 ? ContainerAction.NONE
                 : new PurchaseContainerAction(clicker -> {
+                    if (PremiumRank.getCurrentCosts(clicker, rank) == 0) {
+                        clicker.sendMessage(Messages.PREFIX + "§cDu hast diesen Rang bereits.");
+                        return;
+                    }
+
+
                 PermissionUtils.setRank(clicker.getName(), rank.getGroupName());
                 Bukkit.broadcastMessage(
                     Messages.PREFIX
