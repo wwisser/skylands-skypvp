@@ -78,7 +78,7 @@ public class InventoryKit implements Listener {
             .lore(ITEM_LORE)
             .build();
     private static ItemStack woolDiamond = new InventoryEdit.ItemBuilderLegacy(Material.DIAMOND)
-            .name(ITEM_PREFIX + "§aDiamond")
+            .name(ITEM_PREFIX + "§bDiamond")
             .lore(ITEM_LORE)
             .build();
     private static ItemStack woolEmerald = new InventoryEdit.ItemBuilderLegacy(Material.EMERALD)
