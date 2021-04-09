@@ -17,9 +17,10 @@ public class InventoryKit implements Listener {
     public static void open(Player p) {
         Inventory inventory = Bukkit.createInventory(null, 9 * 3, "§0Kits");
 
-        inventory.setItem(10, woolGold);
-        inventory.setItem(13, woolDiamond);
-        inventory.setItem(16, woolSky);
+        inventory.setItem(10, woolSky);
+        inventory.setItem(12, woolGold);
+        inventory.setItem(14, woolDiamond);
+        inventory.setItem(16, woolEmerald);
 
         p.openInventory(inventory);
         p.playSound(p.getLocation(), Sound.CHEST_OPEN, 1, 1);
@@ -64,20 +65,22 @@ public class InventoryKit implements Listener {
         }
     }
 
-    private static ItemStack woolSky = new InventoryEdit.ItemBuilderLegacy(Material.WOOL).damage((byte) 8)
-            .name("§7Kit Sky")
+    private static final String ITEM_PREFIX = "§7Ausrüstung§8: §7";
+
+    private static ItemStack woolSky = new InventoryEdit.ItemBuilderLegacy(Material.IRON_INGOT)
+            .name(ITEM_PREFIX + "§7Sky")
             .lore(new String[]{"§7Verfügbar für: §7§oSpieler"})
             .build();
-    private static ItemStack woolGold = new InventoryEdit.ItemBuilderLegacy(Material.WOOL).damage((byte) 4)
-            .name("§6Kit Gold")
+    private static ItemStack woolGold = new InventoryEdit.ItemBuilderLegacy(Material.GOLD_INGOT)
+            .name(ITEM_PREFIX + "§6Gold")
             .lore(new String[]{"§7§oVerfügbar für: §e§oGold"})
             .build();
-    private static ItemStack woolDiamond = new InventoryEdit.ItemBuilderLegacy(Material.WOOL).damage((byte) 9)
-            .name("§3Kit Diamond")
+    private static ItemStack woolDiamond = new InventoryEdit.ItemBuilderLegacy(Material.DIAMOND)
+            .name(ITEM_PREFIX + "§aDiamond")
             .lore(new String[]{"§7Verfügbar für: §3§oDiamond"})
             .build();
-    private static ItemStack woolEmerald = new InventoryEdit.ItemBuilderLegacy(Material.WOOL).damage((byte) 5)
-            .name("§aKit Emerald")
+    private static ItemStack woolEmerald = new InventoryEdit.ItemBuilderLegacy(Material.EMERALD)
+            .name(ITEM_PREFIX + "§aEmerald")
             .lore(new String[]{"§7Verfügbar für: §a§oEmerald"})
             .build();
 
