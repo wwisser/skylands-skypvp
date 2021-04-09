@@ -66,22 +66,24 @@ public class InventoryKit implements Listener {
     }
 
     private static final String ITEM_PREFIX = "§7Ausrüstung§8: §7";
+    private static final String[] ITEM_LORE = new String[]{"§f", "§7Klicke, um die Ausrüstung zu erhalten."};
+
 
     private static ItemStack woolSky = new InventoryEdit.ItemBuilderLegacy(Material.IRON_INGOT)
             .name(ITEM_PREFIX + "§7Sky")
-            .lore(new String[]{"§7Verfügbar für: §7§oSpieler"})
+            .lore(ITEM_LORE)
             .build();
     private static ItemStack woolGold = new InventoryEdit.ItemBuilderLegacy(Material.GOLD_INGOT)
-            .name(ITEM_PREFIX + "§6Gold")
-            .lore(new String[]{"§7§oVerfügbar für: §e§oGold"})
+            .name(ITEM_PREFIX + "§eGold")
+            .lore(ITEM_LORE)
             .build();
     private static ItemStack woolDiamond = new InventoryEdit.ItemBuilderLegacy(Material.DIAMOND)
             .name(ITEM_PREFIX + "§aDiamond")
-            .lore(new String[]{"§7Verfügbar für: §3§oDiamond"})
+            .lore(ITEM_LORE)
             .build();
     private static ItemStack woolEmerald = new InventoryEdit.ItemBuilderLegacy(Material.EMERALD)
             .name(ITEM_PREFIX + "§aEmerald")
-            .lore(new String[]{"§7Verfügbar für: §a§oEmerald"})
+            .lore(ITEM_LORE)
             .build();
 
 }
