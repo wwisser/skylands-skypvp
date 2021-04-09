@@ -24,3 +24,6 @@ commands:
   kit:
   anvil:
     aliases: [amboss]
+  bottle:
+  fill:
+  cook:
