@@ -49,7 +49,7 @@ public class RankShopContainerTemplate extends ContainerTemplate {
                         + "§e" + clicker.getName()
                         + " §7hat sich den Rang " + rank.getChatColor() + ChatColor.BOLD + rank.getName() + " §7gekauft.");
                 Bukkit.broadcastMessage(Messages.PREFIX + "Jetzt auch mit Leveln einkaufen §8§l=> §d§l/levelshop");
-            }, PremiumRank.getCurrentCosts(player, rank));
+            }, PremiumRank.getCurrentCosts(player, rank), true);
 
             ItemStack itemStack = new ItemBuilder(rank.getMaterial())
                 .name("§7Rang " + rank.getChatColor() + "§l" + rank.getName())

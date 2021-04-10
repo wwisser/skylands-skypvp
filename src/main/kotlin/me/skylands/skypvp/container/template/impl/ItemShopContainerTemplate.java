@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -36,7 +37,7 @@ public class ItemShopContainerTemplate extends ContainerTemplate {
 
             new ItemBuyOption(new ItemBuilder(Material.BLAZE_ROD).name("§6Blaze Rod").build(), 30, 5),
             new ItemBuyOption(new ItemBuilder(Material.SPECKLED_MELON).name("§eGoldene Melone").build(), 12, 6),
-            new ItemBuyOption(new ItemBuilder(Material.NETHER_WARTS).name("§4Netherwarze").build(), 20, 7),
+            new ItemBuyOption(new ItemBuilder(Material.NETHER_STALK).name("§4Netherwarze").build(), 20, 7),
             new ItemBuyOption(new ItemBuilder(Material.MAGMA_CREAM).name("§aMagma Creme").build(), 12, 8),
 
             new ItemBuyOption(new ItemBuilder(Material.POTION).name("§1Wasserflasche").build(), 5, 14),
@@ -44,13 +45,13 @@ public class ItemShopContainerTemplate extends ContainerTemplate {
             new ItemBuyOption(new ItemBuilder(Material.BLAZE_POWDER).name("§6Blazepowder").build(), 15, 16),
             new ItemBuyOption(new ItemBuilder(Material.FERMENTED_SPIDER_EYE).name("§4Fermentiertes Spinnenauge").build(), 12, 17),
 
-            new ItemBuyOption(new ItemBuilder(Material.CACTUS).name("§1Kaktus").build(), 6, 18),
-            new ItemBuyOption(new ItemBuilder(Material.SAPLING).name("§1Setzling").build(), 6, 19),
-            new ItemBuyOption(new ItemBuilder(Material.SUGAR_CANE).name("§aZuckerrohr").build(), 6, 20),
+            new ItemBuyOption(new ItemBuilder(Material.CACTUS).name("§2Kaktus").build(), 6, 27),
+            new ItemBuyOption(new ItemBuilder(Material.SAPLING).name("§2Setzling").build(), 6, 28),
+            new ItemBuyOption(new ItemBuilder(Material.SUGAR_CANE).name("§aZuckerrohr").build(), 6, 29),
 
-            new ItemBuyOption(new ItemBuilder(Material.ANVIL).name("§7Amboss").build(), 20, 24),
-            new ItemBuyOption(new ItemBuilder(Material.ENCHANTMENT_TABLE).name("§dZaubertisch").build(), 30, 25),
-            new ItemBuyOption(new ItemBuilder(Material.ENDER_CHEST).name("§1Ender Truhe").build(), 50, 26)
+            new ItemBuyOption(new ItemBuilder(Material.ANVIL).name("§7Amboss").build(), 20, 33),
+            new ItemBuyOption(new ItemBuilder(Material.ENCHANTMENT_TABLE).name("§dZaubertisch").build(), 30, 34),
+            new ItemBuyOption(new ItemBuilder(Material.ENDER_CHEST).name("§2Ender Truhe").build(), 50, 35)
             ).collect(Collectors.toList());
 
     private final ShopContainerTemplate shopContainerTemplate;
@@ -66,10 +67,13 @@ public class ItemShopContainerTemplate extends ContainerTemplate {
                 .addAction(53, ShopContainerTemplate.ITEM_BACK, this.shopContainerTemplate::openContainer);
 
         for (ItemBuyOption option : OPTIONS) {
+            ItemMeta itemMeta = option.getItemStack().getItemMeta();
+            itemMeta.setLore(Arrays.asList("", "§7Preis: §a" + option.getCost() + " Level", BUY_DESCRIPTION));
+
             builder.addAction(option.getSlot(), option.getItemStack(), new PurchaseContainerAction(clicker -> {
                 ItemUtils.INSTANCE.addAndDropRest(clicker, option.toClearItem());
                 clicker.playSound(clicker.getLocation(), Sound.SUCCESSFUL_HIT, 1f, 1f);
-            }, option.getCost()));
+            }, option.getCost(), false));
         }
 
         final Container builtContainer = builder.build();

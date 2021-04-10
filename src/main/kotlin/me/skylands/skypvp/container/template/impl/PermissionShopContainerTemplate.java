@@ -43,7 +43,8 @@ public class PermissionShopContainerTemplate extends ContainerTemplate {
                                 + " §7hat sich Rechte für §e/" + shopPermission.getCommand() + " §7gekauft.");
                         Bukkit.broadcastMessage(Messages.PREFIX + "Jetzt auch mit Leveln einkaufen §8§l=> §d§l/levelshop");
                     },
-                    shopPermission.getCosts()
+                    shopPermission.getCosts(),
+                        true
                 )
             );
         }

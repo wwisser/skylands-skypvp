@@ -16,6 +16,8 @@ public class PurchaseContainerAction implements ContainerAction {
     private Consumer<Player> buyAction;
     @NonNull
     private int costs;
+    @NonNull
+    private boolean closeInventory;
 
     @Override
     public void process(Player player) {
@@ -33,7 +35,9 @@ public class PurchaseContainerAction implements ContainerAction {
             player.playSound(player.getLocation(), Sound.CREEPER_HISS, 1, 1);
         }
 
-        player.closeInventory();
+        if (this.closeInventory) {
+            player.closeInventory();
+        }
     }
 
 }
