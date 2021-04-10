@@ -15,7 +15,7 @@ class CommandGiveall : AbstractCommand() {
 
         val player = ValidateCommand.onlyPlayer(sender)
         val itemStack = ValidateCommand.heldItem(player)
-s
+
         Bukkit.getOnlinePlayers()
             .stream()
             .filter { players: Player -> players !== player }
