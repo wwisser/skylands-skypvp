@@ -38,8 +38,6 @@ public class CommandLevelserver extends AbstractCommand {
 
         switch (args[0].toLowerCase()) {
             case "add":
-                user.setLevel(user.getLevel() + amount);
-
                 if (silent) {
                     sender.sendMessage(
                             Messages.PREFIX
@@ -62,7 +60,6 @@ public class CommandLevelserver extends AbstractCommand {
                 }
                 break;
             case "remove":
-                user.setLevel(Math.max(0, user.getLevel() - amount));
                 sender.sendMessage(
                         Messages.PREFIX
                                 + "§e"
@@ -73,7 +70,6 @@ public class CommandLevelserver extends AbstractCommand {
                 );
                 break;
             case "set":
-                user.setLevel(amount);
                 sender.sendMessage(
                         Messages.PREFIX
                                 + "§e"
@@ -83,11 +79,33 @@ public class CommandLevelserver extends AbstractCommand {
                 break;
         }
 
-        userService.saveUser(user);
         val player = Bukkit.getPlayer(user.getName());
+        TransactionType type = TransactionType.valueOf(args[0].toUpperCase());
         if (player != null) {
-            player.setLevel(user.getLevel());
+            player.setLevel(this.getNewLevel(player.getLevel(), amount, type));
+        } else {
+            user.setLevel(this.getNewLevel(user.getLevel(), amount, type));
+            userService.saveUser(user);
         }
+    }
+
+    private int getNewLevel(final int current, final int modify, final TransactionType type) {
+        switch (type) {
+            case ADD:
+                return current + modify;
+            case SET:
+                return modify;
+            case REMOVE:
+                return Math.max(0, current - modify);
+            default:
+                throw new RuntimeException("Transaction type unknown");
+        }
+    }
+
+    enum TransactionType {
+        ADD,
+        REMOVE,
+        SET
     }
 
     @NotNull
