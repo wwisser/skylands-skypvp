@@ -32,6 +32,10 @@ public class ShopContainerTemplate extends ContainerTemplate {
             this
         );
 
+        final ItemShopContainerTemplate itemShopContainerTemplate = new ItemShopContainerTemplate(
+                super.containerService,
+                this
+        );
 
         builder.addAction(
             11,
@@ -44,6 +48,11 @@ public class ShopContainerTemplate extends ContainerTemplate {
             rankShopTemplate::openContainer
         );
 
+        builder.addAction(
+                13,
+                new ItemBuilder(Material.GOLDEN_APPLE).name("§e§lItems").build(),
+                itemShopContainerTemplate::openContainer
+        );
 
         final Container builtContainer = builder.build();
 
