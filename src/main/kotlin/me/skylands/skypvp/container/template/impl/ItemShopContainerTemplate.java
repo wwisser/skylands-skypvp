@@ -32,7 +32,7 @@ public class ItemShopContainerTemplate extends ContainerTemplate {
 
             new ItemBuyOption(new ItemBuilder(Material.GOLDEN_APPLE).name("§eGoldapfel").build(), 7, 9),
             new ItemBuyOption(new ItemBuilder(Material.ENDER_PEARL).name("§2Enderperle").build(), 7, 10),
-            new ItemBuyOption(new ItemBuilder(Material.DIAMOND_SWORD).name("§eGoldapfel").build(), 7, 11),
+            new ItemBuyOption(new ItemBuilder(Material.DIAMOND_SWORD).name("§bDiamantschwert").build(), 7, 11),
             new ItemBuyOption(new ItemBuilder(Material.FISHING_ROD).name("§cAngel").build(), 5, 12),
 
             new ItemBuyOption(new ItemBuilder(Material.BLAZE_ROD).name("§6Blaze Rod").build(), 30, 5),
