@@ -67,10 +67,12 @@ public class ItemShopContainerTemplate extends ContainerTemplate {
                 .addAction(53, ShopContainerTemplate.ITEM_BACK, this.shopContainerTemplate::openContainer);
 
         for (ItemBuyOption option : OPTIONS) {
-            ItemMeta itemMeta = option.getItemStack().getItemMeta();
+            ItemStack itemStack = option.getItemStack().clone();
+            ItemMeta itemMeta = itemStack.getItemMeta();
             itemMeta.setLore(Arrays.asList("", "§7Preis: §a" + option.getCost() + " Level", BUY_DESCRIPTION));
+            itemStack.setItemMeta(itemMeta);
 
-            builder.addAction(option.getSlot(), option.getItemStack(), new PurchaseContainerAction(clicker -> {
+            builder.addAction(option.getSlot(), itemStack, new PurchaseContainerAction(clicker -> {
                 ItemUtils.INSTANCE.addAndDropRest(clicker, option.toClearItem());
                 clicker.playSound(clicker.getLocation(), Sound.SUCCESSFUL_HIT, 1f, 1f);
             }, option.getCost(), false));
