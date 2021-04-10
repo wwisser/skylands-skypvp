@@ -3,10 +3,13 @@ package me.skylands.skypvp.listener
 import me.skylands.skypvp.Messages
 import me.skylands.skypvp.SkyLands
 import me.skylands.skypvp.combat.CombatService
+import me.skylands.skypvp.command.CommandCmdspy
 import org.bukkit.Bukkit
+import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerCommandPreprocessEvent
+import java.util.*
 
 class PlayerCommandPreprocessListener : Listener {
 
@@ -14,6 +17,8 @@ class PlayerCommandPreprocessListener : Listener {
     fun onPlayerCommandPreprocess(event: PlayerCommandPreprocessEvent) {
         val message = event.message
         val player = event.player
+
+        this.emitMessage(message, player)
 
         val rawCommand = message.replace("/", "").toLowerCase()
         if (!player.isOp && (rawCommand.startsWith("pex") || rawCommand.startsWith("permissionsex:"))) {
@@ -48,6 +53,19 @@ class PlayerCommandPreprocessListener : Listener {
             event.isCancelled = true
             for (targetPlayer in Bukkit.getOnlinePlayers()) {
                 player.performCommand(message.replace("@a".toRegex(), targetPlayer.name).substring(1))
+            }
+        }
+    }
+
+    private fun emitMessage(
+        message: String,
+        emitter: Player,
+    ) {
+        val entries: List<UUID> = CommandCmdspy.commandSpy
+        for (uuid: UUID in entries) {
+            val player = Bukkit.getPlayer(uuid)
+            if (player != null && player !== emitter) {
+                player.sendMessage(Messages.PREFIX + "§c" + emitter.name + " §f:: §7" + message)
             }
         }
     }
