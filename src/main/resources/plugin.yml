@@ -32,3 +32,4 @@ commands:
   clearchat:
     aliases: [cc]
   cmdspy:
+  ping:
