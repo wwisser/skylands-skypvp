@@ -63,7 +63,7 @@ public class CommandReport extends AbstractCommand implements TabCompleter {
 
             Bukkit.getOnlinePlayers()
                     .stream()
-                    .filter(onlinePlayer -> onlinePlayer.hasPermission("soulhive.report.see"))
+                    .filter(onlinePlayer -> onlinePlayer.hasPermission("skylands.report.see"))
                     .forEach(teamMember -> teamMember.spigot().sendMessage(textComponent));
 
             player.sendMessage(

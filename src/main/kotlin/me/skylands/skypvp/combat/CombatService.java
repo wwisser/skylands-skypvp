@@ -26,7 +26,7 @@ public class CombatService {
     private static Map<Player, Long> fightTimestamps = new HashMap<>();
 
     public static void setFighting(Player player) {
-        if (player.hasPermission("soulhive.combatlog.bypass")) {
+        if (player.hasPermission("skylands.combatlog.bypass")) {
             return;
         }
 

@@ -11,7 +11,7 @@ public class CombatUpdateTask extends BukkitRunnable {
     @Override
     public void run() {
         for (Player player : CombatService.getPlayersInFight()) {
-            if (player.hasPermission("soulhive.combatlog.bypass")) {
+            if (player.hasPermission("skylands.combatlog.bypass")) {
                 continue;
             }
 
