@@ -49,7 +49,7 @@ public class ShopContainerTemplate extends ContainerTemplate {
         );
 
         builder.addAction(
-                13,
+                15,
                 new ItemBuilder(Material.GOLDEN_APPLE).name("§e§lItems").build(),
                 itemShopContainerTemplate::openContainer
         );

@@ -17,7 +17,7 @@ public class ItemShopContainerTemplate extends ContainerTemplate {
 
         final Container.ContainerBuilder builder = new Container.ContainerBuilder("§0§lShop")
                 .setStorageLevel(ContainerStorageLevel.STORED)
-                .setSize(5 * 9)
+                .setSize(6 * 9)
                 .addAction(53, ShopContainerTemplate.ITEM_BACK, this.shopContainerTemplate::openContainer);
 
 
