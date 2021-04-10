@@ -48,7 +48,6 @@ class PlayerInteractListener : Listener {
         ItemStack(Material.BREWING_STAND_ITEM, 1),
         ItemStack(Material.POTION, 8),
         ItemStack(Material.POTION, 8, 16453.toShort()),
-        ItemStack(Material.POTION, 1, 8265.toShort()),
         ItemStack(Material.NETHER_WARTS, 3),
         ItemStack(Material.GLASS_BOTTLE, 8),
         ItemStack(Material.POTION, 8),

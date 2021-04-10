@@ -5,6 +5,7 @@ import me.skylands.skypvp.SkyLands
 import me.skylands.skypvp.task.TablistUpdateTask
 import me.skylands.skypvp.user.FileUserRepository
 import me.skylands.skypvp.user.UserRepository
+import me.skylands.skypvp.util.FontUtils
 import me.skylands.skypvp.util.Title
 import org.bukkit.Bukkit
 import org.bukkit.Sound
@@ -39,6 +40,17 @@ class PlayerJoinListener : Listener {
         } else {
             event.joinMessage = "§7[§6§l+§7] ${player.name}"
         }
+
+        FontUtils.sendCenteredMessage(player, Messages.PREFIX_LONG)
+        player.sendMessage("")
+        FontUtils.sendCenteredMessage(player, "§7Herzlich Willkommen auf §6§lSkyLands§7!")
+        FontUtils.sendCenteredMessage(player, "§7SkyPvP im Einklang mit Handel & Wirtschaft.")
+        player.sendMessage("")
+        FontUtils.sendCenteredMessage(player, "§7Wichtige Befehle:")
+        FontUtils.sendCenteredMessage(player, "§e/level§8, §e/is§8, §e/kit§8, §e/vote§8, §e/clan")
+        player.sendMessage("")
+        FontUtils.sendCenteredMessage(player, Messages.PREFIX_LONG)
+
 
         player.playSound(player.location, Sound.LEVEL_UP, Float.MAX_VALUE, Float.MIN_VALUE)
         TablistUpdateTask.updateTablist(player)
