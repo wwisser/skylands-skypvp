@@ -41,7 +41,7 @@ class PlayerJoinListener : Listener {
             event.joinMessage = "§7[§6§l+§7] ${player.name}"
         }
 
-        FontUtils.sendCenteredMessage(player, Messages.PREFIX_LONG)
+        FontUtils.sendCenteredMessage(player, Messages.PREFIX_LONG_CENTER)
         player.sendMessage("")
         FontUtils.sendCenteredMessage(player, "§7Herzlich Willkommen auf §6§lSkyLands§7!")
         FontUtils.sendCenteredMessage(player, "§7SkyPvP im Einklang mit Handel & Wirtschaft.")
@@ -49,7 +49,7 @@ class PlayerJoinListener : Listener {
         FontUtils.sendCenteredMessage(player, "§7Wichtige Befehle:")
         FontUtils.sendCenteredMessage(player, "§e/level§8, §e/is§8, §e/kit§8, §e/vote§8, §e/clan")
         player.sendMessage("")
-        FontUtils.sendCenteredMessage(player, Messages.PREFIX_LONG)
+        FontUtils.sendCenteredMessage(player, Messages.PREFIX_LONG_CENTER)
 
 
         player.playSound(player.location, Sound.LEVEL_UP, Float.MAX_VALUE, Float.MIN_VALUE)
