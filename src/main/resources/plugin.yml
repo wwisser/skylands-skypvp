@@ -29,3 +29,5 @@ commands:
   cook:
   globalmute:
   giveall:
+  clearchat:
+    aliases: [cc]
