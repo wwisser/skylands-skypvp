@@ -131,6 +131,10 @@ class SkyLands : JavaPlugin() {
 
             Bukkit.getOnlinePlayers().forEach { userService.loadUser(it) }
 
+            val worldBorder = WORLD_SKYPVP.worldBorder
+            worldBorder.center = LOCATION_SPAWN
+            worldBorder.size = 500.0
+
             Clans().onEnable(this)
 
             ProtocolLibrary.getProtocolManager().addPacketListener(CustomPayloadPacketAdapter(this))
