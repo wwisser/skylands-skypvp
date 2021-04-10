@@ -9,6 +9,6 @@ object Messages {
     const val NO_HELD_ITEM: String = "§cDu musst ein Item in deiner Hand halten."
 
     fun getVoteUrl(name: String): String {
-        return "https://minecraft-server.eu/server/index/21FF4/$name"
+        return "https://minecraft-server.eu/vote/index/21FF4/$name"
     }
 }
