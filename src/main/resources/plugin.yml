@@ -27,3 +27,5 @@ commands:
   bottle:
   fill:
   cook:
+  globalmute:
+  giveall:

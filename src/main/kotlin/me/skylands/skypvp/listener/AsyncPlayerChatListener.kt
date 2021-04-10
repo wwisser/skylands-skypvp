@@ -5,6 +5,7 @@ import me.skylands.skypvp.Permissions
 import me.skylands.skypvp.SkyLands
 import me.skylands.skypvp.clan.util.clan.Clan
 import me.skylands.skypvp.clan.util.clan.ClanManager
+import me.skylands.skypvp.command.CommandGlobalmute
 import me.skylands.skypvp.delay.DelayConfig
 import me.skylands.skypvp.delay.DelayService
 import me.skylands.skypvp.user.UserService
@@ -55,11 +56,19 @@ class AsyncPlayerChatListener : Listener {
         if (player.hasPermission(Permissions.TEAM)) {
             return
         }
+
         if (userService.getUser(player).playtime < 30) {
             event.isCancelled = true
             player.sendMessage(Messages.PREFIX+ "§cDu darfst erst ab 30 Minuten Spielzeit schreiben.")
             return
         }
+
+        if (CommandGlobalmute.globalmute) {
+            event.isCancelled = true
+            player.sendMessage(Messages.PREFIX+ "§cDer Chat ist aktuell deaktiviert.")
+            return
+        }
+
         val delayed: Boolean = DelayService.handleDelayInverted(player, DELAY_CONFIGURATION) { sender ->
             event.isCancelled =
                 true
