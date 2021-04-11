@@ -13,7 +13,7 @@ import java.util.*
 
 class PlayerCommandPreprocessListener : Listener {
 
-    val blockedCommands: List<String> = listOf("pex", "permissionsex", "calc", "calculate", "eval", "evaluate", "solve")
+    val blockedCommands: List<String> = listOf("pex", "permissionsex", "/calc", "/calculate", "/eval", "/evaluate", "/solve")
 
     @EventHandler
     fun onPlayerCommandPreprocess(event: PlayerCommandPreprocessEvent) {
