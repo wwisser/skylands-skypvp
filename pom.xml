@@ -76,7 +76,8 @@
             <groupId>com.wasteofplastic</groupId>
             <artifactId>askyblock</artifactId>
             <version>3.0.8.2</version>
-            <scope>provided</scope>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/askyblock.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
