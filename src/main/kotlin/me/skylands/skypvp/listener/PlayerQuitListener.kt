@@ -13,7 +13,8 @@ class PlayerQuitListener : Listener {
         val player = event.player
         CombatService.detachFight(player, true)
 
-        event.quitMessage = "§7[§8§l-§7] ${player.name}"
+        //event.quitMessage = "§7[§8§l-§7] ${player.name}"
+        event.quitMessage = null
 
         val user = SkyLands.userService.getUser(player)
         user.level = player.level
