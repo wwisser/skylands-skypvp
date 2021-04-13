@@ -1,6 +1,5 @@
 package me.skylands.skypvp
 
-import com.comphenix.protocol.ProtocolLibrary
 import me.skylands.skypvp.clan.Clans
 import me.skylands.skypvp.command.AbstractCommand
 import me.skylands.skypvp.config.DiscoConfig
@@ -136,8 +135,6 @@ class SkyLands : JavaPlugin() {
             worldBorder.size = 500.0
 
             Clans().onEnable(this)
-
-            ProtocolLibrary.getProtocolManager().addPacketListener(CustomPayloadPacketAdapter(this))
         } catch (e: Exception) {
             e.printStackTrace()
             throw RuntimeException(e)
