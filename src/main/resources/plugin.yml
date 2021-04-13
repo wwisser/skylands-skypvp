@@ -33,3 +33,4 @@ commands:
     aliases: [cc]
   cmdspy:
   ping:
+  setstats:

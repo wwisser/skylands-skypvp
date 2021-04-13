@@ -82,6 +82,12 @@ class SkyLands : JavaPlugin() {
                 20L * 60 * 5
             ) // 5m
 
+            super.getServer().scheduler.runTaskTimer(
+                this,
+                { Bukkit.getOnlinePlayers().forEach { userService.saveUser(userService.getUser(it)) } },
+                20L * 30,
+                20L * 30
+            )
 
             super.getServer().scheduler.runTaskTimer(
                 this,
