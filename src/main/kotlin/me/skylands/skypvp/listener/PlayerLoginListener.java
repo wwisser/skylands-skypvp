@@ -1,4 +1,4 @@
-package me.skylands.skypvp.command;
+package me.skylands.skypvp.listener;
 
 import me.skylands.skypvp.SkyLands;
 import org.bukkit.entity.Player;
