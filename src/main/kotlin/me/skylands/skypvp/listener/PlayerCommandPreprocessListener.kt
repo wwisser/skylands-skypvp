@@ -13,7 +13,23 @@ import java.util.*
 
 class PlayerCommandPreprocessListener : Listener {
 
-    val blockedCommands: List<String> = listOf("pex", "permissionsex", "/calc", "/calculate", "/eval", "/evaluate", "/solve")
+    private val blockedCommands: List<String> = listOf(
+        "pex",
+        "permissionsex",
+        "calc",
+        "calculate",
+        "eval",
+        "evaluate",
+        "solve",
+        "execute",
+        "demote",
+        "promote",
+        "hd",
+        "holographicdisplays",
+        "holo",
+        "hologram",
+        "worldedit"
+    )
 
     @EventHandler
     fun onPlayerCommandPreprocess(event: PlayerCommandPreprocessEvent) {
@@ -22,8 +38,8 @@ class PlayerCommandPreprocessListener : Listener {
 
         this.emitMessage(message, player)
 
-        val rawCommand = message.replace("/", "").toLowerCase()
-        if (!player.isOp && blockedCommands.any { it.startsWith(rawCommand.split(" ")[0]) }) {
+        val rawCommand = message.replace("/", "").split(" ")[0].toLowerCase()
+        if (!player.isOp && blockedCommands.any { it.startsWith(rawCommand) }) {
             event.isCancelled = true
             player.sendMessage(Messages.PREFIX + Messages.NO_PERMISSION)
         }
