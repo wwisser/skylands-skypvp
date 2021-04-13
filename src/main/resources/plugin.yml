@@ -34,3 +34,5 @@ commands:
   cmdspy:
   ping:
   setstats:
+  alt:
+    aliases: [alts, accounts]
