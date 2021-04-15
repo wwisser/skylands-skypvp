@@ -4,6 +4,7 @@ import me.skylands.skypvp.clan.settings.Message;
 import me.skylands.skypvp.clan.util.clan.ClanManager;
 import me.skylands.skypvp.clan.util.clan.ClanRank;
 import me.skylands.skypvp.clan.util.clan.ClanUser;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -44,6 +45,7 @@ public class CommandManager implements CommandExecutor {
                             commandData.args(), commandData.description()));
                 }
             }
+            p.sendMessage(Message.PREFIX + "§e#<nachricht> §8- §7Clan-Chat");
             p.sendMessage(Message.DEFAULT_TAGINFO);
             return true;
         } else {
