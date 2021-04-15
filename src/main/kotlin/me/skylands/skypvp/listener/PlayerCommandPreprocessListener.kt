@@ -28,7 +28,8 @@ class PlayerCommandPreprocessListener : Listener {
         "holographicdisplays",
         "holo",
         "hologram",
-        "worldedit"
+        "worldedit",
+        "worldedit:"
     )
 
     @EventHandler
