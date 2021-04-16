@@ -36,3 +36,5 @@ commands:
   setstats:
   alt:
     aliases: [alts, accounts]
+  apply:
+    aliases: [bewerben]
