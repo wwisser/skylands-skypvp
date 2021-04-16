@@ -195,6 +195,9 @@ class PlayerInteractListener : Listener {
                         ev.isCancelled = true
                         player.sendMessage(Messages.PREFIX + "§cStärke II ist deaktiviert.")
                     }
+                } else if (itemStack.type == Material.GOLDEN_APPLE && itemStack.durability.toInt() == 1) {
+                    ev.isCancelled = true
+                    player.sendMessage(Messages.PREFIX + "§cOP-Äpfel sind deaktiviert.")
                 }
             }
         }
