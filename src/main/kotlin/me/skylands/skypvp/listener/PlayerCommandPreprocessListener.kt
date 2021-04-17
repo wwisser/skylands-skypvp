@@ -29,7 +29,14 @@ class PlayerCommandPreprocessListener : Listener {
         "holo",
         "hologram",
         "worldedit",
-        "worldedit:"
+        "worldedit:calc",
+        "worldedit:calculate",
+        "worldedit:eval",
+        "worldedit:evaluate",
+        "worldedit:solve",
+        "worldedit:execute",
+        "permissionsex:promote",
+        "permissionsex:demote"
     )
 
     @EventHandler
