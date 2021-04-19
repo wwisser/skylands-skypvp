@@ -5,7 +5,7 @@ import me.skylands.skypvp.Messages;
 public class Message {
 
     public static String PREFIX = Messages.PREFIX;
-    public static String PREFIX_LONG = "§7\n§7\n";
+    public static String PREFIX_LONG = "§6§l§m@§8§l§m=============================§6§l§m@";
     //public static String PREFIX_LONG = "§7\n§7\n[§8§m---------------§7[ §e§lClan §7]§8§m---------------§7]";
 
     public static String NO_PERMISSION = "§cDu hast keinen Zugriff auf diesen Befehl.";

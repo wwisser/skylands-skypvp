@@ -38,3 +38,5 @@ commands:
     aliases: [alts, accounts]
   apply:
     aliases: [bewerben]
+  help:
+    aliases: [hilfe, ?]

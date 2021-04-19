@@ -26,11 +26,13 @@ public class CommandLevel extends AbstractCommand {
         if (args.length < 1) {
             final User user = this.userService.getUser(player);
 
+            player.sendMessage(Messages.PREFIX_LONG);
             player.sendMessage(Messages.PREFIX + "§aLevel §7System");
             player.sendMessage(" §7Deine Level: §e" + player.getLevel());
             player.sendMessage(" §7Transferieren: §e/level pay <name> <anzahl>");
             player.sendMessage(" §7Shop: §e/levelshop");
           //  player.sendMessage(" §7Level kaufen: §e/buy");
+            player.sendMessage(Messages.PREFIX_LONG);
             return;
         }
 

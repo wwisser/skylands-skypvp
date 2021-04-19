@@ -1,5 +1,6 @@
 package me.skylands.skypvp.clan.util.command;
 
+import me.skylands.skypvp.Messages;
 import me.skylands.skypvp.clan.settings.Message;
 import me.skylands.skypvp.clan.util.clan.ClanManager;
 import me.skylands.skypvp.clan.util.clan.ClanRank;
@@ -47,6 +48,7 @@ public class CommandManager implements CommandExecutor {
             }
             p.sendMessage(Message.PREFIX + "§e#<nachricht> §8- §7Clan-Chat");
             p.sendMessage(Message.DEFAULT_TAGINFO);
+            p.sendMessage(Messages.PREFIX_LONG);
             return true;
         } else {
             ArrayList<String> arguments = new ArrayList<>(Arrays.asList(args));
