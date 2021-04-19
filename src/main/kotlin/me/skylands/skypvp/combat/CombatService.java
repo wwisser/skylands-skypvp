@@ -20,7 +20,7 @@ public class CombatService {
             "/spec", "/spectator", "/stats", "/friede", "/frieden", "/stack", "/kit"
     };
     private static final String[] INSTANT_TELEPORT_COMMANDS = {
-            "/is", "/tpa", "/tpaccept", "/tpahere", "/top", "/essentials:top", "/askyblock:is", "/essentials:tpaccept",
+            "/is", "/tpa", "/tpaccept", "/tpahere", "/top", "/essentials:top", "/askyblock:is", "/essentials:tpaccept", "/is top", "/askyblock:is top"
     };
 
     private static Map<Player, Long> fightTimestamps = new HashMap<>();
@@ -66,6 +66,7 @@ public class CombatService {
     }
 
     public static boolean isCommandTeleportable(String command) {
+        System.out.println(command);
         return Arrays
                 .stream(INSTANT_TELEPORT_COMMANDS)
                 .anyMatch(allowedCommand -> allowedCommand.startsWith(command.toLowerCase()));

@@ -78,6 +78,7 @@ class SkyLands : JavaPlugin() {
             super.getServer().scheduler.runTaskTimer(this, MotdUpdateTask(), 0L, 20L * 60 * 3) // 3m
             super.getServer().scheduler.runTaskTimer(this, MotdUpdateTask(), 0L, 20L * 60 * 3) // 3m
             super.getServer().scheduler.runTaskTimer(this, PlaytimeUpdateTask(), 20L * 60, 20L * 60) // 1m
+            super.getServer().scheduler.runTaskTimer(this, JumpboostSupplierTask(), 0L, 3L)
             super.getServer().scheduler.runTaskTimerAsynchronously(
                 this,
                 ToplistUpdateTask(arrayOf(KillToplistContext(userService))),
