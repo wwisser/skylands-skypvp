@@ -48,7 +48,6 @@ class PlayerCommandPreprocessListener : Listener {
         this.emitMessage(message, player)
 
         val rawCommand = message.replace("/", "").split(" ")[0].toLowerCase()
-        println(rawCommand)
         if (!player.isOp && blockedCommands.any { it.startsWith(rawCommand) }) {
             event.isCancelled = true
             player.sendMessage(Messages.PREFIX + Messages.NO_PERMISSION)

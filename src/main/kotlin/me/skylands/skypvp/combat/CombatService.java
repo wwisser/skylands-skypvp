@@ -66,7 +66,6 @@ public class CombatService {
     }
 
     public static boolean isCommandTeleportable(String command) {
-        System.out.println(command);
         return Arrays
                 .stream(INSTANT_TELEPORT_COMMANDS)
                 .anyMatch(allowedCommand -> allowedCommand.startsWith(command.toLowerCase()));
