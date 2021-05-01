@@ -1,0 +1,45 @@
+name: Staging
+
+on:
+  push:
+    branches:
+      - 'development'
+      - 'feature/**'
+      - 'bug/**'
+  pull_request:
+    branches:
+      - 'development'
+      - 'feature/**'
+      - 'bug/**'
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build & Deploy Staging
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+          echo $'' >> ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          eval "$(ssh-agent -s)"
+          ssh-add ~/.ssh/id_rsa
+          cat >>~/.ssh/config <<END
+          Host skylands
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/id_rsa
+            StrictHostKeyChecking no
+          END
+          mvn clean package
+          scp ./target/SkyLands-SkyPvP.jar skylands:/home/build/plugins
+          ssh skylands "docker exec build /etc/init.d/minecraft_server send \"rawbc &7[&6&lSL&7] &7GitHub Action triggered, starting deployment\""
+          ssh skylands "docker exec build /etc/init.d/minecraft_server send \"plugman reload SkyLands-SkyPvP\""
+          ssh skylands "docker exec build /etc/init.d/minecraft_server send \"rawbc &7[&6&lSL&7] &7Deployment successful: &e${{ github.event.head_commit.message }}\""
+        env:
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_HOST: ${{ secrets.HOST }}
