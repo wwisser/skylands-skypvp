@@ -40,3 +40,4 @@ commands:
     aliases: [bewerben]
   help:
     aliases: [hilfe, ?]
+  huansohn:
