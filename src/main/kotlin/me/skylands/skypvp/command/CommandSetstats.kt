@@ -9,7 +9,7 @@ import org.bukkit.command.CommandSender
 class CommandSetstats : AbstractCommand() {
     override fun process(sender: CommandSender, label: String, args: Array<String>) {
         ValidateCommand.permission(sender, Permissions.ADMIN)
-        ValidateCommand.minArgs(3, args, "/setstats <target> <kills|deaths> <amount>")
+        ValidateCommand.minArgs(3, args, "/setstats <target> <kills|deaths|killstreak|blutpunkte> <amount>")
         val target = ValidateCommand.targetOrSelf(args[0])
         val amount = ValidateCommand.amount(args[2])
 
@@ -19,7 +19,9 @@ class CommandSetstats : AbstractCommand() {
         when (args[1]) {
             "kills" -> user.kills = amount
             "deaths" -> user.deaths = amount
-            else -> throw CommandException("Invalide Metrik: <kills|deaths>")
+            "killstreak" -> user.currentKillstreak = amount
+            "blutpunkte" -> user.bloodpoints = amount
+            else -> throw CommandException("Invalide Metrik: <kills|deaths|killstreak|blutpunkte>")
         }
 
         userService.saveUser(user)

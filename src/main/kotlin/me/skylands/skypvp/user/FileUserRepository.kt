@@ -13,21 +13,23 @@ class FileUserRepository : UserRepository {
         val currentTimeMillis = System.currentTimeMillis()
         if (!userDatabase.contains(uuid)) {
             return User(
-                name, uuid, currentTimeMillis, currentTimeMillis,
-                0, 0, 0, 0, 0
+                    name, uuid, currentTimeMillis, currentTimeMillis,
+                    0, 0, 0, 0, 0, 0, 0
             )
         }
         val data: List<String> = userDatabase.getString(uuid).split(";")
         return User(
-            name,
-            uuid,
-            java.lang.Long.valueOf(data[0]),
-            java.lang.Long.valueOf(data[1]),
-            Integer.valueOf(data[2]),
-            Integer.valueOf(data[3]),
-            Integer.valueOf(data[4]),
-            Integer.valueOf(data[5]),
-            Integer.valueOf(data[6])
+                name,
+                uuid,
+                java.lang.Long.valueOf(data[0]),
+                java.lang.Long.valueOf(data[1]),
+                Integer.valueOf(data[2]),
+                Integer.valueOf(data[3]),
+                Integer.valueOf(data[4]),
+                Integer.valueOf(data[5]),
+                Integer.valueOf(data[6]),
+                Integer.valueOf(data[7]),
+                Integer.valueOf(data[8])
         )
     }
 
@@ -53,6 +55,8 @@ class FileUserRepository : UserRepository {
         val data: String = (user.firstSeen.toString() + ";"
                 + user.lastSeen + ";"
                 + user.kills + ";"
+                + user.currentKillstreak + ";"
+                + user.bloodpoints + ";"
                 + user.deaths + ";"
                 + user.votes + ";"
                 + user.playtime + ";"
