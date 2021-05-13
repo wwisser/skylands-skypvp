@@ -28,15 +28,15 @@ public class BPPurchaseContainerAction implements ContainerAction {
         UserService userService = SkyLands.userService;
         User user = userService.getUser(player);
 
-        if (user.getBloodpoints() >= this.costs) {
-            user.setBloodpoints(user.getBloodpoints() - this.costs);
+        if (user.getBloodPoints() >= this.costs) {
+            user.setBloodPoints(user.getBloodPoints() - this.costs);
             this.buyAction.accept(player);
             player.playSound(player.getLocation(), Sound.SUCCESSFUL_HIT, 1, 1);
         } else {
             player.sendMessage(
                     Messages.PREFIX
                             + "§cDir fehlen noch "
-                            + (this.costs - user.getBloodpoints())
+                            + (this.costs - user.getBloodPoints())
                             + " Blutpunkte."
             );
             player.playSound(player.getLocation(), Sound.CREEPER_HISS, 1, 1);

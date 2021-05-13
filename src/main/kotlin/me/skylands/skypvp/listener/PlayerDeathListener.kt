@@ -69,7 +69,7 @@ class PlayerDeathListener : Listener {
         }
         LastHitCache.lastHits.remove(victim)
 
-        val LightArtifact: ItemStack? = LightArtifactItemFactory.createLightArtifactItem()
+        val LightArtifact: ItemStack = LightArtifactItemFactory.createLightArtifactItem()
 
         if (victim.inventory.contains(LightArtifact)) {
             event.keepInventory = true;

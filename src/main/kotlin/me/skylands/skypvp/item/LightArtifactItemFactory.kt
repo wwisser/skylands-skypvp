@@ -6,7 +6,7 @@ import org.bukkit.inventory.ItemStack
 
 object LightArtifactItemFactory {
 
-    fun createLightArtifactItem(): ItemStack? {
+    fun createLightArtifactItem(): ItemStack {
         return ItemBuilder(Material.GHAST_TEAR)
                 .name(ChatColor.WHITE.toString() + "Artifakt des " + ChatColor.YELLOW.toString() + "Lichts")
                 .modifyLore()

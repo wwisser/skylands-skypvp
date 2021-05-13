@@ -4,6 +4,7 @@ import me.skylands.skypvp.Messages;
 import me.skylands.skypvp.SkyLands;
 import me.skylands.skypvp.user.User;
 import me.skylands.skypvp.user.UserService;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,9 +27,9 @@ public class KillstreakListener implements Listener {
             killer.sendMessage(Messages.PREFIX + "Du hast die §eKillstreak§7 von §e" + victim.getName() + " §7beendet! §7+§a" + levelToAdd + " Level");
             killer.setLevel(killer.getLevel() + levelToAdd);
         } else if(victimKillstreak > 30) {
-            int PointsToAdd = (int)Math.ceil( 0.20 * victimKillstreak);
-            killer.sendMessage(Messages.PREFIX + "Du hast die §eKillstreak§7 von §e" + victim.getName() + " §7beendet! §7+§c" + PointsToAdd + " Blutpunkte");
-            killerUser.setBloodpoints(killerUser.getBloodpoints() + PointsToAdd);
+            int pointsToAdd = (int)Math.ceil( 0.20 * victimKillstreak);
+            killer.sendMessage(Messages.PREFIX + "Du hast die §eKillstreak§7 von §e" + victim.getName() + " §7beendet! §7+§c" + pointsToAdd + " Blutpunkte");
+            killerUser.setBloodPoints(killerUser.getBloodPoints() + pointsToAdd);
         }
 
         victimUser.setCurrentKillstreak(0);
@@ -42,11 +43,11 @@ public class KillstreakListener implements Listener {
                 killer.sendMessage(Messages.PREFIX + "Du hast eine Killstreak von §e" + killerUser.getCurrentKillstreak() + " §7erreicht! +§a20 Level");
                 killer.setLevel(killer.getLevel() + 20);
             }
-            killer.getServer().broadcastMessage(Messages.PREFIX + "§e" + killer.getName() + " §7hat eine Killstreak von §e" + killerUser.getCurrentKillstreak() + "§7 erreicht!");
+            Bukkit.broadcastMessage(Messages.PREFIX + "§e" + killer.getName() + " §7hat eine Killstreak von §e" + killerUser.getCurrentKillstreak() + "§7 erreicht!");
 
         } else if(killerUser.getCurrentKillstreak() % 20 == 0) {
             killer.sendMessage(Messages.PREFIX + "Du hast eine Killstreak von §e" + killerUser.getCurrentKillstreak() + " §7erreicht! +§c2 Blutpunkte");
-            killerUser.setBloodpoints(killerUser.getBloodpoints() + 2);
+            killerUser.setBloodPoints(killerUser.getBloodPoints() + 2);
         }
     }
 }

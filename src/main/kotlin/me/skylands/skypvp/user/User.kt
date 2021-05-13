@@ -9,7 +9,7 @@ data class User(
     var lastSeen: Long,
     var kills: Int,
     var currentKillstreak: Int,
-    var bloodpoints : Int,
+    var bloodPoints : Int,
     var deaths: Int,
     var votes: Int,
     var playtime: Int,

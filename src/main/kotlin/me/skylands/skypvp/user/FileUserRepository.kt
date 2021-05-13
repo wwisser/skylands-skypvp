@@ -56,7 +56,7 @@ class FileUserRepository : UserRepository {
                 + user.lastSeen + ";"
                 + user.kills + ";"
                 + user.currentKillstreak + ";"
-                + user.bloodpoints + ";"
+                + user.bloodPoints + ";"
                 + user.deaths + ";"
                 + user.votes + ";"
                 + user.playtime + ";"
