@@ -18,7 +18,7 @@ public class CommandKillstreak extends AbstractCommand {
         User user = userService.getUser(player);
 
         player.sendMessage(Messages.PREFIX + "Deine zurzeitige Killstreak: §e" + user.getCurrentKillstreak());
-        player.sendMessage(Messages.PREFIX + "Deine Blutpunkte: §e" + user.getBloodpoints());
+        player.sendMessage(Messages.PREFIX + "Deine Blutpunkte: §e" + user.getBloodPoints());
     }
 
     @NotNull

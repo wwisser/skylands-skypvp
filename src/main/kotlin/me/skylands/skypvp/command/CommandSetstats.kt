@@ -20,7 +20,7 @@ class CommandSetstats : AbstractCommand() {
             "kills" -> user.kills = amount
             "deaths" -> user.deaths = amount
             "killstreak" -> user.currentKillstreak = amount
-            "blutpunkte" -> user.bloodpoints = amount
+            "blutpunkte" -> user.bloodPoints = amount
             else -> throw CommandException("Invalide Metrik: <kills|deaths|killstreak|blutpunkte>")
         }
 
