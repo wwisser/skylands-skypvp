@@ -5,6 +5,8 @@ import me.skylands.skypvp.SkyLands;
 import me.skylands.skypvp.command.exception.CommandException;
 import me.skylands.skypvp.command.exception.InvalidArgsException;
 import me.skylands.skypvp.command.exception.TargetNotFoundException;
+import me.skylands.skypvp.delay.DelayConfig;
+import me.skylands.skypvp.delay.DelayService;
 import me.skylands.skypvp.user.User;
 import me.skylands.skypvp.user.UserService;
 import me.skylands.skypvp.util.TransactionUtils;
@@ -16,6 +18,11 @@ import org.jetbrains.annotations.NotNull;
 public class CommandLevel extends AbstractCommand {
 
     private static final String USAGE = "/level pay <name> <anzahl>";
+
+    private static final DelayConfig LEVEL_PAY_CONFIG = new DelayConfig(
+            "Bitte warte noch %time, um erneut Level zu versenden.",
+            60000
+    );
 
     private UserService userService = SkyLands.userService;
 
@@ -54,39 +61,41 @@ public class CommandLevel extends AbstractCommand {
                 throw e;
             }
         }
-
         final int amount = ValidateCommand.INSTANCE.amount(args[2]);
-        final boolean success = TransactionUtils.INSTANCE.handleTransaction(player, targetUser, Bukkit.getPlayer(targetUser.getName()), amount);
+        User finalTargetUser = targetUser;
+        DelayService.INSTANCE.handleDelay(player, LEVEL_PAY_CONFIG, target -> {
+            final boolean success = TransactionUtils.INSTANCE.handleTransaction(player, finalTargetUser, Bukkit.getPlayer(finalTargetUser.getName()), amount);
 
-        if (success) {
-            player.sendMessage(
-                    Messages.PREFIX
-                            + "Du hast §e"
-                            + targetUser.getName()
-                            + " §a" + amount + " Level §7überwiesen."
-            );
-
-            final Player targetPlayer = Bukkit.getPlayer(targetUser.getName());
-
-            if (targetPlayer != null && targetPlayer.isOnline()) {
-                targetPlayer.sendMessage(
+            if (success) {
+                player.sendMessage(
                         Messages.PREFIX
-                                + "Du hast §a"
-                                + amount
-                                + " Level §7von §e"
-                                + player.getName()
-                                + " §7erhalten!"
+                                + "Du hast §e"
+                                + finalTargetUser.getName()
+                                + " §a" + amount + " Level §7überwiesen."
                 );
+
+                final Player targetPlayer = Bukkit.getPlayer(finalTargetUser.getName());
+
+                if (targetPlayer != null && targetPlayer.isOnline()) {
+                    targetPlayer.sendMessage(
+                            Messages.PREFIX
+                                    + "Du hast §a"
+                                    + amount
+                                    + " Level §7von §e"
+                                    + player.getName()
+                                    + " §7erhalten!"
+                    );
+                }
+            } else {
+                player.sendMessage(
+                        Messages.PREFIX
+                                + "Dir fehlen "
+                                + (amount - player.getLevel())
+                                + " Level, um diese Transaktion durchzuführen."
+                );
+                //  player.sendMessage(Messages.PREFIX + "Jetzt §a§lLevel §7kaufen §8> §e/buy");
             }
-        } else {
-            player.sendMessage(
-                    Messages.PREFIX
-                            + "Dir fehlen "
-                            + (amount - player.getLevel())
-                            + " Level, um diese Transaktion durchzuführen."
-            );
-            //  player.sendMessage(Messages.PREFIX + "Jetzt §a§lLevel §7kaufen §8> §e/buy");
-        }
+        });
     }
 
     @NotNull
