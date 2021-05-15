@@ -18,7 +18,7 @@ public class JumpboostSupplierTask extends BukkitRunnable {
                 continue;
             }
 
-            player.setVelocity(player.getLocation().getDirection().setY(0.3).multiply(2.8));
+            player.setVelocity(player.getLocation().getDirection().setY(0.3).multiply(3.2));
             player.playSound(player.getLocation(), Sound.SLIME_ATTACK, 1, 1);
         }
     }
