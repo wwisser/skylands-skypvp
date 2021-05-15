@@ -8,10 +8,12 @@ import lombok.Getter;
 public enum StatsLabel {
 
     KILLS("Kills", "Kills", 2),
-    DEATHS("Tode", "Tode", 3),
-    VOTES("Votes", "Votes", 4),
-    PLAYTIME("Spielzeit", "Stunden", 5),
-    LEVEL("Level", "Level", 6),
+    KILLSTREAK("Killstreak", "Killstreak", 3),
+    BLOODPOINTS("Blutpunkte", "Blutpunkte", 4),
+    DEATHS("Tode", "Tode", 5),
+    VOTES("Votes", "Votes", 6),
+    PLAYTIME("Spielzeit", "Stunden", 7),
+    LEVEL("Level", "Level", 8),
     ISLAND_LEVEL("IS-Level", "Level", -1);
 
     private String displayName;
