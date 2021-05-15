@@ -8,9 +8,9 @@ object LightArtifactItemFactory {
 
     fun createLightArtifactItem(): ItemStack {
         return ItemBuilder(Material.GHAST_TEAR)
-                .name(ChatColor.WHITE.toString() + "Artifakt des " + ChatColor.YELLOW.toString() + "Lichts")
+                .name(ChatColor.WHITE.toString() + "Artefakt des " + ChatColor.YELLOW.toString() + "Lichts")
                 .modifyLore()
-                .add("§7Ein sagenumwobenes §eLichtartifakt§7!")
+                .add("§7Ein sagenumwobenes §eLichtartefakt§7!")
                 .add("§7Behalte dein Inventar einmalig beim Tod.")
                 .finish()
                 .glow()
