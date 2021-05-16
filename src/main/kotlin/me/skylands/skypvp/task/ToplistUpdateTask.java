@@ -3,8 +3,8 @@ package me.skylands.skypvp.task;
 import me.skylands.skypvp.SkyLands;
 import me.skylands.skypvp.stats.context.ToplistContext;
 import me.skylands.skypvp.stats.label.StatsLabel;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Sign;
 import org.bukkit.block.Skull;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -19,9 +19,9 @@ public class ToplistUpdateTask extends BukkitRunnable {
     private static final int TOP_LIST_SIZE = 10;
     private static ConcurrentHashMap<StatsLabel, LinkedHashMap<String, ? super Number>> topLists = new ConcurrentHashMap<>();
 
-    private static final int POSITION_X_START = 45;
+    private static final int POSITION_X_START = 49;
     private static final int HEAD_AMOUNT = 5;
-    private static final Location LABEL_LOCATION = new Location(SkyLands.WORLD_SKYPVP, 47, 125, 134);
+    private static final Location LABEL_LOCATION = new Location(SkyLands.WORLD_SKYPVP, 47, 120, 142);
 
     private final ToplistContext[] toplistContexts;
     private int currentIndex = 0;
@@ -41,14 +41,13 @@ public class ToplistUpdateTask extends BukkitRunnable {
         labelSign.update();
 
         LinkedHashMap<String, ? super Number> topList = this.sort(toplistContext.getData());
-        Location currentHead = new Location(SkyLands.WORLD_SKYPVP, POSITION_X_START, 124, 134);
-        int count = 0;
+        Location currentHead = new Location(SkyLands.WORLD_SKYPVP, POSITION_X_START, 119, 142);
 
         topLists.put(statsLabel, topList);
         Iterator<? extends Map.Entry<String, ? super Number>> iterator = topList.entrySet().iterator();
         Map.Entry<String, ? super Number> entry = iterator.next();
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < HEAD_AMOUNT; i++) {
 
             Skull skull = (Skull) currentHead.getBlock().getState();
 
@@ -59,14 +58,13 @@ public class ToplistUpdateTask extends BukkitRunnable {
 
             Sign sign = (Sign) lowerLoc.getBlock().getState();
 
-            sign.setLine(0, "§l#" + (count + 1));
+            sign.setLine(0, "§l#" + (i + 1));
             sign.setLine(1, entry.getKey());
             sign.setLine(2, String.valueOf(entry.getValue()));
             sign.setLine(3, statsLabel.getAdditive());
             sign.update();
 
-            currentHead.add(1, 0, 0);
-            count++;
+            currentHead.add(-1, 0, 0);
             entry = iterator.next();
         }
 
