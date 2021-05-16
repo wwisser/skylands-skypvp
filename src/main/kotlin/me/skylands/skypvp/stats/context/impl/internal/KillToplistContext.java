@@ -1,5 +1,6 @@
 package me.skylands.skypvp.stats.context.impl.internal;
 
+import lombok.AllArgsConstructor;
 import me.skylands.skypvp.stats.context.ToplistContext;
 import me.skylands.skypvp.stats.label.StatsLabel;
 import me.skylands.skypvp.user.UserService;
@@ -12,9 +13,7 @@ public class KillToplistContext implements ToplistContext {
 
     private UserService service;
 
-    public KillToplistContext(UserService service) {
-        this.service = service;
-    }
+    public KillToplistContext(UserService service) { this.service = service; }
 
     @Override
     public StatsLabel getLabel() {
