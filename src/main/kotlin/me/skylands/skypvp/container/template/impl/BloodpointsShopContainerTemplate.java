@@ -22,7 +22,7 @@ public class BloodpointsShopContainerTemplate extends ContainerTemplate {
         super(containerManager);
         this.shopContainerTemplate = shopContainerTemplate;
 
-        ItemStack LightArtifactPreview = new ItemBuilder(Material.GHAST_TEAR).name("§fArtifakt des §eLichts").glow().modifyLore().add("§7Ein sagenumwobenes §eLichtartifakt§7!").add("§7Behalte dein Inventar einmalig beim Tod.").add(" ").add("§7Preis: §c50 Blutpunkte").finish().build();
+        ItemStack LightArtifactPreview = new ItemBuilder(Material.GHAST_TEAR).name("§fArtefakt des §eLichts").glow().modifyLore().add("§7Ein sagenumwobenes §eLichtartefakt§7!").add("§7Behalte dein Inventar einmalig beim Tod.").add(" ").add("§7Preis: §c50 Blutpunkte").finish().build();
         ItemStack LightArtifact = LightArtifactItemFactory.INSTANCE.createLightArtifactItem();
         ItemStack BeaconPreview = new ItemBuilder(Material.BEACON).name("§bLeuchtfeuer").modifyLore().add("§7Füge deiner Insel §bEffekte§7 hinzu.").add(" ").add("§7Preis: §c30 Blutpunkte").finish().build();
         ItemStack Beacon = new ItemBuilder(Material.BEACON).build();
