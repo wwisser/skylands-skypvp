@@ -3,6 +3,7 @@ package me.skylands.skypvp.listener
 import me.skylands.skypvp.Messages
 import me.skylands.skypvp.SkyLands
 import me.skylands.skypvp.combat.CombatService
+import me.skylands.skypvp.item.LightArtifactItemFactory
 import me.skylands.skypvp.stats.LastHitCache
 import me.skylands.skypvp.user.User
 import me.skylands.skypvp.user.UserService
@@ -49,35 +50,50 @@ class PlayerDeathListener : Listener {
         if (killer != null && killer !== victim) {
             val killerUser: User = userService.getUser(killer)
             killerUser.kills = killerUser.kills + 1
-            killer.sendMessage(Messages.PREFIX + "Du hast §e" + victim.name + " §7getötet! +§a3 Level")
+            if (killerUser.currentKillstreak < 50) {
+                killer.level = killer.level + 3
+                killer.sendMessage(Messages.PREFIX + "Du hast §e" + victim.name + " §7getötet! +§a3 Level")
+            } else {
+                killer.level = killer.level + 6
+                killer.sendMessage(Messages.PREFIX + "Du hast §e" + victim.name + " §7getötet! +§a6 Level")
+            }
             killer.playSound(killer.location, Sound.SUCCESSFUL_HIT, 100f, 100f)
             killer.addPotionEffect(PotionEffect(PotionEffectType.REGENERATION, 10, 5))
-            killer.level = killer.level + 3
             victim.sendMessage(
-                Messages.PREFIX + "Du wurdest von §e"
-                        + killer.name
-                        + " §7mit §c"
-                        + formatHealth(killer.health)
-                        + " ❤ §7getötet."
+                    Messages.PREFIX + "Du wurdest von §e"
+                            + killer.name
+                            + " §7mit §c"
+                            + formatHealth(killer.health)
+                            + " ❤ §7getötet."
             )
         }
         LastHitCache.lastHits.remove(victim)
+
+        val LightArtifact: ItemStack = LightArtifactItemFactory.createLightArtifactItem()
+
+        if (victim.inventory.contains(LightArtifact)) {
+            event.keepInventory = true;
+            victim.inventory.remove(LightArtifact);
+
+            victim.sendMessage(Messages.PREFIX + "Dein §eLichtartifakt§7 hat dein Inventar geschützt!")
+        }
 
 
         val drops: MutableList<ItemStack> = ArrayList(event.drops)
 
         event.drops
-            .stream()
-            .filter { itemStack: ItemStack ->
-                (itemStack.hasItemMeta()
-                        && itemStack.itemMeta.hasDisplayName()
-                        && !itemStack.itemMeta.hasEnchants()
-                        && itemStack.itemMeta.displayName == PlayerRespawnListener.AUTO_KIT_NAME)
-            }
-            .forEach { o: ItemStack -> drops.remove(o) }
+                .stream()
+                .filter { itemStack: ItemStack ->
+                    (itemStack.hasItemMeta()
+                            && itemStack.itemMeta.hasDisplayName()
+                            && !itemStack.itemMeta.hasEnchants()
+                            && itemStack.itemMeta.displayName == PlayerRespawnListener.AUTO_KIT_NAME)
+                }
+                .forEach { o: ItemStack -> drops.remove(o) }
 
         event.drops.clear()
         event.drops.addAll(drops)
+
     }
 
     private fun formatHealth(health: Double): String {

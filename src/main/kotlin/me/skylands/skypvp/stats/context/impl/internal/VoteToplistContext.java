@@ -7,12 +7,13 @@ import me.skylands.skypvp.user.UserRepository;
 
 import java.util.Map;
 
-@AllArgsConstructor
 public class VoteToplistContext implements ToplistContext {
 
     private static final StatsLabel STATS_LABEL = StatsLabel.VOTES;
 
     private UserRepository userRepository;
+
+    public VoteToplistContext(UserRepository userRepository) { this.userRepository = userRepository; }
 
     @Override
     public StatsLabel getLabel() {

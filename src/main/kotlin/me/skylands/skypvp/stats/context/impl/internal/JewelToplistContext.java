@@ -7,7 +7,6 @@ import me.skylands.skypvp.user.UserRepository;
 
 import java.util.Map;
 
-@AllArgsConstructor
 public class JewelToplistContext implements ToplistContext {
 
     private static final StatsLabel STATS_LABEL = StatsLabel.LEVEL;
@@ -18,6 +17,8 @@ public class JewelToplistContext implements ToplistContext {
     public StatsLabel getLabel() {
         return STATS_LABEL;
     }
+
+    public JewelToplistContext(UserRepository userRepository) { this.userRepository = userRepository; }
 
     @Override
     public Map<String, ? super Number> getData() {

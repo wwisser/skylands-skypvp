@@ -37,21 +37,32 @@ public class ShopContainerTemplate extends ContainerTemplate {
                 this
         );
 
+        final BloodpointsShopContainerTemplate bloodpointsTemplate = new BloodpointsShopContainerTemplate(
+                super.containerService,
+                this
+        );
+
         builder.addAction(
-            11,
+            10,
             new ItemBuilder(Material.BOOK).name("§9§lRechte").build(),
             permissionShopTemplate::openContainer
         );
         builder.addAction(
-            13,
+            12,
             new ItemBuilder(Material.EMERALD).name("§a§lRänge").build(),
             rankShopTemplate::openContainer
         );
 
         builder.addAction(
-                15,
+                14,
                 new ItemBuilder(Material.GOLDEN_APPLE).name("§e§lItems").build(),
                 itemShopContainerTemplate::openContainer
+        );
+
+        builder.addAction(
+                16,
+                new ItemBuilder(Material.IRON_SWORD).name("§c§lBlutpunkte").build(),
+                bloodpointsTemplate::openContainer
         );
 
         final Container builtContainer = builder.build();

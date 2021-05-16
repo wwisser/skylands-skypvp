@@ -40,3 +40,5 @@ commands:
     aliases: [bewerben]
   help:
     aliases: [hilfe, ?]
+  killstreak:
+    aliases: [ks]

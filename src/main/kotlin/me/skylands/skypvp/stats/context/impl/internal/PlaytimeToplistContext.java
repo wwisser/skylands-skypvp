@@ -8,12 +8,13 @@ import me.skylands.skypvp.user.UserRepository;
 import java.util.HashMap;
 import java.util.Map;
 
-@AllArgsConstructor
 public class PlaytimeToplistContext implements ToplistContext {
 
     private static final StatsLabel STATS_LABEL = StatsLabel.PLAYTIME;
 
     private UserRepository userRepository;
+
+    public PlaytimeToplistContext(UserRepository userRepository) { this.userRepository = userRepository; }
 
     @Override
     public StatsLabel getLabel() {
