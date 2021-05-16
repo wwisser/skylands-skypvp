@@ -7,7 +7,7 @@ import me.skylands.skypvp.config.MotdConfig
 import me.skylands.skypvp.config.PeaceConfig
 import me.skylands.skypvp.container.ContainerManager
 import me.skylands.skypvp.ipmatching.IpMatchingService
-import me.skylands.skypvp.stats.context.impl.internal.KillToplistContext
+import me.skylands.skypvp.stats.context.impl.internal.*
 import me.skylands.skypvp.task.*
 import me.skylands.skypvp.user.UserService
 import net.milkbowl.vault.chat.Chat
@@ -81,7 +81,12 @@ class SkyLands : JavaPlugin() {
             super.getServer().scheduler.runTaskTimer(this, JumpboostSupplierTask(), 0L, 3L)
             super.getServer().scheduler.runTaskTimerAsynchronously(
                 this,
-                ToplistUpdateTask(arrayOf(KillToplistContext(userService))),
+                ToplistUpdateTask(arrayOf(
+                    KillToplistContext(userService),
+                    JewelToplistContext(userService.userRepository),
+                    DeathToplistContext(userService.userRepository),
+                    PlaytimeToplistContext(userService.userRepository),
+                    VoteToplistContext(userService.userRepository))),
                 0L,
                 20L * 60 * 5
             ) // 5m
@@ -93,12 +98,12 @@ class SkyLands : JavaPlugin() {
                 20L * 30
             )
 
-            super.getServer().scheduler.runTaskTimer(
+/*            super.getServer().scheduler.runTaskTimer(
                 this,
                 { ScoreboardUpdateTask.setShowTopList(!ScoreboardUpdateTask.isShowTopList()) },
                 20L * 60,
                 20L * 60 * 2
-            ) // 2m
+            ) // 2m*/
             super.getServer().scheduler.runTaskTimer(
                 this,
                 ScoreboardUpdateTask(),
