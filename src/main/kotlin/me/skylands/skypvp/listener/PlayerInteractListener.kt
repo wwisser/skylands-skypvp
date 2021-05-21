@@ -1,6 +1,5 @@
 package me.skylands.skypvp.listener
 
-import com.google.common.collect.ImmutableList
 import me.skylands.skypvp.Messages
 import me.skylands.skypvp.SkyLands
 import me.skylands.skypvp.delay.DelayConfig
@@ -43,7 +42,7 @@ class PlayerInteractListener : Listener {
     }
 
     private val inAnimation: MutableList<Player> = ArrayList()
-    val VOTE_WINNINGS = ImmutableList.of(
+    val VOTE_WINNINGS = listOf(
         ItemStack(Material.WOOD, 64),
         ItemStack(Material.BREWING_STAND_ITEM, 1),
         ItemStack(Material.POTION, 8),
