@@ -2,6 +2,7 @@ package me.skylands.skypvp.listener
 
 import com.vexsoftware.votifier.model.VotifierEvent
 import me.skylands.skypvp.Messages
+import me.skylands.skypvp.SkyLands
 import me.skylands.skypvp.item.ItemBuilder
 import org.bukkit.Bukkit
 import org.bukkit.Material
@@ -49,8 +50,7 @@ class VotifierListener : Listener {
         player.level += 35
         player.playSound(player.location, Sound.LEVEL_UP, Float.MAX_VALUE, Float.MAX_VALUE)
         voteTimeStamps[player.uniqueId] = System.currentTimeMillis() + 1000L * 60 * 60 * 6
+        SkyLands.userService.getUser(player).votes++
     }
-
-
 
 }
