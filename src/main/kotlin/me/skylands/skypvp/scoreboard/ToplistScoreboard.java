@@ -8,8 +8,8 @@ import java.util.Map;
 public class ToplistScoreboard extends DynamicScoreboard {
 
     public ToplistScoreboard() {
-        super("§6§lEpische Kämpfer");
-        for (Map.Entry<String, ? super Number> entry : ToplistUpdateTask.getTopListByLabel(StatsLabel.KILLS).entrySet()) {
+        super("§6§lTop Inseln");
+        for (Map.Entry<String, ? super Number> entry : ToplistUpdateTask.getTopListByLabel(StatsLabel.ISLAND_LEVEL).entrySet()) {
             if (entry.getKey().isEmpty()) {
                 continue;
             }

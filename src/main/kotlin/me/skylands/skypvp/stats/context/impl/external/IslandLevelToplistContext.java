@@ -9,13 +9,16 @@ import me.skylands.skypvp.user.UserRepository;
 import java.util.HashMap;
 import java.util.Map;
 
-@AllArgsConstructor
 public class IslandLevelToplistContext implements ToplistContext {
 
     private static final StatsLabel STATS_LABEL = StatsLabel.ISLAND_LEVEL;
 
     private UserRepository userRepository;
     private ASkyBlockAPI aSkyBlockApi;
+
+    public IslandLevelToplistContext(UserRepository userRepository, ASkyBlockAPI aSkyBlockApi) {
+        this.userRepository = userRepository; this.aSkyBlockApi = aSkyBlockApi;
+    }
 
     @Override
     public StatsLabel getLabel() {
