@@ -41,8 +41,7 @@ public class ToplistUpdateTask extends BukkitRunnable {
         labelSign.update();
 
         if(!toplistContext.getLabel().getDisplayName().equals("IS-Level")) {
-            LinkedHashMap<String, ? super Number> ISLevel = this.sort(toplistContexts[0].getData());
-            topLists.put(StatsLabel.ISLAND_LEVEL, ISLevel);
+            topLists.put(StatsLabel.ISLAND_LEVEL, this.sort(toplistContexts[0].getData()));
         }
 
         LinkedHashMap<String, ? super Number> topList = this.sort(toplistContext.getData());
