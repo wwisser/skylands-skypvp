@@ -11,7 +11,9 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class VaultEconomy implements Economy {
+public class LevelEconomy implements Economy {
+
+    private static final EconomyResponse notImplemented = new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "Not implemented.");
 
     @Override
     public boolean isEnabled() {
@@ -211,57 +213,57 @@ public class VaultEconomy implements Economy {
 
     @Override
     public EconomyResponse createBank(String s, String s1) {
-        return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "Not implemented.");
+        return notImplemented;
     }
 
     @Override
     public EconomyResponse createBank(String s, OfflinePlayer offlinePlayer) {
-        return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "Not implemented.");
+        return notImplemented;
     }
 
     @Override
     public EconomyResponse deleteBank(String s) {
-        return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "Not implemented.");
+        return notImplemented;
     }
 
     @Override
     public EconomyResponse bankBalance(String s) {
-        return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "Not implemented.");
+        return notImplemented;
     }
 
     @Override
     public EconomyResponse bankHas(String s, double v) {
-        return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "Not implemented.");
+        return notImplemented;
     }
 
     @Override
     public EconomyResponse bankWithdraw(String s, double v) {
-        return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "Not implemented.");
+        return notImplemented;
     }
 
     @Override
     public EconomyResponse bankDeposit(String s, double v) {
-        return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "Not implemented.");
+        return notImplemented;
     }
 
     @Override
     public EconomyResponse isBankOwner(String s, String s1) {
-        return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "Not implemented.");
+        return notImplemented;
     }
 
     @Override
     public EconomyResponse isBankOwner(String s, OfflinePlayer offlinePlayer) {
-        return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "Not implemented.");
+        return notImplemented;
     }
 
     @Override
     public EconomyResponse isBankMember(String s, String s1) {
-        return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "Not implemented.");
+        return notImplemented;
     }
 
     @Override
     public EconomyResponse isBankMember(String s, OfflinePlayer offlinePlayer) {
-        return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "Not implemented.");
+        return notImplemented;
     }
 
     @Override
