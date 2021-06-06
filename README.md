@@ -8,3 +8,9 @@
 - Killstreaks
 - Bloodpoints
 - Toplist-Rotation
+
+## Release v0.3
+- Chestshops
+- Islands
+  - Top Toplist/Scoreboard
+  - IS-Warps NPC  

@@ -27,6 +27,9 @@ class PlayerInteractEntityListener : Listener {
             if (entityType == EntityType.VILLAGER) {
                 InventoryTrade.open(player)
             }
+            if(entityType == EntityType.COW) {
+                player.performCommand("is warps")
+            }
 
         }
     }

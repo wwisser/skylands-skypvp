@@ -16,11 +16,16 @@ public class KillstreakListener implements Listener {
     public void onDeath(PlayerDeathEvent event) {
         UserService userService = SkyLands.userService;
         Player victim = event.getEntity();
-        Player killer = victim.getKiller();
-        User killerUser = userService.getUser(killer);
         User victimUser = userService.getUser(victim);
-        int victimKillstreak = victimUser.getCurrentKillstreak();
+        Player killer = victim.getKiller();
 
+        if(killer == null) {
+            victimUser.setCurrentKillstreak(0);
+            return;
+        }
+
+        User killerUser = userService.getUser(killer);
+        int victimKillstreak = victimUser.getCurrentKillstreak();
 
         if(victimKillstreak > 10 && victimKillstreak < 30) {
             int levelToAdd = (int)Math.ceil( 0.40 * victimKillstreak);

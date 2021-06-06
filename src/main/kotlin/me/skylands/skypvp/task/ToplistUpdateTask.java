@@ -40,6 +40,10 @@ public class ToplistUpdateTask extends BukkitRunnable {
         labelSign.setLine(2, "§l" + statsLabel.getDisplayName());
         labelSign.update();
 
+        if(!toplistContext.getLabel().getDisplayName().equals("IS-Level")) {
+            topLists.put(StatsLabel.ISLAND_LEVEL, this.sort(toplistContexts[0].getData()));
+        }
+
         LinkedHashMap<String, ? super Number> topList = this.sort(toplistContext.getData());
         Location currentHead = new Location(SkyLands.WORLD_SKYPVP, POSITION_X_START, 119, 142);
 
@@ -67,7 +71,6 @@ public class ToplistUpdateTask extends BukkitRunnable {
             currentHead.add(-1, 0, 0);
             entry = iterator.next();
         }
-
         if (this.currentIndex >= (this.toplistContexts.length - 1)) {
             this.currentIndex = 0;
         } else {
