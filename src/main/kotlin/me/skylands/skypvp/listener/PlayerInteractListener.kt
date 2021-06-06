@@ -165,6 +165,8 @@ class PlayerInteractListener : Listener {
                     player.spigot().sendMessage(base)
                     player.sendMessage(Messages.PREFIX_LONG)
                 }
+            } else if(player.itemInHand.type.equals(Material.ENDER_PEARL) && player.eyeLocation.block.type.isOccluding) {
+                event.isCancelled = true
             }
         }
     }
