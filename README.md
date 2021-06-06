@@ -10,7 +10,7 @@
 - Toplist-Rotation
 
 ## Release v0.3
-- Chestshops
 - Islands
-  - Top Toplist/Scoreboard
-  - IS-Warps NPC  
+  - Toplist/Scoreboard
+  - Warps NPC  
+  - Chestshops
