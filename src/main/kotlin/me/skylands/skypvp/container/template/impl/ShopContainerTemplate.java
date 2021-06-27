@@ -14,7 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class ShopContainerTemplate extends ContainerTemplate {
 
-    public static final ItemStack ITEM_BACK = new ItemBuilder(Material.BARRIER)
+    static final ItemStack ITEM_BACK = new ItemBuilder(Material.BARRIER)
         .name("§cZurück zur Shopübersicht")
         .build();
 
@@ -50,25 +50,36 @@ public class ShopContainerTemplate extends ContainerTemplate {
         itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         bloodPoints.setItemMeta(itemMeta);
 
+        final BlockShopContainerTemplate blockShopContainerTemplate = new BlockShopContainerTemplate(
+                super.containerService,
+                this
+        );
+
         builder.addAction(
-            10,
+            9,
             new ItemBuilder(Material.BOOK).name("§9§lRechte").build(),
             permissionShopTemplate::openContainer
         );
         builder.addAction(
-            12,
+            11,
             new ItemBuilder(Material.EMERALD).name("§a§lRänge").build(),
             rankShopTemplate::openContainer
         );
 
         builder.addAction(
-                14,
+                13,
                 new ItemBuilder(Material.GOLDEN_APPLE).name("§e§lItems").build(),
                 itemShopContainerTemplate::openContainer
         );
 
         builder.addAction(
-                16,
+                15,
+                new ItemBuilder(Material.GRASS).name("§b§lBlöcke").build(),
+                blockShopContainerTemplate::openContainer
+        );
+
+        builder.addAction(
+                17,
                 bloodPoints,
                 bloodpointsTemplate::openContainer
         );
@@ -80,7 +91,7 @@ public class ShopContainerTemplate extends ContainerTemplate {
     }
 
     @Override
-    public void openContainer(Player player) {
+    protected void openContainer(Player player) {
         player.openInventory(this.container.getInventory());
     }
 
