@@ -21,6 +21,7 @@ class CommandSetstats : AbstractCommand() {
             "deaths" -> user.deaths = amount
             "killstreak" -> user.currentKillstreak = amount
             "blutpunkte" -> user.bloodPoints = amount
+            "blocke" -> user.blocksPlaced = amount
             else -> throw CommandException("Invalide Metrik: <kills|deaths|killstreak|blutpunkte>")
         }
 

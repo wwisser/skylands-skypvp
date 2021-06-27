@@ -1,7 +1,6 @@
 package me.skylands.skypvp.stats.context.impl.external;
 
 import com.wasteofplastic.askyblock.ASkyBlockAPI;
-import lombok.AllArgsConstructor;
 import me.skylands.skypvp.stats.context.ToplistContext;
 import me.skylands.skypvp.stats.label.StatsLabel;
 import me.skylands.skypvp.user.UserRepository;

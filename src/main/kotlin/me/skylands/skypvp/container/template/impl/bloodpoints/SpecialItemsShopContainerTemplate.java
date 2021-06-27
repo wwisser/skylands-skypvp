@@ -1,10 +1,11 @@
-package me.skylands.skypvp.container.template.impl;
+package me.skylands.skypvp.container.template.impl.bloodpoints;
 
 import me.skylands.skypvp.container.Container;
 import me.skylands.skypvp.container.ContainerManager;
 import me.skylands.skypvp.container.ContainerStorageLevel;
 import me.skylands.skypvp.container.action.impl.BPPurchaseContainerAction;
 import me.skylands.skypvp.container.template.ContainerTemplate;
+import me.skylands.skypvp.container.template.impl.ShopContainerTemplate;
 import me.skylands.skypvp.item.ItemBuilder;
 import me.skylands.skypvp.item.LightArtifactItemFactory;
 import me.skylands.skypvp.util.ItemUtils;
@@ -13,12 +14,12 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class BloodpointsShopContainerTemplate extends ContainerTemplate {
+public class SpecialItemsShopContainerTemplate extends ContainerTemplate {
 
     private final Container container;
     private final ShopContainerTemplate shopContainerTemplate;
 
-    BloodpointsShopContainerTemplate(ContainerManager containerManager, final ShopContainerTemplate shopContainerTemplate) {
+    public SpecialItemsShopContainerTemplate(ContainerManager containerManager, final ShopContainerTemplate shopContainerTemplate) {
         super(containerManager);
         this.shopContainerTemplate = shopContainerTemplate;
 
@@ -31,7 +32,7 @@ public class BloodpointsShopContainerTemplate extends ContainerTemplate {
         ItemStack NetherStarPreview = new ItemBuilder(Material.NETHER_STAR).name("§cNetherstern").modifyLore().add("§7Sähe ein §cNetherstern§7 auf deiner Insel nicht toll aus?").add(" ").add("§7Preis: §c100 Blutpunkte").finish().build();
         ItemStack NetherStar = new ItemBuilder(Material.NETHER_STAR).build();
 
-        final Container.ContainerBuilder builder = new Container.ContainerBuilder("§0§lShop §0> §0§lBlutpunkte")
+        final Container.ContainerBuilder builder = new Container.ContainerBuilder("§0§lBesondere Items")
                 .setStorageLevel(ContainerStorageLevel.NEW)
                 .addAction(26, ShopContainerTemplate.ITEM_BACK, shopContainerTemplate::openContainer);
 
@@ -63,7 +64,7 @@ public class BloodpointsShopContainerTemplate extends ContainerTemplate {
     }
 
     @Override
-    protected void openContainer(Player player) {
+    public void openContainer(Player player) {
         player.openInventory(this.container.getInventory());
     }
 }

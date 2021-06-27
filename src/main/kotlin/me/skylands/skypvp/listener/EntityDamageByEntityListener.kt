@@ -1,12 +1,14 @@
 package me.skylands.skypvp.listener
 
+import me.skylands.skypvp.Messages
 import me.skylands.skypvp.SkyLands
 import me.skylands.skypvp.combat.CombatService
 import me.skylands.skypvp.config.PeaceConfig
 import me.skylands.skypvp.nms.ActionBar
 import me.skylands.skypvp.stats.LastHitCache
-import org.bukkit.entity.Player
-import org.bukkit.entity.Projectile
+import me.skylands.skypvp.user.UserService
+import org.bukkit.Bukkit
+import org.bukkit.entity.*
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
@@ -15,31 +17,99 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent
 class EntityDamageByEntityListener : Listener {
 
     private val peaceConfig: PeaceConfig = SkyLands.peaceConfig
+    private val userService: UserService = SkyLands.userService
 
     @EventHandler
     fun onEntityDamageByEntity(event: EntityDamageByEntityEvent) {
-        if (event.entity.world == SkyLands.WORLD_SKYPVP) {
-            if (event.entity !is Player) {
-                return
-            }
+        if (event.entity.world == SkyLands.WORLD_SKYPVP || event.entity.world == SkyLands.WORLD_SKYBLOCK) {
             val damager = event.damager
-            val victim = event.entity as Player
-            if (damager is Player &&
-                peaceConfig.hasPeace(victim.uniqueId.toString(), damager.getUniqueId().toString())
-            ) {
-                event.isCancelled = true
-                ActionBar.send("§cDu hast mit " + victim.name + " Frieden geschlossen.", damager)
-            }
-            if (damager !is Projectile) {
-                return
-            }
-            if (damager.shooter is Player) {
-                val shooter = damager.shooter as Player
-                if (shooter !== victim &&
-                    peaceConfig.hasPeace(victim.uniqueId.toString(), shooter.uniqueId.toString())
-                ) {
-                    event.isCancelled = true
-                    ActionBar.send("§cDu hast mit " + victim.name + " Frieden geschlossen.", shooter)
+            val user = if (damager is Player) userService.getUser(damager) else null
+            val entity = event.entity
+
+            if (event.entity !is Player) {
+                if (damager is Player) {
+                    when (user?.increasedMobDamageLevel) {
+                        1 -> event.damage = event.damage + (event.damage * 0.1)
+                        2 -> event.damage = event.damage + (event.damage * 0.2)
+                        3 -> event.damage = event.damage + (event.damage * 0.3)
+                    }
+
+                    if (entity is LivingEntity) {
+                        if (event.finalDamage >= entity.health) {
+                            if (entity.type == EntityType.SPIDER) {
+                                user?.spidersKilled = user?.spidersKilled!! + 1
+
+                                when (user.spidersKilled) {
+
+                                    10 -> {
+                                        damager.sendMessage(Messages.PREFIX + "§aGlückwunsch§7! Du hast die Challenge '§eSpinnenphobie I§7' erfolgreich abgeschlossen und §c5 Blutpunkte§7 erhalten.")
+                                        user.bloodPoints = user.bloodPoints + 5
+                                    }
+
+                                    30 -> {
+                                        damager.sendMessage(Messages.PREFIX + "§aGlückwunsch§7! Du hast die Challenge '§eSpinnenphobie II§7' erfolgreich abgeschlossen und §c10 Blutpunkte§7 erhalten.")
+                                        user.bloodPoints = user.bloodPoints + 10
+                                    }
+
+                                    50 -> {
+                                        damager.sendMessage(Messages.PREFIX + "§aGlückwunsch§7! Du hast die Challenge '§eSpinnenphobie III§7' erfolgreich abgeschlossen und §c20 Blutpunkte§7 erhalten.")
+                                        user.bloodPoints = user.bloodPoints + 20
+                                    }
+
+                                }
+                            } else if (entity is Monster) {
+                                user?.mobsKilled = user?.mobsKilled!! + 1
+
+                                when (user.mobsKilled) {
+
+                                    50 -> {
+                                        damager.sendMessage(Messages.PREFIX + "§aGlückwunsch§7! Du hast die Challenge '§eMonsterjagd I§7' erfolgreich abgeschlossen und §c10 Blutpunkte§7 erhalten.")
+                                        user.bloodPoints = user.bloodPoints + 5
+                                    }
+
+                                    100 -> {
+                                        damager.sendMessage(Messages.PREFIX + "§aGlückwunsch§7! Du hast die Challenge '§eMonsterjagd II§7' erfolgreich abgeschlossen und §c30 Blutpunkte§7 erhalten.")
+                                        user.bloodPoints = user.bloodPoints + 10
+                                    }
+
+                                    500 -> {
+                                        damager.sendMessage(Messages.PREFIX + "§aGlückwunsch§7! Du hast die Challenge '§eMonsterjagd III§7' erfolgreich abgeschlossen und §c100 Blutpunkte§7 erhalten.")
+                                        user.bloodPoints = user.bloodPoints + 100
+                                    }
+
+                                }
+                            }
+                        }
+                        return
+                    }
+
+                    val victim = event.entity as Player
+                    val vUser = userService.getUser(victim)
+
+                    when (vUser.damageReductionLevel) {
+                        1 -> event.damage = event.damage - (event.damage * 0.03)
+                        2 -> event.damage = event.damage - (event.damage * 0.06)
+                        3 -> event.damage = event.damage - (event.damage * 0.1)
+                    }
+
+                    if (damager is Player &&
+                            peaceConfig.hasPeace(victim.uniqueId.toString(), damager.getUniqueId().toString())
+                    ) {
+                        event.isCancelled = true
+                        ActionBar.send("§cDu hast mit " + victim.name + " Frieden geschlossen.", damager)
+                    }
+                    if (damager !is Projectile) {
+                        return
+                    }
+                    if (damager.shooter is Player) {
+                        val shooter = damager.shooter as Player
+                        if (shooter !== victim &&
+                                peaceConfig.hasPeace(victim.uniqueId.toString(), shooter.uniqueId.toString())
+                        ) {
+                            event.isCancelled = true
+                            ActionBar.send("§cDu hast mit " + victim.name + " Frieden geschlossen.", shooter)
+                        }
+                    }
                 }
             }
         }
@@ -95,5 +165,4 @@ class EntityDamageByEntityListener : Listener {
             CombatService.setFighting(victim)
         }
     }
-
 }
