@@ -91,7 +91,6 @@ class PlayerCommandPreprocessListener : Listener {
         }
 
         if(rawCommand == "spawn") {
-            Bukkit.getLogger().info("spawn command prepocess called")
             if(player.hasPotionEffect(PotionEffectType.SPEED)) player.removePotionEffect(PotionEffectType.SPEED)
             if(player.hasPotionEffect(PotionEffectType.FAST_DIGGING)) player.removePotionEffect(PotionEffectType.FAST_DIGGING)
             if(player.hasPotionEffect(PotionEffectType.WATER_BREATHING)) player.removePotionEffect(PotionEffectType.WATER_BREATHING)
