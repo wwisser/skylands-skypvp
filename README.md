@@ -14,3 +14,9 @@
   - Toplist/Scoreboard
   - Warps NPC  
   - Chestshops
+
+## Release v0.4
+- Island update v2
+  - Blockshop
+  - Upgrades and Island Challenges 
+  - Challenges
