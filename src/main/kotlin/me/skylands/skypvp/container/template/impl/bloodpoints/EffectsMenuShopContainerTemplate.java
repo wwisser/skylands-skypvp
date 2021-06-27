@@ -34,7 +34,7 @@ public class EffectsMenuShopContainerTemplate extends ContainerTemplate {
         String speedDesc = player.hasPotionEffect(PotionEffectType.SPEED) ? "§aKlicke zum Deaktivieren" : "§cNicht aktiviert";
         ItemStack Speed = new ItemBuilder(Material.CHAINMAIL_HELMET).name("§eGeschwindigkeitseffekt").modifyLore().add(" ").add(speedDesc).finish().build();
 
-        String hasteDesc = player.hasPotionEffect(PotionEffectType.FAST_DIGGING) ? "§aKlicke zum Deaktivieren" : "§cNicht aktivoert";
+        String hasteDesc = player.hasPotionEffect(PotionEffectType.FAST_DIGGING) ? "§aKlicke zum Deaktivieren" : "§cNicht aktiviert";
         ItemStack Haste = new ItemBuilder(Material.GOLD_PICKAXE).name("§eEile-Effekt").modifyLore().add(" ").add(hasteDesc).finish().build();
 
         String waterBreathingDesc = player.hasPotionEffect(PotionEffectType.WATER_BREATHING) ? "§aKlicke zum Deaktivieren" : "§cNicht aktiviert";
