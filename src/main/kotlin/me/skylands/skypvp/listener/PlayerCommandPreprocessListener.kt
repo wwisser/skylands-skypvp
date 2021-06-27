@@ -96,7 +96,7 @@ class PlayerCommandPreprocessListener : Listener {
             if(player.hasPotionEffect(PotionEffectType.WATER_BREATHING)) player.removePotionEffect(PotionEffectType.WATER_BREATHING)
         }
 
-        if(rawCommand == "challenge" || rawCommand == "challenges" || rawCommand == "askyblock:challenge" || rawCommand == "askyblock:challenges") {
+        if(rawCommand == "challenge" || rawCommand == "challenges" || rawCommand == "askyblock:challenge" || rawCommand == "askyblock:challenges" || rawCommand == "c") {
             challengesShopContainerTemplate.openContainer(player)
             event.isCancelled = true
         }
