@@ -100,8 +100,6 @@ class PlayerCommandPreprocessListener : Listener {
                 player.performCommand(message.replace("@a".toRegex(), targetPlayer.name).substring(1))
             }
         }
-<<<<<<< HEAD
-=======
 
         if(rawCommand == "spawn") {
             if(player.hasPotionEffect(PotionEffectType.SPEED)) player.removePotionEffect(PotionEffectType.SPEED)
@@ -113,7 +111,6 @@ class PlayerCommandPreprocessListener : Listener {
             challengesShopContainerTemplate.openContainer(player)
             event.isCancelled = true
         }
->>>>>>> d710c8944e10f1636883a24350ab7f1cb5652e43
     }
 
     private fun emitMessage(
