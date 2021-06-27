@@ -14,7 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class ShopContainerTemplate extends ContainerTemplate {
 
-    static final ItemStack ITEM_BACK = new ItemBuilder(Material.BARRIER)
+    public static final ItemStack ITEM_BACK = new ItemBuilder(Material.BARRIER)
         .name("§cZurück zur Shopübersicht")
         .build();
 
@@ -91,7 +91,7 @@ public class ShopContainerTemplate extends ContainerTemplate {
     }
 
     @Override
-    protected void openContainer(Player player) {
+    public void openContainer(Player player) {
         player.openInventory(this.container.getInventory());
     }
 

@@ -62,6 +62,17 @@ class PlayerCommandPreprocessListener : Listener {
 
         val command = event.message
 
+        if(rawCommand == "spawn") {
+            Bukkit.getLogger().info("spawn command prepocess called")
+            if(player.hasPotionEffect(PotionEffectType.SPEED)) player.removePotionEffect(PotionEffectType.SPEED)
+            if(player.hasPotionEffect(PotionEffectType.FAST_DIGGING)) player.removePotionEffect(PotionEffectType.FAST_DIGGING)
+            if(player.hasPotionEffect(PotionEffectType.WATER_BREATHING)) player.removePotionEffect(PotionEffectType.WATER_BREATHING)
+        }
+        if(rawCommand == "challenge" || rawCommand == "challenges" || rawCommand == "askyblock:challenge" || rawCommand == "askyblock:challenges") {
+            challengesShopContainerTemplate.openContainer(player)
+            event.isCancelled = true
+        }
+
         if (!player.isOp && CombatService.isFighting(player) && !CombatService.isCommandAllowed(command)) {
             event.isCancelled = true
             player.sendMessage(Messages.PREFIX + "§cDu darfst diesen Befehl im Kampf nicht verwenden.")
@@ -88,18 +99,6 @@ class PlayerCommandPreprocessListener : Listener {
             for (targetPlayer in Bukkit.getOnlinePlayers()) {
                 player.performCommand(message.replace("@a".toRegex(), targetPlayer.name).substring(1))
             }
-        }
-
-        if(rawCommand == "spawn") {
-            Bukkit.getLogger().info("spawn command prepocess called")
-            if(player.hasPotionEffect(PotionEffectType.SPEED)) player.removePotionEffect(PotionEffectType.SPEED)
-            if(player.hasPotionEffect(PotionEffectType.FAST_DIGGING)) player.removePotionEffect(PotionEffectType.FAST_DIGGING)
-            if(player.hasPotionEffect(PotionEffectType.WATER_BREATHING)) player.removePotionEffect(PotionEffectType.WATER_BREATHING)
-        }
-
-        if(rawCommand == "challenge" || rawCommand == "challenges" || rawCommand == "askyblock:challenge" || rawCommand == "askyblock:challenges") {
-            challengesShopContainerTemplate.openContainer(player)
-            event.isCancelled = true
         }
     }
 

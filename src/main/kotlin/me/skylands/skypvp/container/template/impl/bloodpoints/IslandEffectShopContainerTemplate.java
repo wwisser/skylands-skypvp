@@ -47,20 +47,20 @@ public class IslandEffectShopContainerTemplate extends ContainerTemplate {
 
 
         builder.addAction(10, Haste, (user.getHasIslandEffectHaste() ? ContainerAction.NONE : new BPPurchaseContainerAction(clicker -> {
-            user.setHasIslandEffectHaste(true);
-            player.sendMessage(Messages.PREFIX + "Du hast soeben den §eEile-Effekt §7für Inseln erworben. Benutze §e/effekte§7 um deine Insel-Effekte zu verwalten.");
+            userService.getUser(clicker).setHasIslandEffectHaste(true);
+            clicker.sendMessage(Messages.PREFIX + "Du hast soeben den §eEile-Effekt §7für Inseln erworben. Benutze §e/effekte§7 um deine Insel-Effekte zu verwalten.");
             clicker.playSound(clicker.getLocation(), Sound.SUCCESSFUL_HIT, 1f, 1f);
         }, 50, true)));
 
         builder.addAction(13, Speed, (user.getHasIslandEffectSpeed() ? ContainerAction.NONE : new BPPurchaseContainerAction(clicker -> {
-            user.setHasIslandEffectSpeed(true);
-            player.sendMessage(Messages.PREFIX + "Du hast soeben den §eGeschwindigkeits-Effekt §7für Inseln erworben. Benutze §e/effekte§7 um deine Insel-Effekte zu verwalten.");
+            userService.getUser(clicker).setHasIslandEffectSpeed(true);
+            clicker.sendMessage(Messages.PREFIX + "Du hast soeben den §eGeschwindigkeits-Effekt §7für Inseln erworben. Benutze §e/effekte§7 um deine Insel-Effekte zu verwalten.");
             clicker.playSound(clicker.getLocation(), Sound.SUCCESSFUL_HIT, 1f, 1f);
         }, 50, true)));
 
         builder.addAction(16, WaterBreathing, (user.getHasIslandEffectWaterBreathing() ? ContainerAction.NONE : new BPPurchaseContainerAction(clicker -> {
-            user.setHasIslandEffectWaterBreathing(true);
-            player.sendMessage(Messages.PREFIX + "Du hast soeben den §eUnterwasseratmungs-Effekt §7für deine Inseln erworben. Benutze §e/effekte§7 um deine Insel-Effekte zu verwalten.");
+            userService.getUser(clicker).setHasIslandEffectWaterBreathing(true);
+            clicker.sendMessage(Messages.PREFIX + "Du hast soeben den §eUnterwasseratmungs-Effekt §7für deine Inseln erworben. Benutze §e/effekte§7 um deine Insel-Effekte zu verwalten.");
             clicker.playSound(clicker.getLocation(), Sound.SUCCESSFUL_HIT, 1f, 1f);
         }, 50, true)));
 

@@ -21,7 +21,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class UpgradesShopContainerTemplate extends ContainerTemplate {
 
-    private final ShopContainerTemplate shopContainerTemplate;
+    private ShopContainerTemplate shopContainerTemplate;
 
     public UpgradesShopContainerTemplate(ContainerManager containerManager, final ShopContainerTemplate shopContainerTemplate) {
         super(containerManager);
@@ -56,20 +56,20 @@ public class UpgradesShopContainerTemplate extends ContainerTemplate {
         IncreasedMobDamage.setItemMeta(itemMeta);
 
         builder.addAction(10, ReducedXPCosts, (user.getHasReducedEnchantingCostsUpgrade() ? ContainerAction.NONE : new BPPurchaseContainerAction(clicker -> {
-            user.setHasReducedEnchantingCostsUpgrade(true);
-            player.sendMessage(Messages.PREFIX + "Du hast soeben §eReduzierte Verzauberungskosten§7 freigeschaltet. Deine Verzauberungskosten sind nun dauerhaft um §e15%§7 reduziert.");
+            userService.getUser(clicker).setHasReducedEnchantingCostsUpgrade(true);
+            clicker.sendMessage(Messages.PREFIX + "Du hast soeben §eReduzierte Verzauberungskosten§7 freigeschaltet. Deine Verzauberungskosten sind nun dauerhaft um §e15%§7 reduziert.");
             clicker.playSound(clicker.getLocation(), Sound.SUCCESSFUL_HIT, 1f, 1f);
         }, 25, true)));
 
         builder.addAction(13, DamageReductionUpgrade, (user.getDamageReductionLevel() < 3 ? new BPPurchaseContainerAction(clicker -> {
-            user.setDamageReductionLevel(user.getDamageReductionLevel() + 1);
-            player.sendMessage(Messages.PREFIX + "Du hast soeben §eSchadensreduzierung§7 auf §eStufe " + user.getDamageReductionLevel() + " §7freigeschaltet. Du erhältst nun weniger Schaden.");
+            userService.getUser(clicker).setDamageReductionLevel(user.getDamageReductionLevel() + 1);
+            clicker.sendMessage(Messages.PREFIX + "Du hast soeben §eSchadensreduzierung§7 auf §eStufe " + user.getDamageReductionLevel() + " §7freigeschaltet. Du erhältst nun weniger Schaden.");
             clicker.playSound(clicker.getLocation(), Sound.SUCCESSFUL_HIT, 1f, 1f);
         }, damageReductionUpgradePrice, true) : ContainerAction.NONE));
 
         builder.addAction(16, IncreasedMobDamage, (user.getIncreasedMobDamageLevel() < 3 ? new BPPurchaseContainerAction(clicker -> {
-            user.setIncreasedMobDamageLevel(user.getIncreasedMobDamageLevel() + 1);
-            player.sendMessage(Messages.PREFIX + "Du hast soeben §eMehr Schaden gegen Monster§7 auf §eStufe " + user.getIncreasedMobDamageLevel() + " §7freigeschaltet. Deine nächste Monsterjagd endet nun garantiert tödlich.");
+            userService.getUser(clicker).setIncreasedMobDamageLevel(user.getIncreasedMobDamageLevel() + 1);
+            clicker.sendMessage(Messages.PREFIX + "Du hast soeben §eMehr Schaden gegen Monster§7 auf §eStufe " + user.getIncreasedMobDamageLevel() + " §7freigeschaltet. Deine nächste Monsterjagd endet nun garantiert tödlich.");
             clicker.playSound(clicker.getLocation(), Sound.SUCCESSFUL_HIT, 1f, 1f);
         }, increasedMobDamageUpgradePrice, true) : ContainerAction.NONE));
 
