@@ -42,3 +42,5 @@ commands:
     aliases: [hilfe, ?]
   killstreak:
     aliases: [ks]
+  effekte:
+    aliases: [ef, effects]

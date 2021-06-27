@@ -33,6 +33,7 @@ class SkyLands : JavaPlugin() {
         const val CONFIG_PATH: String = "plugins/SkyLands-SkyPvP"
 
         lateinit var WORLD_SKYPVP: World
+        lateinit var WORLD_SKYBLOCK: World
         lateinit var LOCATION_SPAWN: Location
         const val VOID_HEIGHT: Int = -15
 
@@ -71,6 +72,7 @@ class SkyLands : JavaPlugin() {
 
             vaultChat = Bukkit.getServer().servicesManager.getRegistration(Chat::class.java).provider
             WORLD_SKYPVP = Bukkit.getWorld("world")
+            WORLD_SKYBLOCK = Bukkit.getWorld("ASkyBlock")
             LOCATION_SPAWN = Location(WORLD_SKYPVP, 57.5, 123.0, 137.5, 0f, 0f)
 
             PackageClassIndexer.resolveInstances("me.skylands.skypvp.listener", Listener::class.java)

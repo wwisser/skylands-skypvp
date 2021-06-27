@@ -40,5 +40,4 @@ class MotdConfig {
     fun getFooter(): String {
         return this.config.getString(KEY_FOOTER)
     }
-    
 }

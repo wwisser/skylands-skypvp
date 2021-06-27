@@ -11,10 +11,18 @@ class FileUserRepository : UserRepository {
     override fun fetchByUuid(uuid: String): User {
         val name: String = uuidDatabase.getString(uuid)
         val currentTimeMillis = System.currentTimeMillis()
+        val islandEffectHasteStatus = false
+        val islandEffectSpeedStatus = false
+        val islandEffectWaterBreathingStatus = false
+        val hasReducedEnchantingCostsUpgrade = false
+        val islandLevelChallengeCompleted = false
+        val teamworkChallengeCompleted = false
+
+
         if (!userDatabase.contains(uuid)) {
             return User(
                     name, uuid, currentTimeMillis, currentTimeMillis,
-                    0, 0, 0, 0, 0, 0, 0
+                    0, 0, 0, 0, 0, 0, 0, islandEffectHasteStatus, islandEffectSpeedStatus, islandEffectWaterBreathingStatus, hasReducedEnchantingCostsUpgrade, 0, 0, 0, 0, 0, 0, teamworkChallengeCompleted, islandLevelChallengeCompleted
             )
         }
         val data: List<String> = userDatabase.getString(uuid).split(";")
@@ -29,7 +37,19 @@ class FileUserRepository : UserRepository {
                 Integer.valueOf(data[5]),
                 Integer.valueOf(data[6]),
                 Integer.valueOf(data[7]),
-                Integer.valueOf(data[8])
+                Integer.valueOf(data[8]),
+                data[9].toBoolean(),
+                data[10].toBoolean(),
+                data[11].toBoolean(),
+                data[12].toBoolean(),
+                Integer.valueOf(data[13]),
+                Integer.valueOf(data[14]),
+                Integer.valueOf(data[15]),
+                Integer.valueOf(data[16]),
+                Integer.valueOf(data[17]),
+                Integer.valueOf(data[18]),
+                data[19].toBoolean(),
+                data[20].toBoolean()
         )
     }
 
@@ -60,7 +80,19 @@ class FileUserRepository : UserRepository {
                 + user.deaths + ";"
                 + user.votes + ";"
                 + user.playtime + ";"
-                + user.level)
+                + user.level + ";"
+                + user.hasIslandEffectHaste + ";"
+                + user.hasIslandEffectSpeed + ";"
+                + user.hasIslandEffectWaterBreathing + ";"
+                + user.hasReducedEnchantingCostsUpgrade + ";"
+                + user.damageReductionLevel + ";"
+                + user.increasedMobDamageLevel + ";"
+                + user.blocksPlaced + ";"
+                + user.spidersKilled + ";"
+                + user.mobsKilled + ";"
+                + user.woodChopped + ";"
+                + user.teamWorkChallengeCompleted + ";"
+                + user.islandLevelChallengeCompleted)
         userDatabase[user.uuid] = data
         userDatabase.saveFile()
     }
