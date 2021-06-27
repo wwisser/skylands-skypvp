@@ -1,14 +1,19 @@
 package me.skylands.skypvp.listener
 
+import com.wasteofplastic.askyblock.ASkyBlockAPI
 import me.skylands.skypvp.Messages
 import me.skylands.skypvp.SkyLands
 import me.skylands.skypvp.combat.CombatService
 import me.skylands.skypvp.command.CommandCmdspy
+import me.skylands.skypvp.container.template.impl.ShopContainerTemplate
+import me.skylands.skypvp.container.template.impl.bloodpoints.ChallengesShopContainerTemplate
+import me.skylands.skypvp.container.template.impl.bloodpoints.EffectsMenuShopContainerTemplate
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerCommandPreprocessEvent
+import org.bukkit.potion.PotionEffectType
 import java.util.*
 
 class PlayerCommandPreprocessListener : Listener {
@@ -39,6 +44,8 @@ class PlayerCommandPreprocessListener : Listener {
         "permissionsex:demote",
         "permissionsex:pex"
     )
+
+    private val challengesShopContainerTemplate = ChallengesShopContainerTemplate(SkyLands.containerManager, ShopContainerTemplate(SkyLands.containerManager))
 
     @EventHandler
     fun onPlayerCommandPreprocess(event: PlayerCommandPreprocessEvent) {
@@ -81,6 +88,18 @@ class PlayerCommandPreprocessListener : Listener {
             for (targetPlayer in Bukkit.getOnlinePlayers()) {
                 player.performCommand(message.replace("@a".toRegex(), targetPlayer.name).substring(1))
             }
+        }
+
+        if(rawCommand == "spawn") {
+            Bukkit.getLogger().info("spawn command prepocess called")
+            if(player.hasPotionEffect(PotionEffectType.SPEED)) player.removePotionEffect(PotionEffectType.SPEED)
+            if(player.hasPotionEffect(PotionEffectType.FAST_DIGGING)) player.removePotionEffect(PotionEffectType.FAST_DIGGING)
+            if(player.hasPotionEffect(PotionEffectType.WATER_BREATHING)) player.removePotionEffect(PotionEffectType.WATER_BREATHING)
+        }
+
+        if(rawCommand == "challenge" || rawCommand == "challenges" || rawCommand == "askyblock:challenge" || rawCommand == "askyblock:challenges") {
+            challengesShopContainerTemplate.openContainer(player)
+            event.isCancelled = true
         }
     }
 

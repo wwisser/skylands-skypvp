@@ -4,10 +4,13 @@ import me.skylands.skypvp.container.Container;
 import me.skylands.skypvp.container.ContainerManager;
 import me.skylands.skypvp.container.ContainerStorageLevel;
 import me.skylands.skypvp.container.template.ContainerTemplate;
+import me.skylands.skypvp.container.template.impl.bloodpoints.BloodPointsShopContainerTemplate;
 import me.skylands.skypvp.item.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class ShopContainerTemplate extends ContainerTemplate {
 
@@ -37,10 +40,15 @@ public class ShopContainerTemplate extends ContainerTemplate {
                 this
         );
 
-        final BloodpointsShopContainerTemplate bloodpointsTemplate = new BloodpointsShopContainerTemplate(
+        final BloodPointsShopContainerTemplate bloodpointsTemplate = new BloodPointsShopContainerTemplate(
                 super.containerService,
                 this
         );
+
+        ItemStack bloodPoints = new ItemBuilder(Material.IRON_SWORD).name("§c§lBlutpunkte").build();
+        ItemMeta itemMeta = bloodPoints.getItemMeta();
+        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        bloodPoints.setItemMeta(itemMeta);
 
         final BlockShopContainerTemplate blockShopContainerTemplate = new BlockShopContainerTemplate(
                 super.containerService,
@@ -72,7 +80,7 @@ public class ShopContainerTemplate extends ContainerTemplate {
 
         builder.addAction(
                 17,
-                new ItemBuilder(Material.IRON_SWORD).name("§c§lBlutpunkte").build(),
+                bloodPoints,
                 bloodpointsTemplate::openContainer
         );
 
