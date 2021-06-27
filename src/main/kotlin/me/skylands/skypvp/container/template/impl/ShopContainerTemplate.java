@@ -42,25 +42,36 @@ public class ShopContainerTemplate extends ContainerTemplate {
                 this
         );
 
+        final BlockShopContainerTemplate blockShopContainerTemplate = new BlockShopContainerTemplate(
+                super.containerService,
+                this
+        );
+
         builder.addAction(
-            10,
+            9,
             new ItemBuilder(Material.BOOK).name("§9§lRechte").build(),
             permissionShopTemplate::openContainer
         );
         builder.addAction(
-            12,
+            11,
             new ItemBuilder(Material.EMERALD).name("§a§lRänge").build(),
             rankShopTemplate::openContainer
         );
 
         builder.addAction(
-                14,
+                13,
                 new ItemBuilder(Material.GOLDEN_APPLE).name("§e§lItems").build(),
                 itemShopContainerTemplate::openContainer
         );
 
         builder.addAction(
-                16,
+                15,
+                new ItemBuilder(Material.GRASS).name("§b§lBlöcke").build(),
+                blockShopContainerTemplate::openContainer
+        );
+
+        builder.addAction(
+                17,
                 new ItemBuilder(Material.IRON_SWORD).name("§c§lBlutpunkte").build(),
                 bloodpointsTemplate::openContainer
         );
