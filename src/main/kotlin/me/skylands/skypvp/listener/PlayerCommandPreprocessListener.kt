@@ -100,6 +100,20 @@ class PlayerCommandPreprocessListener : Listener {
                 player.performCommand(message.replace("@a".toRegex(), targetPlayer.name).substring(1))
             }
         }
+<<<<<<< HEAD
+=======
+
+        if(rawCommand == "spawn") {
+            if(player.hasPotionEffect(PotionEffectType.SPEED)) player.removePotionEffect(PotionEffectType.SPEED)
+            if(player.hasPotionEffect(PotionEffectType.FAST_DIGGING)) player.removePotionEffect(PotionEffectType.FAST_DIGGING)
+            if(player.hasPotionEffect(PotionEffectType.WATER_BREATHING)) player.removePotionEffect(PotionEffectType.WATER_BREATHING)
+        }
+
+        if(rawCommand == "challenge" || rawCommand == "challenges" || rawCommand == "askyblock:challenge" || rawCommand == "askyblock:challenges" || rawCommand == "c") {
+            challengesShopContainerTemplate.openContainer(player)
+            event.isCancelled = true
+        }
+>>>>>>> d710c8944e10f1636883a24350ab7f1cb5652e43
     }
 
     private fun emitMessage(
