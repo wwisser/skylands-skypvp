@@ -21,9 +21,9 @@ class EnchantItemListener : Listener {
         val user = userService.getUser(player)
 
         if(user.hasReducedEnchantingCostsUpgrade) {
-            event.expLevelCostsOffered[0] = event.expLevelCostsOffered[0] - (event.expLevelCostsOffered[0] * 0.75).toInt()
-            event.expLevelCostsOffered[1] = event.expLevelCostsOffered[1] - (event.expLevelCostsOffered[1] * 0.75).toInt()
-            event.expLevelCostsOffered[2] = event.expLevelCostsOffered[2] - (event.expLevelCostsOffered[2] * 0.75).toInt()
+            event.expLevelCostsOffered[0] = event.expLevelCostsOffered[0] - (event.expLevelCostsOffered[0] * 0.15).toInt()
+            event.expLevelCostsOffered[1] = event.expLevelCostsOffered[1] - (event.expLevelCostsOffered[1] * 0.15).toInt()
+            event.expLevelCostsOffered[2] = event.expLevelCostsOffered[2] - (event.expLevelCostsOffered[2] * 0.15).toInt()
         }
     }
 
