@@ -1,7 +1,7 @@
 name: SkyLands-SkyPvP
 version: 1.0
 main: me.skylands.skypvp.SkyLands
-depend: [Vault, Votifier, PermissionsEx, ASkyBlock]
+depend: [Vault, Votifier, PermissionsEx, ASkyBlock, Multiverse-Core]
 commands:
   rawbc:
   motd:
