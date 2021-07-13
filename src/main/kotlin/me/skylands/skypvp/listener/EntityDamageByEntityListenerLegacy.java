@@ -2,8 +2,7 @@ package me.skylands.skypvp.listener;
 
 import me.skylands.skypvp.nms.ActionBar;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -21,14 +20,14 @@ public class EntityDamageByEntityListenerLegacy implements Listener {
                 showHeal(pl, to);
             }
         }
-        if (ev.getDamager() instanceof Player && ev.getEntity() instanceof Player) {
-            final Player pl2 = (Player) ev.getEntity();
-            final Player to2 = (Player) ev.getDamager();
-            showHeal(pl2, to2);
+        if((ev.getEntity() instanceof Player || ev.getEntity() instanceof Monster) && ev.getDamager() instanceof Player) {
+            final Player player = (Player) ev.getDamager();
+            final LivingEntity entity = (LivingEntity) ev.getEntity();
+            showHeal(entity, player);
         }
     }
 
-    private void showHeal(final Player entity, final Player receiver) {
+    private void showHeal(final LivingEntity entity, final Player receiver) {
         final double maxHealth = entity.getMaxHealth();
 
         double health = entity.getHealth();
