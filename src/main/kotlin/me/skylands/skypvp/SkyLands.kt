@@ -43,17 +43,13 @@ class SkyLands : JavaPlugin() {
         lateinit var motdConfig: MotdConfig
         lateinit var discoConfig: DiscoConfig
         lateinit var peaceConfig: PeaceConfig
+        lateinit var totemConfig: TotemConfig
         lateinit var userService: UserService
 
         lateinit var containerManager: ContainerManager
         lateinit var ipMatchingService: IpMatchingService
         lateinit var plugin: JavaPlugin
         var vaultChat: Chat? = null
-
-        lateinit var totemConfig: TotemConfig
-
-        lateinit var totem: Totem
-        lateinit var totem2: Totem
 
         fun getChat(): Chat {
             return vaultChat!!

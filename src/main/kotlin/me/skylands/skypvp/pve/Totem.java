@@ -74,13 +74,14 @@ public class Totem {
     }
 
     private int getNearbyMonstersAmount() {
-        Collection<Entity> nearbyEntities = world.getNearbyEntities(centerLocation, spawnRadius*3, spawnRadius*2, spawnRadius*3);
-        nearbyEntities.forEach(entity -> {
-            if (!(entity instanceof Creature)) {
-                nearbyEntities.remove(entity);
+        int count = 0;
+        for (LivingEntity livingEntity : centerLocation.getWorld().getLivingEntities()) {
+            if (livingEntity instanceof Player) continue;
+            if (livingEntity.getLocation().distance(centerLocation) < (spawnRadius * 3)) {
+                count++;
             }
-        });
-        return nearbyEntities.size();
+        }
+        return count;
     }
 
     private int getRandomNumber(int min, int max) {
