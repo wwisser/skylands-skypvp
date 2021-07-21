@@ -6,8 +6,10 @@ import me.skylands.skypvp.command.AbstractCommand
 import me.skylands.skypvp.config.DiscoConfig
 import me.skylands.skypvp.config.MotdConfig
 import me.skylands.skypvp.config.PeaceConfig
+import me.skylands.skypvp.config.TotemConfig
 import me.skylands.skypvp.container.ContainerManager
 import me.skylands.skypvp.ipmatching.IpMatchingService
+import me.skylands.skypvp.pve.Totem
 import me.skylands.skypvp.stats.context.impl.external.IslandLevelToplistContext
 import me.skylands.skypvp.stats.context.impl.internal.*
 import me.skylands.skypvp.task.*
@@ -21,6 +23,7 @@ import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.World
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer
+import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
 import org.bukkit.event.Listener
 import org.bukkit.plugin.ServicePriority
@@ -38,14 +41,17 @@ class SkyLands : JavaPlugin() {
         const val VOID_HEIGHT: Int = -15
 
         lateinit var motdConfig: MotdConfig
+
         lateinit var discoConfig: DiscoConfig
         lateinit var peaceConfig: PeaceConfig
-
         lateinit var userService: UserService
+
         lateinit var containerManager: ContainerManager
         lateinit var ipMatchingService: IpMatchingService
         lateinit var plugin: JavaPlugin
         var vaultChat: Chat? = null
+
+        lateinit var totem: Totem
 
         fun getChat(): Chat {
             return vaultChat!!
@@ -62,6 +68,7 @@ class SkyLands : JavaPlugin() {
 
     override fun onEnable() {
         try {
+
             plugin = this
             motdConfig = MotdConfig()
             discoConfig = DiscoConfig()
@@ -124,6 +131,18 @@ class SkyLands : JavaPlugin() {
                 10L
             )
 
+            totem = Totem(
+                Location(WORLD_SKYPVP,54.5, 69.0,38.5),
+                1,
+                10,
+                listOf<EntityType>(
+                    EntityType.ZOMBIE,
+                    EntityType.CREEPER,
+                    EntityType.SKELETON,
+                    EntityType.SPIDER
+                )
+            )
+
             super.getServer().scheduler.runTaskTimer(
                 this,
                 CombatUpdateTask(),
@@ -156,6 +175,14 @@ class SkyLands : JavaPlugin() {
                 3L
             )
 
+            super.getServer().scheduler.runTaskTimer(
+                this,
+                {
+                    totem.spawnMobs();
+                },
+                20L,
+                20L*5
+            )
             Bukkit.getOnlinePlayers().forEach { userService.loadUser(it) }
 
             val worldBorder = WORLD_SKYPVP.worldBorder

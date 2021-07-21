@@ -14,13 +14,13 @@ public class EntityDamageByEntityListenerLegacy implements Listener {
     public void onDamage(final EntityDamageByEntityEvent ev) {
         if (ev.getDamager() instanceof Projectile) {
             final Projectile bullit = (Projectile) ev.getDamager();
-            if (bullit.getShooter() instanceof Player && ev.getEntity() instanceof Player) {
-                final Player pl = (Player) ev.getEntity();
+            if (bullit.getShooter() instanceof Player && ev.getEntity() instanceof LivingEntity) {
+                final LivingEntity pl = (LivingEntity) ev.getEntity();
                 final Player to = (Player) bullit.getShooter();
                 showHeal(pl, to);
             }
         }
-        if((ev.getEntity() instanceof Player || ev.getEntity() instanceof Monster) && ev.getDamager() instanceof Player) {
+        if(ev.getDamager() instanceof Player && ev.getEntity() instanceof LivingEntity) {
             final Player player = (Player) ev.getDamager();
             final LivingEntity entity = (LivingEntity) ev.getEntity();
             showHeal(entity, player);
