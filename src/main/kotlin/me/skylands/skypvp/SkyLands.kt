@@ -41,7 +41,6 @@ class SkyLands : JavaPlugin() {
         const val VOID_HEIGHT: Int = -15
 
         lateinit var motdConfig: MotdConfig
-
         lateinit var discoConfig: DiscoConfig
         lateinit var peaceConfig: PeaceConfig
         lateinit var userService: UserService
@@ -51,7 +50,10 @@ class SkyLands : JavaPlugin() {
         lateinit var plugin: JavaPlugin
         var vaultChat: Chat? = null
 
+        lateinit var totemConfig: TotemConfig
+
         lateinit var totem: Totem
+        lateinit var totem2: Totem
 
         fun getChat(): Chat {
             return vaultChat!!
@@ -73,7 +75,9 @@ class SkyLands : JavaPlugin() {
             motdConfig = MotdConfig()
             discoConfig = DiscoConfig()
             peaceConfig = PeaceConfig()
+            totemConfig = TotemConfig()
             userService = UserService()
+
             containerManager = ContainerManager()
             ipMatchingService = IpMatchingService()
 
@@ -131,23 +135,18 @@ class SkyLands : JavaPlugin() {
                 10L
             )
 
-            totem = Totem(
-                Location(WORLD_SKYPVP,54.5, 69.0,38.5),
-                1,
-                10,
-                listOf<EntityType>(
-                    EntityType.ZOMBIE,
-                    EntityType.CREEPER,
-                    EntityType.SKELETON,
-                    EntityType.SPIDER
-                )
-            )
-
             super.getServer().scheduler.runTaskTimer(
                 this,
                 CombatUpdateTask(),
                 5L,
                 5L
+            )
+
+            super.getServer().scheduler.runTaskTimer(
+                this,
+                TotemEnemiesSpawnTask(),
+                20L,
+                20L*30
             )
 
             super.getServer().scheduler.runTaskTimer(
@@ -175,14 +174,6 @@ class SkyLands : JavaPlugin() {
                 3L
             )
 
-            super.getServer().scheduler.runTaskTimer(
-                this,
-                {
-                    totem.spawnMobs();
-                },
-                20L,
-                20L*5
-            )
             Bukkit.getOnlinePlayers().forEach { userService.loadUser(it) }
 
             val worldBorder = WORLD_SKYPVP.worldBorder

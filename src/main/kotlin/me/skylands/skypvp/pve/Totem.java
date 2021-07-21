@@ -6,7 +6,9 @@ import org.bukkit.entity.*;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Totem {
 
@@ -72,14 +74,13 @@ public class Totem {
     }
 
     private int getNearbyMonstersAmount() {
-        int count = 0;
-        for (LivingEntity livingEntity : centerLocation.getWorld().getLivingEntities()) {
-            if (livingEntity instanceof Player) continue;
-            if (livingEntity.getLocation().distance(centerLocation) < (spawnRadius * 3)) {
-                count++;
+        Collection<Entity> nearbyEntities = world.getNearbyEntities(centerLocation, spawnRadius*3, spawnRadius*2, spawnRadius*3);
+        nearbyEntities.forEach(entity -> {
+            if (!(entity instanceof Creature)) {
+                nearbyEntities.remove(entity);
             }
-        }
-        return count;
+        });
+        return nearbyEntities.size();
     }
 
     private int getRandomNumber(int min, int max) {
