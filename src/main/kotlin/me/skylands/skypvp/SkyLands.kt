@@ -9,21 +9,23 @@ import me.skylands.skypvp.config.PeaceConfig
 import me.skylands.skypvp.config.TotemConfig
 import me.skylands.skypvp.container.ContainerManager
 import me.skylands.skypvp.ipmatching.IpMatchingService
-import me.skylands.skypvp.pve.Totem
+import me.skylands.skypvp.pve.Helper
+import me.skylands.skypvp.pve.bosses.BossSlime
 import me.skylands.skypvp.stats.context.impl.external.IslandLevelToplistContext
 import me.skylands.skypvp.stats.context.impl.internal.*
 import me.skylands.skypvp.task.*
+import me.skylands.skypvp.task.pve.TotemEnemiesSpawnTask
 import me.skylands.skypvp.user.UserService
 import me.skylands.skypvp.util.LevelEconomy
 import net.milkbowl.vault.chat.Chat
 import net.milkbowl.vault.economy.Economy
+import net.minecraft.server.v1_8_R3.EntitySlime
 import net.minecraft.server.v1_8_R3.EnumParticle
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.World
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer
-import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
 import org.bukkit.event.Listener
 import org.bukkit.plugin.ServicePriority
@@ -142,7 +144,7 @@ class SkyLands : JavaPlugin() {
                 this,
                 TotemEnemiesSpawnTask(),
                 20L,
-                20L*30
+                20L
             )
 
             super.getServer().scheduler.runTaskTimer(
@@ -181,6 +183,9 @@ class SkyLands : JavaPlugin() {
             e.printStackTrace()
             throw RuntimeException(e)
         }
+
+        val helper = Helper();
+        helper.registerEntity("Slime", 55, EntitySlime::class.java, BossSlime::class.java)
     }
 
     override fun onDisable() {

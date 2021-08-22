@@ -22,7 +22,9 @@ class TotemConfig {
                 getCenterLocation(key),
                 getDifficulty(key),
                 getSpawnRadius(key),
-                getEnemiesList(key)
+                getEnemiesList(key),
+                getBossType(key),
+                getTotemIdentifer(key)
             )
         }
     }
@@ -51,5 +53,13 @@ class TotemConfig {
             list.add(EntityType.fromName(it))
         }
         return list.toList()
+    }
+
+    fun getBossType(id: String) : String {
+        return config.getString(id + ".bossType")
+    }
+
+    fun getTotemIdentifer(id: String) : Int {
+        return config.getInt(id + ".totemIdentifier")
     }
 }

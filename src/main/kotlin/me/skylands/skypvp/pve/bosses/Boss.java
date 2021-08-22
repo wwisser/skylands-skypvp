@@ -1,19 +1,35 @@
 package me.skylands.skypvp.pve.bosses;
 
-import org.bukkit.Location;
-import org.bukkit.entity.EntityType;
+import me.skylands.skypvp.pve.bosses.attacks.BossAttack;
+import me.skylands.skypvp.pve.bosses.attacks.DestroyItemAttack;
 
-public abstract class Boss {
+public interface Boss {
 
-    EntityType entityType;
-    Location location;
-    double maxHealth;
-
-    public Boss(EntityType entityType, double maxHealth, Location location) {
-        this.entityType = entityType;
-        this.maxHealth = maxHealth;
-        this.location = location;
+    public default Integer attackSpeedMultiplier() {
+        return 4;
     }
 
-    public abstract void spawnBoss();
+    public default Integer getBossHealth() {
+        return 1024;
+    }
+
+    public default Integer getFollowRange() {
+        return 8;
+    }
+
+    public default String getBossPrefix () {
+        return "§7[§c§lBOSS§r§7] ";
+    }
+
+    public default BossAttack getBossAttack() {
+        return new DestroyItemAttack();
+    }
+
+    public default Float getDamageReduction() {
+        return 0.9F;
+    }
+
+    public default Integer getDamageIncrease() {
+        return 5;
+    }
 }

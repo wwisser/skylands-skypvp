@@ -1,4 +1,4 @@
-package me.skylands.skypvp.listener;
+package me.skylands.skypvp.listener.pve;
 
 import me.skylands.skypvp.SkyLands;
 import org.bukkit.Bukkit;
