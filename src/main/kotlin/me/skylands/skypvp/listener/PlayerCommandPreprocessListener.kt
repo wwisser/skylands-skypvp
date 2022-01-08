@@ -1,13 +1,11 @@
 package me.skylands.skypvp.listener
 
-import com.wasteofplastic.askyblock.ASkyBlockAPI
 import me.skylands.skypvp.Messages
 import me.skylands.skypvp.SkyLands
 import me.skylands.skypvp.combat.CombatService
 import me.skylands.skypvp.command.CommandCmdspy
 import me.skylands.skypvp.container.template.impl.ShopContainerTemplate
 import me.skylands.skypvp.container.template.impl.bloodpoints.ChallengesShopContainerTemplate
-import me.skylands.skypvp.container.template.impl.bloodpoints.EffectsMenuShopContainerTemplate
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -42,7 +40,9 @@ class PlayerCommandPreprocessListener : Listener {
         "worldedit:execute",
         "permissionsex:promote",
         "permissionsex:demote",
-        "permissionsex:pex"
+        "permissionsex:pex",
+        "mvhelp",
+        "mv"
     )
 
     private val challengesShopContainerTemplate = ChallengesShopContainerTemplate(SkyLands.containerManager, ShopContainerTemplate(SkyLands.containerManager))
