@@ -1,5 +1,7 @@
 package me.skylands.skypvp
 
+import com.github.fierioziy.particlenativeapi.api.ParticleNativeAPI
+import com.github.fierioziy.particlenativeapi.plugin.ParticleNativePlugin
 import com.wasteofplastic.askyblock.ASkyBlockAPI
 import me.skylands.skypvp.clan.Clans
 import me.skylands.skypvp.command.AbstractCommand
@@ -9,11 +11,13 @@ import me.skylands.skypvp.config.PeaceConfig
 import me.skylands.skypvp.config.TotemConfig
 import me.skylands.skypvp.container.ContainerManager
 import me.skylands.skypvp.ipmatching.IpMatchingService
+import me.skylands.skypvp.pve.BossTracker
 import me.skylands.skypvp.pve.Helper
 import me.skylands.skypvp.pve.bosses.BossSlime
 import me.skylands.skypvp.stats.context.impl.external.IslandLevelToplistContext
 import me.skylands.skypvp.stats.context.impl.internal.*
 import me.skylands.skypvp.task.*
+import me.skylands.skypvp.task.pve.PreventBossIslandEnterTask
 import me.skylands.skypvp.task.pve.TotemEnemiesSpawnTask
 import me.skylands.skypvp.user.UserService
 import me.skylands.skypvp.util.LevelEconomy
@@ -51,6 +55,7 @@ class SkyLands : JavaPlugin() {
         lateinit var containerManager: ContainerManager
         lateinit var ipMatchingService: IpMatchingService
         lateinit var plugin: JavaPlugin
+        lateinit var particleAPI: ParticleNativeAPI
         var vaultChat: Chat? = null
 
         fun getChat(): Chat {
@@ -80,7 +85,8 @@ class SkyLands : JavaPlugin() {
             ipMatchingService = IpMatchingService()
 
             vaultChat = Bukkit.getServer().servicesManager.getRegistration(Chat::class.java).provider
-            WORLD_SKYPVP = Bukkit.getWorld("world")
+            particleAPI = ParticleNativePlugin.getAPI()
+            WORLD_SKYPVP = Bukkit.getWorld("sl_pve")
             WORLD_SKYBLOCK = Bukkit.getWorld("ASkyBlock")
             LOCATION_SPAWN = Location(WORLD_SKYPVP, 57.5, 123.0, 137.5, 0f, 0f)
 
@@ -90,6 +96,7 @@ class SkyLands : JavaPlugin() {
             PackageClassIndexer.resolveInstances("me.skylands.skypvp.command", AbstractCommand::class.java)
                 .forEach { super.getCommand(it.getName()).executor = it }
 
+            super.getServer().scheduler.runTaskTimer(this, PreventBossIslandEnterTask(), 20L, 15L * 2)
             super.getServer().scheduler.runTaskTimer(this, DiscoUpdateTask(), 15L, 15L) // 1s
             super.getServer().scheduler.runTaskTimer(this, YoloBootsUpdateTask(), 0L, 5L) // 1s
             super.getServer().scheduler.runTaskTimer(this, FlyDisableTask(), 0L, 15L) // 1s
@@ -140,12 +147,14 @@ class SkyLands : JavaPlugin() {
                 5L
             )
 
+            Bukkit.getLogger().info("SpawnTask call (pre)")
             super.getServer().scheduler.runTaskTimer(
                 this,
                 TotemEnemiesSpawnTask(),
                 20L,
                 20L
             )
+            Bukkit.getLogger().info("SpawnTask call (after)")
 
             super.getServer().scheduler.runTaskTimer(
                 this,
@@ -189,6 +198,12 @@ class SkyLands : JavaPlugin() {
     }
 
     override fun onDisable() {
+        val bossTracker = BossTracker();
+
+        Helper.bossData.keys.forEach {
+            bossTracker.killBoss(it, true)
+        }
+
         try {
             Bukkit.getOnlinePlayers().forEach { userService.unloadUser(it) }
             discoConfig.save()

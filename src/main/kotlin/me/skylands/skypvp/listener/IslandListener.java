@@ -77,7 +77,8 @@ public class IslandListener implements Listener {
             islandOwnerAsUser.setTeamWorkChallengeCompleted(true);
             islandOwnerAsUser.setBloodPoints(islandOwnerAsUser.getBloodPoints() + 20);
 
-            if (islandOwner != null) islandOwner.sendMessage(Messages.PREFIX + "§aGlückwunsch§7! Du hast die Challenge '§eTeamwork§7' erfolgreich abgeschlossen und §c20 Blutpunkte§7 erhalten.");
+            if (islandOwner != null)
+                islandOwner.sendMessage(Messages.PREFIX + "§aGlückwunsch§7! Du hast die Challenge '§eTeamwork§7' erfolgreich abgeschlossen und §c20 Blutpunkte§7 erhalten.");
         }
     }
 
@@ -89,14 +90,11 @@ public class IslandListener implements Listener {
         long newLevel = event.getLongLevel();
         Bukkit.getLogger().info(Long.toString(newLevel));
 
-        if(newLevel >= 1000 && !islandOwnerAsUser.getTeamWorkChallengeCompleted()) {
-            Bukkit.getLogger().info("reqs met!");
+        if (newLevel >= 1000 && !islandOwnerAsUser.getTeamWorkChallengeCompleted()) {
             islandOwnerAsUser.setIslandLevelChallengeCompleted(true);
             islandOwnerAsUser.setBloodPoints(islandOwnerAsUser.getBloodPoints() + 250);
 
             if (islandOwner != null) islandOwner.sendMessage(Messages.PREFIX + "§aGlückwunsch§7! Du hast die Challenge '§eUnglaublich!§7' erfolgreich abgeschlossen und §c250 Blutpunkte§7 erhalten.");
-        } else {
-            Bukkit.getLogger().info("reqs not met");
         }
     }
 }

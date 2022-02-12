@@ -6,13 +6,17 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 public class BossData {
 
     private boolean isAlive;
-    private CraftEntity bossHandle;
-    private Location spawnLocation;
 
-    public BossData(Boolean isAlive, CraftEntity bossHandle, Location spawnLocation) {
+    private CraftEntity bossHandle;
+    private Location randomSpawnLocation;
+    private Location totemCenterLocation;
+
+
+    public BossData(Boolean isAlive, CraftEntity bossHandle, Location randomSpawnLocation, Location totemCenterLocation) {
         this.isAlive = isAlive;
         this.bossHandle = bossHandle;
-        this.spawnLocation = spawnLocation;
+        this.randomSpawnLocation = randomSpawnLocation;
+        this.totemCenterLocation = totemCenterLocation;
     }
 
     public boolean isAlive() {
@@ -23,7 +27,11 @@ public class BossData {
         return bossHandle;
     }
 
-    public Location getSpawnLocation() {
-        return spawnLocation;
+    public Location getRandomSpawnLocation() {
+        return randomSpawnLocation;
+    }
+
+    public Location getTotemCenterLocation() {
+        return totemCenterLocation;
     }
 }

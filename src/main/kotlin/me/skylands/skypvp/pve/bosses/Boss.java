@@ -1,12 +1,12 @@
 package me.skylands.skypvp.pve.bosses;
 
 import me.skylands.skypvp.pve.bosses.attacks.BossAttack;
-import me.skylands.skypvp.pve.bosses.attacks.DestroyItemAttack;
+import me.skylands.skypvp.pve.bosses.attacks.AreaMultiAttack;
 
 public interface Boss {
 
     public default Integer attackSpeedMultiplier() {
-        return 4;
+        return 2;
     }
 
     public default Integer getBossHealth() {
@@ -22,7 +22,7 @@ public interface Boss {
     }
 
     public default BossAttack getBossAttack() {
-        return new DestroyItemAttack();
+        return new AreaMultiAttack();
     }
 
     public default Float getDamageReduction() {

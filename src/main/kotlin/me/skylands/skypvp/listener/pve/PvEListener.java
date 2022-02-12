@@ -1,34 +1,24 @@
 package me.skylands.skypvp.listener.pve;
 
 import me.skylands.skypvp.SkyLands;
-import me.skylands.skypvp.item.ItemBuilder;
 import me.skylands.skypvp.pve.BossData;
+import me.skylands.skypvp.pve.BossTracker;
 import me.skylands.skypvp.pve.Helper;
 import me.skylands.skypvp.pve.bosses.Boss;
 import me.skylands.skypvp.pve.bosses.BossSlime;
-import me.skylands.skypvp.task.pve.RemoveChestTask;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
+import me.skylands.skypvp.task.pve.SpawnChestTask;
+import org.bukkit.Location;
 import org.bukkit.Sound;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
-import org.bukkit.block.Chest;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.SlimeSplitEvent;
-
-import java.util.*;
+import org.bukkit.event.entity.*;
+import org.bukkit.event.world.ChunkUnloadEvent;
+import org.bukkit.util.Vector;
 
 public class PvEListener implements Listener {
-
-    private final Helper entityManager = new Helper();
-
     @EventHandler
     public void onSlimeSplit(SlimeSplitEvent event) {
         if (((CraftEntity) event.getEntity()).getHandle() instanceof BossSlime) {
@@ -36,8 +26,9 @@ public class PvEListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntityDeath(EntityDeathEvent event) {
+
         Entity entity = event.getEntity();
         String uuidAsString = entity.getUniqueId().toString();
 
@@ -45,31 +36,26 @@ public class PvEListener implements Listener {
             CraftEntity handle = Helper.bossData.get(bossID).getBossHandle();
 
             if(handle.getUniqueId().toString().equals(uuidAsString)) {
-                Helper.bossData.replace(bossID, Helper.bossData.get(bossID), new BossData(false, Helper.bossData.get(bossID).getBossHandle(), Helper.bossData.get(bossID).getSpawnLocation()));
+                Helper.bossData.replace(bossID, Helper.bossData.get(bossID), new BossData(false, Helper.bossData.get(bossID).getBossHandle(), Helper.bossData.get(bossID).getRandomSpawnLocation(), Helper.bossData.get(bossID).getTotemCenterLocation()));
 
-                entity.getLocation().getWorld().getBlockAt(entity.getLocation()).setType(Material.CHEST);
-                event.getEntity().getKiller().sendMessage("You killed the boss! Chest should be there by now.");
+                if(Helper.getSilentRemovalStatus()) return;
 
-                Block chest = entity.getLocation().getWorld().getBlockAt(entity.getLocation());
-                BlockState state = chest.getState();
+                BossTracker bossTracker = new BossTracker();
+                Helper helper = new Helper();
 
-                // TODO Add actual rewards
-                if(state instanceof Chest) {
-                    for(int i = 0; i < ((Chest) state).getBlockInventory().getSize(); i++) {
-                        ((Chest) state).getBlockInventory().setItem(i, new ItemBuilder(Material.FEATHER).name("Cool feather!").build());
-                    }
-                }
+                helper.createBossHologram(bossTracker.getIDbyUUID(uuidAsString));
 
-                Bukkit.getScheduler().scheduleSyncDelayedTask(SkyLands.plugin, new RemoveChestTask(entity.getLocation()), 20 * 30);
-                event.getEntity().getWorld().playSound(event.getEntity().getLocation(), Sound.EXPLODE, 20, 20);
-                // TODO Fill it up! Boooom Sound! Tbc
-                // TODO CANCEL EXPLOSION BLOCK DAMAGE & REGULAR DAMAGE TODO tbc
+                event.getEntity().getWorld().playSound(event.getEntity().getLocation(), Sound.LEVEL_UP, 20, 20);
+                bossTracker.cancelParticleTask(bossTracker.getIDbyUUID(uuidAsString), false);
 
-                for(Entity entityNearby : event.getEntity().getNearbyEntities(8, 8, 8)) {
+                for(Entity entityNearby : event.getEntity().getNearbyEntities(30, 5, 30)) {
                     if(entityNearby instanceof Player) {
-                        ((Player) entityNearby).sendTitle("§c§lBoss died!", "§6§lCongratz!");
+                        ((Player) entityNearby).sendTitle("§c§lBoss tot!", "§eGlückwunsch");
                     }
                 }
+
+                SpawnChestTask spawnChestTask = new SpawnChestTask(bossID);
+                spawnChestTask.runTaskTimer(SkyLands.plugin, 0L, 20L);
             }
         }
     }
@@ -78,6 +64,7 @@ public class PvEListener implements Listener {
     public void onEntityAttack(EntityDamageByEntityEvent event) {
         Entity attackedEntity = event.getEntity();
         Entity attackingPlayer = event.getDamager();
+
         net.minecraft.server.v1_8_R3.Entity craftEntityAttacked = ((CraftEntity) event.getEntity()).getHandle();
         net.minecraft.server.v1_8_R3.Entity craftEntityAttacker = ((CraftEntity) event.getDamager()).getHandle();
 
@@ -93,14 +80,53 @@ public class PvEListener implements Listener {
                 event.setDamage(event.getDamage() * ((Boss) craftEntityAttacker).getDamageIncrease());
             }
         }
+
+        if((!(attackedEntity instanceof Player)) && event.getDamager() instanceof Projectile) {
+            if(craftEntityAttacked instanceof Boss) {
+                Projectile projectile = (Projectile) event.getDamager();
+                event.setDamage(event.getDamage() - event.getDamage() * ((Boss) craftEntityAttacked).getDamageReduction());
+
+                if(projectile instanceof Arrow) {
+                    if(projectile.getShooter() instanceof Player) {
+                        double randomDouble = Math.random();
+                        if(randomDouble < 0.5) {
+                            Player pShooter = ((Player)projectile.getShooter());
+                            pShooter.sendMessage("§2§lSLIME-ATTACKE! §eDer Slimekönig wehrt sich.");
+                            pShooter.setFireTicks(80);
+                            moveToward(pShooter, attackedEntity.getLocation(), 5);
+                        }
+                    }
+                }
+            }
+        }
     }
+
 
     @EventHandler
     public void onEntityDamage(EntityDamageEvent event) {
-        if(event.getCause().equals(EntityDamageEvent.DamageCause.BLOCK_EXPLOSION)) {
-            if(!(event.getEntity() instanceof Player)) {
-                event.setCancelled(true);
+        Entity attackedEntity = event.getEntity();
+        net.minecraft.server.v1_8_R3.Entity craftEntityAttacked = ((CraftEntity) event.getEntity()).getHandle();
+
+        if(event.getCause().equals(EntityDamageEvent.DamageCause.BLOCK_EXPLOSION) || event.getCause().equals(EntityDamageEvent.DamageCause.FALL)) {
+            if (!(event.getEntity() instanceof Player)) {
+                if (craftEntityAttacked instanceof Boss) {
+                    event.setCancelled(true);
+                }
             }
         }
+    }
+
+    @EventHandler
+    public void onChunkUnload(ChunkUnloadEvent event) {
+        event.setCancelled(true);
+    }
+
+    public void moveToward(Entity entity, Location to, double speed){
+        Location loc = entity.getLocation();
+        double x = loc.getX() - to.getX();
+        double y = loc.getY() - to.getY();
+        double z = loc.getZ() - to.getZ();
+        Vector velocity = new Vector(x, y, z).normalize().multiply(-speed);
+        entity.setVelocity(velocity);
     }
 }

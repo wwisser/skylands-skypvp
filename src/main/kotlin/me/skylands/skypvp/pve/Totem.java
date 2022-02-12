@@ -2,11 +2,14 @@ package me.skylands.skypvp.pve;
 
 import me.skylands.skypvp.SkyLands;
 import me.skylands.skypvp.pve.bosses.BossSlime;
+import me.skylands.skypvp.pve.bosses.attacks.AreaMultiAttack;
 import me.skylands.skypvp.task.pve.BossAttackTask;
 import org.bukkit.*;
 import org.bukkit.entity.*;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
@@ -34,9 +37,10 @@ public class Totem {
         int spawnAmount = getSpawnAmount();
         for (int i = 0; i < spawnAmount; i++) {
             Location spawnLocation = getRandomSpawnLocation();
-            LivingEntity entity = (LivingEntity) world.spawnEntity(spawnLocation, enemies.get(getRandomNumber(0, enemies.size()-1)));
+            LivingEntity entity = (LivingEntity) world.spawnEntity(spawnLocation, enemies.get(getRandomNumber(0, enemies.size())));
+            entity.setMetadata(Integer.toString(totemIdentifier), new FixedMetadataValue(SkyLands.plugin, difficulty));
             entity.setRemoveWhenFarAway(true);
-            entity.setMaxHealth(20 + 10*difficulty);
+            entity.setMaxHealth(20 + 10 * difficulty);
             entity.setHealth(entity.getMaxHealth());
             entity.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, -1 + difficulty, false, false));
             entity.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, -1 + difficulty, false, false));
@@ -46,49 +50,57 @@ public class Totem {
     public void spawnBoss() {
         Location spawnLocation = getRandomSpawnLocation();
 
-        switch (this.bossType) {
-            case "Slime":
-                // SPAWN CONDITIONS SUPPOSED TO BE CHECKED FOR @ TotemEnemiesSpawnTask
-                BossSlime bossSlime = new BossSlime(spawnLocation);
-                bossSlime.setPosition(spawnLocation.getX(), spawnLocation.getY(), spawnLocation.getZ());
-                Helper.bossData.put(this.totemIdentifier, new BossData(true, bossSlime.getBukkitEntity(), this.getRandomSpawnLocation()));
+        if(this.bossType.equals("Slime")) {
+            BossSlime bossSlime = new BossSlime(spawnLocation);
+            bossSlime.setPosition(spawnLocation.getX(), spawnLocation.getY(), spawnLocation.getZ());
+            Helper.bossData.put(this.totemIdentifier, new BossData(true, bossSlime.getBukkitEntity(), this.getRandomSpawnLocation(), this.centerLocation));
 
-                // AttackTask SUPPOSED TO BE STARTED @ BOSS CLASS (or here? todo)
+            BukkitRunnable bossAttackTask = new BossAttackTask(bossSlime.getBukkitEntity(), bossSlime.getBossAttack());
+            bossAttackTask.runTaskTimer(SkyLands.plugin, 20, 20);
 
-                Bukkit.getScheduler().runTaskTimer(SkyLands.plugin, new BossAttackTask(bossSlime.getBukkitEntity(), bossSlime.getBossAttack()), 20L, 20L);
-
-                Bukkit.getLogger().info("Task started. Boss Attack: " + bossSlime.getBossAttack().toString());
-                break;
-            /*[...]":*/
+            if(Helper.getDebugMode()) Bukkit.getLogger().info("Slime boss spawned. Selected Boss Attack: " + bossSlime.getBossAttack().toString());
         }
     }
 
     private Location getRandomSpawnLocation() {
-        return new Location(
+        Location spawnLocation = new Location(
                 world,
                 centerLocation.getX() + getRandomNumber(-spawnRadius, spawnRadius),
                 centerLocation.getY(),
                 centerLocation.getZ() + getRandomNumber(-spawnRadius, spawnRadius)
         );
+
+        if (world.getHighestBlockYAt(spawnLocation) <= 10) {
+            return getRandomSpawnLocation();
+        }
+
+        for (int i = 0; i < 10; i++) {
+            if (spawnLocation.getBlock().getType().isSolid()) {
+                if (!spawnLocation.add(0, 1, 0).getBlock().getType().isSolid()) {
+                    return spawnLocation;
+                }
+                return getRandomSpawnLocation();
+            }
+        }
+
+        return spawnLocation;
     }
 
     private int getSpawnAmount() {
         int nearbyPlayers = getNearbyPlayersAmount();
-        if (nearbyPlayers == 0 || getNearbyMonstersAmount() > 10) {
-            clearMobs();
-            return 0;
-        }
-        if (nearbyPlayers < 3) {
-            return getRandomNumber(1, 4);
-        } else {
-            return getRandomNumber(nearbyPlayers / 2, nearbyPlayers * 2);
-        }
+
+        int minSpawn = spawnRadius / 5 + nearbyPlayers - 1;
+        int maxSpawn = spawnRadius / 4 + nearbyPlayers;
+
+        if (nearbyPlayers == 0) clearMobs();
+        if (getNearbyMonstersAmount() > spawnRadius / 3) return 0;
+        return getRandomNumber(minSpawn, maxSpawn);
     }
 
     private int getNearbyPlayersAmount() {
         int count = 0;
         for (Player player : centerLocation.getWorld().getPlayers()) {
-            if (player.getLocation().distance(centerLocation) < (spawnRadius * 3)) {
+            if (player.getLocation().distance(centerLocation) < (spawnRadius * 1.3)) {
                 count++;
             }
         }
@@ -99,7 +111,7 @@ public class Totem {
         int count = 0;
         for (LivingEntity livingEntity : centerLocation.getWorld().getLivingEntities()) {
             if (livingEntity instanceof Player) continue;
-            if (livingEntity.getLocation().distance(centerLocation) < (spawnRadius * 3)) {
+            if (livingEntity.getLocation().distance(centerLocation) < (spawnRadius * 1.25)) {
                 count++;
             }
         }
@@ -112,7 +124,7 @@ public class Totem {
 
     private void clearMobs() {
         for (LivingEntity livingEntity : centerLocation.getWorld().getLivingEntities()) {
-            if (livingEntity.getLocation().distance(centerLocation) < (spawnRadius * 7.5)) {
+            if (livingEntity.getLocation().distance(centerLocation) < (spawnRadius * 1.3)) {
                 if (enemies.contains(livingEntity.getType())) {
                     if (getRandomNumber(0, 10) < 4) {
                         livingEntity.remove();
@@ -120,6 +132,21 @@ public class Totem {
                 }
             }
         }
+    }
+
+    public String getBossType() {
+        return this.bossType;
+    }
+
+    public Location getTotemCenterLocation() {
+        return this.centerLocation;
+    }
+
+    public Location getCenterLocation() {
+        return this.centerLocation;
+    }
+    public int getSpawnRadius() {
+        return this.spawnRadius;
     }
 
     public int getTotemIdentifier() {

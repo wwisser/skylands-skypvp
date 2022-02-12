@@ -1,7 +1,8 @@
 name: SkyLands-SkyPvP
 version: 1.0
 main: me.skylands.skypvp.SkyLands
-depend: [Vault, Votifier, PermissionsEx, ASkyBlock, Multiverse-Core]
+depend: [Vault, Votifier, PermissionsEx, ASkyBlock, Multiverse-Core, HolographicDisplays, ParticleNativeAPI]
+api-version: "1.13"
 commands:
   rawbc:
   motd:
@@ -44,3 +45,4 @@ commands:
     aliases: [ks]
   effekte:
     aliases: [ef, effects]
+  pve:

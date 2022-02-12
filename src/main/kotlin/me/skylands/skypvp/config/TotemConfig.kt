@@ -14,6 +14,7 @@ class TotemConfig {
 
     private val config = Config(SkyLands.CONFIG_PATH, FILE_NAME)
     val totems: MutableMap<String, Totem> = HashMap()
+    val bossTotems: MutableMap<String, Totem> = HashMap()
 
     init {
         val keys = config.getKeys(false)
@@ -26,28 +27,31 @@ class TotemConfig {
                 getBossType(key),
                 getTotemIdentifer(key)
             )
+            if (!totems[key]?.bossType.equals("None")) {
+                bossTotems[key] = totems[key]!!
+            }
         }
     }
 
     fun getCenterLocation(id: String): Location {
         return Location(
-            Bukkit.getWorld("world"),
-            config.get(id + ".centerlocation.x") as Double,
-            config.get(id + ".centerlocation.y") as Double,
-            config.get(id + ".centerlocation.z") as Double
+            Bukkit.getWorld("sl_pve"),
+            config["$id.centerlocation.x"] as Double,
+            config["$id.centerlocation.y"] as Double,
+            config["$id.centerlocation.z"] as Double
         )
     }
 
-    fun getDifficulty(id: String): Int {
-        return config.getInt(id + ".difficulty")
+    private fun getDifficulty(id: String): Int {
+        return config.getInt("$id.difficulty")
     }
 
-    fun getSpawnRadius(id: String): Int {
-        return config.getInt(id + ".spawnRadius")
+    private fun getSpawnRadius(id: String): Int {
+        return config.getInt("$id.spawnRadius")
     }
 
-    fun getEnemiesList(name: String): List<EntityType> {
-        val temp = config.getStringList(name + ".enemies")
+    private fun getEnemiesList(name: String): List<EntityType> {
+        val temp = config.getStringList("$name.enemies")
         val list = emptyList<EntityType>().toMutableList()
         temp.forEach {
             list.add(EntityType.fromName(it))
@@ -55,11 +59,11 @@ class TotemConfig {
         return list.toList()
     }
 
-    fun getBossType(id: String) : String {
-        return config.getString(id + ".bossType")
+    private fun getBossType(id: String) : String {
+        return config.getString("$id.bossType")
     }
 
-    fun getTotemIdentifer(id: String) : Int {
-        return config.getInt(id + ".totemIdentifier")
+    private fun getTotemIdentifer(id: String) : Int {
+        return config.getInt("$id.totemIdentifier")
     }
 }

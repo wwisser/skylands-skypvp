@@ -1,6 +1,10 @@
 package me.skylands.skypvp.pve;
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+import me.skylands.skypvp.SkyLands;
 import net.minecraft.server.v1_8_R3.EntityInsentient;
 import net.minecraft.server.v1_8_R3.EntityTypes;
+import org.bukkit.Location;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -8,7 +12,53 @@ import java.util.*;
 
 public class Helper {
 
-    public static HashMap<Integer, BossData> bossData = new HashMap<Integer, BossData>(); // Identifier & "List"
+    public static HashMap<Integer, BossData> bossData = new HashMap<Integer, BossData>();
+    private static boolean totemsToggled = true;
+    private static boolean silentRemoval = false;
+    private static boolean debugMode = false;
+
+    public void createBossHologram(int bossID) {
+        BossData bossData = Helper.bossData.get(bossID);
+        Location totemCenterLoc = bossData.getTotemCenterLocation();
+        Location holoLoc = new Location(SkyLands.WORLD_SKYPVP, totemCenterLoc.getX(),totemCenterLoc.getY() + 3,totemCenterLoc.getZ());
+
+        Hologram hologram = HologramsAPI.createHologram(SkyLands.plugin, holoLoc);
+        hologram.appendTextLine("LOADING..");
+    }
+
+    public Hologram getHologramAt(Location location) {
+        for(Hologram holo : HologramsAPI.getHolograms(SkyLands.plugin)) {
+            if(holo.getLocation().getBlock().getLocation().equals(location.getBlock().getLocation())) {
+                return holo;
+            }
+        }
+
+        return null;
+    }
+
+    public static boolean getTotemsToggled() {
+        return totemsToggled;
+    }
+
+    public static boolean getDebugMode() {
+        return debugMode;
+    }
+
+    public static boolean getSilentRemovalStatus() {
+        return silentRemoval;
+    }
+
+    public static void toggleDebugMode() {
+        debugMode = !debugMode;
+    }
+
+    public static void toggleTotems() {
+        totemsToggled = !totemsToggled;
+    }
+
+    public static void setSilentRemoval(boolean newSilentRemoval) {
+        silentRemoval = newSilentRemoval;
+    }
 
     // Import
     public void registerEntity(String name, int id, Class<? extends EntityInsentient> nmsClass, Class<? extends EntityInsentient> customClass){
