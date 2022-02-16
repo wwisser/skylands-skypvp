@@ -21,6 +21,7 @@ import me.skylands.skypvp.task.pve.PreventBossIslandEnterTask
 import me.skylands.skypvp.task.pve.TotemEnemiesSpawnTask
 import me.skylands.skypvp.user.UserService
 import me.skylands.skypvp.util.LevelEconomy
+import me.skylands.skypvp.util.RandomMessages
 import net.milkbowl.vault.chat.Chat
 import net.milkbowl.vault.economy.Economy
 import net.minecraft.server.v1_8_R3.EntitySlime
@@ -51,6 +52,7 @@ class SkyLands : JavaPlugin() {
         lateinit var peaceConfig: PeaceConfig
         lateinit var totemConfig: TotemConfig
         lateinit var userService: UserService
+        lateinit var randomMessages: RandomMessages
 
         lateinit var containerManager: ContainerManager
         lateinit var ipMatchingService: IpMatchingService
@@ -80,6 +82,7 @@ class SkyLands : JavaPlugin() {
             peaceConfig = PeaceConfig()
             totemConfig = TotemConfig()
             userService = UserService()
+            randomMessages = RandomMessages();
 
             containerManager = ContainerManager()
             ipMatchingService = IpMatchingService()
@@ -106,6 +109,7 @@ class SkyLands : JavaPlugin() {
             super.getServer().scheduler.runTaskTimer(this, MotdUpdateTask(), 0L, 20L * 60 * 3) // 3m
             super.getServer().scheduler.runTaskTimer(this, PlaytimeUpdateTask(), 20L * 60, 20L * 60) // 1m
             super.getServer().scheduler.runTaskTimer(this, JumpboostSupplierTask(), 0L, 3L)
+            super.getServer().scheduler.runTaskTimer(this, RandomMessagesTask(), 0L, 20L * 60);
             super.getServer().scheduler.runTaskTimerAsynchronously(
                 this,
                 ToplistUpdateTask(arrayOf(
@@ -147,14 +151,12 @@ class SkyLands : JavaPlugin() {
                 5L
             )
 
-            Bukkit.getLogger().info("SpawnTask call (pre)")
             super.getServer().scheduler.runTaskTimer(
                 this,
                 TotemEnemiesSpawnTask(),
                 20L,
                 20L
             )
-            Bukkit.getLogger().info("SpawnTask call (after)")
 
             super.getServer().scheduler.runTaskTimer(
                 this,
@@ -218,5 +220,4 @@ class SkyLands : JavaPlugin() {
         val random = Random()
         return min + (max - min) * random.nextDouble()
     }
-
 }

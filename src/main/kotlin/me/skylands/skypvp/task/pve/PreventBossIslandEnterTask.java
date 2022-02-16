@@ -3,6 +3,7 @@ package me.skylands.skypvp.task.pve;
 import me.skylands.skypvp.Messages;
 import me.skylands.skypvp.SkyLands;
 import me.skylands.skypvp.item.ItemBuilder;
+import me.skylands.skypvp.pve.Helper;
 import me.skylands.skypvp.pve.Totem;
 import me.skylands.skypvp.user.User;
 import org.bukkit.Bukkit;
@@ -28,7 +29,7 @@ public class PreventBossIslandEnterTask extends BukkitRunnable {
 
             for (Player player : SkyLands.WORLD_SKYPVP.getPlayers()) {
                 if (totem.getCenterLocation().distance(player.getLocation()) < (totem.getSpawnRadius() + 25)) {
-                    if (!hasItem(player, z1EnterBossIslandTicket, 1)) {
+                    if (!Helper.hasItem(player, z1EnterBossIslandTicket, 1)) {
                         if(!knownPlayers.contains(player.getName())) {
                             player.setVelocity(player.getLocation().getDirection()
                                     .setY(.3).multiply(.3)
@@ -39,7 +40,7 @@ public class PreventBossIslandEnterTask extends BukkitRunnable {
                         }
                     } else {
                         if(!knownPlayers.contains(player.getName())) {
-                            player.sendMessage(Messages.PREFIX + "Willkommen zum §eBosskampf§7! Besiege den §eSlimekönig§7 um Belohnungen zu erhalten.");
+                            player.sendMessage(Messages.PREFIX + "Willkommen zum §eBosskampf§7! Du hast nun für §eeine Stunde§7 Zugang zur Bossinsel. §7Besiege den §eSlimekönig§7 um Belohnungen zu erhalten.");
                             knownPlayers.add(player.getName());
                             player.getInventory().removeItem(z1EnterBossIslandTicket);
 
@@ -51,18 +52,5 @@ public class PreventBossIslandEnterTask extends BukkitRunnable {
                 }
             }
         }
-    }
-
-
-    private boolean hasItem(Player player, ItemStack query, int amount) {
-        int count = 0;
-        for (ItemStack itemStack : player.getInventory().getContents()) {
-            if(itemStack != null) {
-                if(itemStack.getType().equals(query.getType()) && itemStack.getItemMeta().equals(query.getItemMeta())) {
-                    count += itemStack.getAmount();
-                }
-            }
-        }
-        return (count >= amount);
     }
 }

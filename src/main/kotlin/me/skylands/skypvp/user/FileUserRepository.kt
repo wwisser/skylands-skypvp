@@ -17,39 +17,62 @@ class FileUserRepository : UserRepository {
         val hasReducedEnchantingCostsUpgrade = false
         val islandLevelChallengeCompleted = false
         val teamworkChallengeCompleted = false
-
+        val witchUnlocked = false
 
         if (!userDatabase.contains(uuid)) {
             return User(
-                    name, uuid, currentTimeMillis, currentTimeMillis,
-                    0, 0, 0, 0, 0, 0, 0, islandEffectHasteStatus, islandEffectSpeedStatus, islandEffectWaterBreathingStatus, hasReducedEnchantingCostsUpgrade, 0, 0, 0, 0, 0, 0, teamworkChallengeCompleted, islandLevelChallengeCompleted
+                name,
+                uuid,
+                currentTimeMillis,
+                currentTimeMillis,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                islandEffectHasteStatus,
+                islandEffectSpeedStatus,
+                islandEffectWaterBreathingStatus,
+                hasReducedEnchantingCostsUpgrade,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                teamworkChallengeCompleted,
+                islandLevelChallengeCompleted,
+                witchUnlocked
             )
         }
         val data: List<String> = userDatabase.getString(uuid).split(";")
         return User(
-                name,
-                uuid,
-                java.lang.Long.valueOf(data[0]),
-                java.lang.Long.valueOf(data[1]),
-                Integer.valueOf(data[2]),
-                Integer.valueOf(data[3]),
-                Integer.valueOf(data[4]),
-                Integer.valueOf(data[5]),
-                Integer.valueOf(data[6]),
-                Integer.valueOf(data[7]),
-                Integer.valueOf(data[8]),
-                data[9].toBoolean(),
-                data[10].toBoolean(),
-                data[11].toBoolean(),
-                data[12].toBoolean(),
-                Integer.valueOf(data[13]),
-                Integer.valueOf(data[14]),
-                Integer.valueOf(data[15]),
-                Integer.valueOf(data[16]),
-                Integer.valueOf(data[17]),
-                Integer.valueOf(data[18]),
-                data[19].toBoolean(),
-                data[20].toBoolean()
+            name,
+            uuid,
+            java.lang.Long.valueOf(data[0]),
+            java.lang.Long.valueOf(data[1]),
+            Integer.valueOf(data[2]),
+            Integer.valueOf(data[3]),
+            Integer.valueOf(data[4]),
+            Integer.valueOf(data[5]),
+            Integer.valueOf(data[6]),
+            Integer.valueOf(data[7]),
+            Integer.valueOf(data[8]),
+            data[9].toBoolean(),
+            data[10].toBoolean(),
+            data[11].toBoolean(),
+            data[12].toBoolean(),
+            Integer.valueOf(data[13]),
+            Integer.valueOf(data[14]),
+            Integer.valueOf(data[15]),
+            Integer.valueOf(data[16]),
+            Integer.valueOf(data[17]),
+            Integer.valueOf(data[18]),
+            data[19].toBoolean(),
+            data[20].toBoolean(),
+            data[21].toBoolean()
         )
     }
 
@@ -92,7 +115,8 @@ class FileUserRepository : UserRepository {
                 + user.mobsKilled + ";"
                 + user.woodChopped + ";"
                 + user.teamWorkChallengeCompleted + ";"
-                + user.islandLevelChallengeCompleted)
+                + user.islandLevelChallengeCompleted + ";"
+                + user.witchUnlocked)
         userDatabase[user.uuid] = data
         userDatabase.saveFile()
     }

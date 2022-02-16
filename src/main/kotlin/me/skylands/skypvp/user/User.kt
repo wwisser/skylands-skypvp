@@ -25,7 +25,8 @@ data class User(
         var mobsKilled: Int,
         var woodChopped: Int,
         var teamWorkChallengeCompleted: Boolean,
-        var islandLevelChallengeCompleted: Boolean
+        var islandLevelChallengeCompleted: Boolean,
+        var witchUnlocked: Boolean
 ) {
     fun getKdr(): Double {
         if (kills != 0 && deaths != 0) {

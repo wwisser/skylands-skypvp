@@ -1,24 +1,36 @@
 package me.skylands.skypvp.listener.pve;
 
+import me.skylands.skypvp.Messages;
 import me.skylands.skypvp.SkyLands;
+import me.skylands.skypvp.item.ItemBuilder;
 import me.skylands.skypvp.pve.BossData;
 import me.skylands.skypvp.pve.BossTracker;
 import me.skylands.skypvp.pve.Helper;
 import me.skylands.skypvp.pve.bosses.Boss;
 import me.skylands.skypvp.pve.bosses.BossSlime;
 import me.skylands.skypvp.task.pve.SpawnChestTask;
+import me.skylands.skypvp.user.User;
+import me.skylands.skypvp.user.UserService;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.*;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 public class PvEListener implements Listener {
+
+    private final ItemStack bpCoupon = new ItemBuilder(Material.REDSTONE).name("§cBlutpunkt").modifyLore().add(" ").add("§eRechtsklick, um Gutschein einzulösen").finish().glow().build();
+    private final UserService userService = SkyLands.userService;
+
     @EventHandler
     public void onSlimeSplit(SlimeSplitEvent event) {
         if (((CraftEntity) event.getEntity()).getHandle() instanceof BossSlime) {
@@ -101,13 +113,26 @@ public class PvEListener implements Listener {
         }
     }
 
+    @EventHandler
+    public void onInteract(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        if(player.getItemInHand().equals(bpCoupon)) {
+            if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
+                if (hasItem(player, bpCoupon, 1)) {
+                    player.getInventory().removeItem(bpCoupon);
+                    userService.getUser(player).setBloodPoints(userService.getUser(player).getBloodPoints() + 1);
+                    player.sendMessage(Messages.PREFIX + "Du hast §ceinen Blutpunkt§7 erhalten. Du hast nun §c" + userService.getUser(player).getBloodPoints() + " Blutpunkte§7.");
+                }
+            }
+        }
+    }
 
     @EventHandler
     public void onEntityDamage(EntityDamageEvent event) {
         Entity attackedEntity = event.getEntity();
         net.minecraft.server.v1_8_R3.Entity craftEntityAttacked = ((CraftEntity) event.getEntity()).getHandle();
 
-        if(event.getCause().equals(EntityDamageEvent.DamageCause.BLOCK_EXPLOSION) || event.getCause().equals(EntityDamageEvent.DamageCause.FALL)) {
+        if (event.getCause().equals(EntityDamageEvent.DamageCause.BLOCK_EXPLOSION) || event.getCause().equals(EntityDamageEvent.DamageCause.FALL)) {
             if (!(event.getEntity() instanceof Player)) {
                 if (craftEntityAttacked instanceof Boss) {
                     event.setCancelled(true);
@@ -121,7 +146,19 @@ public class PvEListener implements Listener {
         event.setCancelled(true);
     }
 
-    public void moveToward(Entity entity, Location to, double speed){
+    private boolean hasItem(Player player, ItemStack query, int amount) {
+        int count = 0;
+        for (ItemStack itemStack : player.getInventory().getContents()) {
+            if(itemStack != null) {
+                if(itemStack.getType().equals(query.getType()) && itemStack.getItemMeta().equals(query.getItemMeta())) {
+                    count += itemStack.getAmount();
+                }
+            }
+        }
+        return (count >= amount);
+    }
+
+    private void moveToward(Entity entity, Location to, double speed){
         Location loc = entity.getLocation();
         double x = loc.getX() - to.getX();
         double y = loc.getY() - to.getY();

@@ -39,14 +39,14 @@ public class Rewards {
 
     private final List<ItemStack> rareRewards = Arrays.asList(
             new ItemBuilder(Material.BONE).amount(2).name("§cTeufelsknochen").modifyLore().set(brewingItemLore).finish().glow().build(),
+            new ItemBuilder(Material.TRIPWIRE_HOOK).name("§3Katalysator").modifyLore().add(" ").add("§7Seltener §eBraugestand").add("§7Bringe diesen §eKatalysator").add("§7zu §eMelisandre.").finish().glow().build(),
             new ItemBuilder(Material.REDSTONE).amount(20).name("§cBlutpunkt").modifyLore().set(couponItemLore).finish().glow().build()
     );
 
     private final List<ItemStack> legendaryRewards = Arrays.asList(
             new ItemBuilder(Material.ENCHANTED_BOOK).enchant(Enchantment.DAMAGE_ALL, 5).build(),
             new ItemBuilder(Material.ENCHANTED_BOOK).enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 4).build(),
-            new ItemBuilder(Material.EYE_OF_ENDER).name("§5Auge des §7Obsidiandrachens").modifyLore().set(brewingItemLore).finish().glow().build(),
-            new ItemBuilder(Material.DAYLIGHT_DETECTOR).name("§3Katalysator").modifyLore().set(brewingItemLore).finish().glow().build()
+            new ItemBuilder(Material.EYE_OF_ENDER).name("§5Auge des §7Obsidiandrachens").modifyLore().set(brewingItemLore).finish().glow().build()
     );
 
     public List<ItemStack> fetchItems(int amount) {

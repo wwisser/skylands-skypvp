@@ -20,7 +20,7 @@ public class TotemEnemiesSpawnTask extends BukkitRunnable {
     private final BossTracker bossTracker = new BossTracker();
     private final TotemConfig totemConfig = SkyLands.totemConfig;
 
-    private int timeLeft = 60*5;
+    private int timeLeft = 30;
 
     private final List<String> holoContent = Arrays.asList("§c§lZone 1", "§2§l⚔ §r§2Slimekönig §2§l⚔", " ", "[TIME]");
 
@@ -31,13 +31,13 @@ public class TotemEnemiesSpawnTask extends BukkitRunnable {
 
         if(Helper.getDebugMode()) Bukkit.getLogger().info("In: TotemEnemiesSpawnTask Time: " + this.timeLeft);
 
-        if (this.timeLeft % 30 == 0) {
+        if (this.timeLeft % 15 == 0) {
             this.spawnTotemMobs();
         }
 
         if (this.timeLeft == 0) {
             this.spawnBoss();
-            this.timeLeft = 60*5;
+            this.timeLeft = 30;
         }
 
         this.updateHolos(returnTimeUntilBossSpawn());

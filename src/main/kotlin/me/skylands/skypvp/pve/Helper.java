@@ -5,6 +5,8 @@ import me.skylands.skypvp.SkyLands;
 import net.minecraft.server.v1_8_R3.EntityInsentient;
 import net.minecraft.server.v1_8_R3.EntityTypes;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -13,6 +15,7 @@ import java.util.*;
 public class Helper {
 
     public static HashMap<Integer, BossData> bossData = new HashMap<Integer, BossData>();
+    private static HashMap<String, Integer> witchCache = new HashMap<String, Integer>();
     private static boolean totemsToggled = true;
     private static boolean silentRemoval = false;
     private static boolean debugMode = false;
@@ -48,6 +51,13 @@ public class Helper {
         return silentRemoval;
     }
 
+    public static int getWitchCacheStatus(String pName) {
+        if(witchCache.containsKey(pName)) {
+            return witchCache.get(pName);
+        }
+        return -1;
+    }
+
     public static void toggleDebugMode() {
         debugMode = !debugMode;
     }
@@ -58,6 +68,22 @@ public class Helper {
 
     public static void setSilentRemoval(boolean newSilentRemoval) {
         silentRemoval = newSilentRemoval;
+    }
+
+    public static void setWitchCacheData(String pName, int status) {
+        witchCache.put(pName, status);
+    }
+
+    public static boolean hasItem(Player player, ItemStack query, int amount) {
+        int count = 0;
+        for (ItemStack itemStack : player.getInventory().getContents()) {
+            if(itemStack != null) {
+                if(itemStack.getType().equals(query.getType()) && itemStack.getItemMeta().equals(query.getItemMeta())) {
+                    count += itemStack.getAmount();
+                }
+            }
+        }
+        return (count >= amount);
     }
 
     // Import
