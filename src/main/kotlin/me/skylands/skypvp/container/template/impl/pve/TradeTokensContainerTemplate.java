@@ -41,7 +41,7 @@ public class TradeTokensContainerTemplate extends ContainerTemplate {
 
                         pInv.addItem(z1EnterBossIslandTicket);
                         player.closeInventory();
-                        player.sendMessage(Messages.PREFIX + "§7Du hast erfolgreich §eMonstermarken§7 gegen eine §ePassiererlaubnis§7 eingetauscht. Du kannst dich jetzt mit einer §eEnderperle§7 zur §eBossinsel §7teleportieren.");
+                        player.sendMessage(Messages.PREFIX + "§7Du hast erfolgreich §eMonstermarken§7 gegen eine §ePassiererlaubnis§7 eingetauscht. §eViel Erfolg!");
                     } else {
                         player.closeInventory();
                         player.sendMessage(Messages.PREFIX + "§7Du besitzt nicht genug §eMonstermarken§7! Du benötigst §e25§7 von jeder Insel.");
