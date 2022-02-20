@@ -19,6 +19,7 @@ class PlayerJoinListener : Listener {
     @EventHandler
     fun onPlayerJoin(event: PlayerJoinEvent) {
         val player = event.player
+        if(player.world.equals(Bukkit.getWorld("world"))) player.teleport(SkyLands.LOCATION_SPAWN)
 
         Title("§6§lSkyLands", "§7SkyPvP & SkyBlock", 0, 2, 1).send(player)
 

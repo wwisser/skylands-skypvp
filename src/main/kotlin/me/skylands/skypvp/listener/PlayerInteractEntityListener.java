@@ -68,6 +68,7 @@ public class PlayerInteractEntityListener implements Listener {
                 if (entityType == EntityType.ZOMBIE) {
                     selectZoneContainerTemplate.open(player);
                 }
+                return;
             }
             if (entityType == EntityType.VILLAGER) {
                 tradeTokensContainerTemplate.open(player);

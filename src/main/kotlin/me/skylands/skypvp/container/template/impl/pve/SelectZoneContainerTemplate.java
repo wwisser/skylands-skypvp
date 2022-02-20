@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 public class SelectZoneContainerTemplate extends ContainerTemplate {
 
     private final Container container;
-    private final Location zone1 = new Location(SkyLands.WORLD_SKYPVP, 135.5, 71, 8.5);
+    private final Location zone1 = new Location(SkyLands.WORLD_SKYPVP, 135.5, 71, 8.5,180,0);
 
     public SelectZoneContainerTemplate(ContainerManager containerManager) {
         super(containerManager);
