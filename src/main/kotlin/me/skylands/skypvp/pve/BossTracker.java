@@ -34,7 +34,6 @@ public class BossTracker {
         if (boss instanceof BossSlime) {
             ((Slime) bossHandle).addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 3, false, false));
             ((Slime) bossHandle).addPotionEffect(new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, 3, false, false));
-            Bukkit.getLogger().info("Max Health Of Boss Is " + ((BossSlime) boss).getMaxHealth());
         }
         helper.setDataStatus(0);
     }
