@@ -3,7 +3,9 @@ package me.skylands.skypvp.pve;
 import me.skylands.skypvp.item.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.SpawnEgg;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,7 +39,10 @@ public class Rewards {
             new ItemBuilder(Material.DIAMOND_BOOTS).build(),
             new ItemBuilder(Material.DIAMOND_HELMET).build(),
             new ItemBuilder(Material.ENCHANTED_BOOK).enchant(Enchantment.DAMAGE_ALL, 3).build(),
-            new ItemBuilder(Material.ENCHANTED_BOOK).enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 3).build()
+            new ItemBuilder(Material.ENCHANTED_BOOK).enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 3).build(),
+            new ItemStack(Material.MONSTER_EGG, 1, EntityType.OCELOT.getTypeId()),
+            new ItemStack(Material.MONSTER_EGG, 1, EntityType.MUSHROOM_COW.getTypeId()),
+            new ItemStack(Material.MONSTER_EGG, 1, EntityType.WOLF.getTypeId())
     );
 
     private final List<ItemStack> rareRewards = Arrays.asList(

@@ -41,7 +41,7 @@ public class BossParticleTask extends BukkitRunnable {
                     for(Entity nearby : boss.getNearbyEntities(20,5,20)) {
                         if(nearby instanceof Player) {
                             if(!((Player) nearby).hasPotionEffect(PotionEffectType.POISON)) {
-                                ((Player) nearby).addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20*9, 3, true, false));
+                                ((Player) nearby).addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20*4, 3, true, false));
                                 nearby.sendMessage("§a§lGIFTATTACKE! §r§eDu wurdest vergiftet.");
                             }
                         }

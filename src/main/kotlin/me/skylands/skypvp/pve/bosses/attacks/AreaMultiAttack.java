@@ -60,7 +60,7 @@ public class AreaMultiAttack implements BossAttack {
     }
 
     private void showParticles(CraftEntity boss) {
-        for(int y = 0; y <= 4; y++) {
+        for(int y = 3; y <= 4; y++) {
             for(int x = 0; x <= 3; x++) {
                 for(int z = 0; z <= 3; z++) {
 

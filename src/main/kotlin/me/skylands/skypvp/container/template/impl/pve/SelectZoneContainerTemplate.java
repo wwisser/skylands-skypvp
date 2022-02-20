@@ -1,12 +1,14 @@
 package me.skylands.skypvp.container.template.impl.pve;
 
 import me.skylands.skypvp.Messages;
+import me.skylands.skypvp.SkyLands;
 import me.skylands.skypvp.container.Container;
 import me.skylands.skypvp.container.ContainerManager;
 import me.skylands.skypvp.container.ContainerStorageLevel;
 import me.skylands.skypvp.container.action.ContainerAction;
 import me.skylands.skypvp.container.template.ContainerTemplate;
 import me.skylands.skypvp.item.ItemBuilder;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -14,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 public class SelectZoneContainerTemplate extends ContainerTemplate {
 
     private final Container container;
+    private final Location zone1 = new Location(SkyLands.WORLD_SKYPVP, 135.5, 71, 8.5);
 
     public SelectZoneContainerTemplate(ContainerManager containerManager) {
         super(containerManager);
@@ -26,7 +29,7 @@ public class SelectZoneContainerTemplate extends ContainerTemplate {
 
         builder.addAction(10, Zone1,
                 player -> {
-                    player.performCommand("warp pveinsel1");
+                    player.teleport(zone1);
                     player.sendMessage(Messages.PREFIX_LONG);
                     player.sendMessage(Messages.PREFIX + "§7Willkommen in §aZone 1§7!");
                     player.sendMessage(" ");
