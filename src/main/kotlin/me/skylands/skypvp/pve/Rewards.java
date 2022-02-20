@@ -23,7 +23,10 @@ public class Rewards {
             new ItemBuilder(Material.EXP_BOTTLE).amount(64).build(),
             new ItemBuilder(Material.FLINT_AND_STEEL).amount(1).build(),
             new ItemBuilder(Material.GLOWSTONE_DUST).name("§7Feenstaub").modifyLore().set(brewingItemLore).finish().glow().build(),
-            new ItemBuilder(Material.GLOWSTONE_DUST).name("§7Feenstaub").amount(3).modifyLore().set(brewingItemLore).finish().glow().build()
+            new ItemBuilder(Material.GLOWSTONE_DUST).name("§7Feenstaub").amount(3).modifyLore().set(brewingItemLore).finish().glow().build(),
+            new ItemBuilder(Material.ENCHANTED_BOOK).enchant(Enchantment.DAMAGE_ALL, 2).build(),
+            new ItemBuilder(Material.ENCHANTED_BOOK).enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2).build()
+
     );
 
     private final List<ItemStack> uncommonRewards = Arrays.asList(
@@ -40,7 +43,7 @@ public class Rewards {
     private final List<ItemStack> rareRewards = Arrays.asList(
             new ItemBuilder(Material.BONE).amount(2).name("§cTeufelsknochen").modifyLore().set(brewingItemLore).finish().glow().build(),
             new ItemBuilder(Material.TRIPWIRE_HOOK).name("§3Katalysator").modifyLore().add(" ").add("§7Seltener §eBraugestand").add("§7Bringe diesen §eKatalysator").add("§7zu §eMelisandre.").finish().glow().build(),
-            new ItemBuilder(Material.REDSTONE).amount(20).name("§cBlutpunkt").modifyLore().set(couponItemLore).finish().glow().build()
+            new ItemBuilder(Material.REDSTONE).amount(4).name("§cBlutpunkt").modifyLore().set(couponItemLore).finish().glow().build()
     );
 
     private final List<ItemStack> legendaryRewards = Arrays.asList(

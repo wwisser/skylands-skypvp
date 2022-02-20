@@ -20,7 +20,7 @@ public class RandomMessagesTask extends BukkitRunnable {
     }
 
     private String returnRandomMessage() {
-        int randomEntry = ThreadLocalRandom.current().nextInt(0, messages.size() + 1);
+        int randomEntry = ThreadLocalRandom.current().nextInt(0, messages.size());
         return messages.get(randomEntry);
     }
 }

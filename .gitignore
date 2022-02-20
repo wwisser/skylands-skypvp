@@ -1,5 +1,6 @@
 .idea/
 target/
 dependency-reduced-pom.xml
+src/main/kotlin/me/skylands/skypvp/command/CommandTest.java
 
 *iml

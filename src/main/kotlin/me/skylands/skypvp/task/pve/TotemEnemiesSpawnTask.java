@@ -47,7 +47,7 @@ public class TotemEnemiesSpawnTask extends BukkitRunnable {
 
     private String returnTimeUntilBossSpawn() {
         int minutesLeft = this.timeLeft / 60;
-        int secondsLeft = this.timeLeft % 60;
+        String secondsLeft = this.timeLeft % 60 < 10 ? "0" + this.timeLeft % 60 : String.valueOf(this.timeLeft % 60);
 
         return "§e" + minutesLeft + "§7:§e" + secondsLeft;
     }

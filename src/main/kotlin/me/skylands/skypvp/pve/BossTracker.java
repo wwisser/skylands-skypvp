@@ -1,18 +1,43 @@
 package me.skylands.skypvp.pve;
 
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import me.skylands.skypvp.SkyLands;
+import me.skylands.skypvp.pve.bosses.Boss;
+import me.skylands.skypvp.pve.bosses.BossSlime;
+import me.skylands.skypvp.pve.data.BossData;
+import me.skylands.skypvp.pve.data.CacheData;
+import me.skylands.skypvp.pve.data.StatsData;
 import me.skylands.skypvp.task.pve.BossParticleTask;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Slime;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class BossTracker {
 
     public static HashMap<Integer, BossParticleTask> runningParticleTasks = new HashMap<Integer, BossParticleTask>();
+    private final Helper helper = new Helper();
+
+    public void initBoss(int bossID, Boss boss) {
+        CraftEntity bossHandle = getBossHandle(bossID);
+        if (boss instanceof BossSlime) {
+            ((Slime) bossHandle).addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 3, false, false));
+            ((Slime) bossHandle).addPotionEffect(new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, 3, false, false));
+            Bukkit.getLogger().info("Max Health Of Boss Is " + ((BossSlime) boss).getMaxHealth());
+        }
+        helper.setDataStatus(0);
+    }
 
     public boolean isValidID(int bossID) {
         BossData bossData = Helper.bossData.get(bossID);
@@ -39,6 +64,15 @@ public class BossTracker {
         return null;
     }
 
+    public void createBossHologram(int bossID) {
+        BossData bossData = Helper.bossData.get(bossID);
+        Location totemCenterLoc = bossData.getTotemCenterLocation();
+        Location holoLoc = new Location(SkyLands.WORLD_SKYPVP, totemCenterLoc.getX(),totemCenterLoc.getY() + 3,totemCenterLoc.getZ());
+
+        Hologram hologram = HologramsAPI.createHologram(SkyLands.plugin, holoLoc);
+        hologram.appendTextLine("LOADING..");
+    }
+
     public CraftEntity getBossHandle(int bossID) {
         BossData bossData = Helper.bossData.get(bossID);
 
@@ -59,12 +93,6 @@ public class BossTracker {
         return bossData.isAlive();
     }
 
-    public Location getBossLocation(int bossID) {
-        BossData bossData = Helper.bossData.get(bossID);
-
-        return bossData.getBossHandle().getLocation();
-    }
-
     public Location getTotemCenterLocation(int bossID) {
         BossData bossData = Helper.bossData.get(bossID);
 
@@ -80,7 +108,7 @@ public class BossTracker {
     public void displayAttackParticles(int bossID) {
         if(!isParticleTaskRunning(bossID)) {
             BossParticleTask bossParticleTask = new BossParticleTask(bossID);
-            bossParticleTask.runTaskTimer(SkyLands.plugin, 0,10); // 20 20
+            bossParticleTask.runTaskTimer(SkyLands.plugin, 0,10);
 
             runningParticleTasks.put(bossID, bossParticleTask);
         }

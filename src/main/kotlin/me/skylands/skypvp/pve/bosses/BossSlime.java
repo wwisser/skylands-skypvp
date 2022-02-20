@@ -1,4 +1,5 @@
 package me.skylands.skypvp.pve.bosses;
+import me.skylands.skypvp.pve.BossTracker;
 import me.skylands.skypvp.pve.bosses.attacks.AreaMultiAttack;
 import me.skylands.skypvp.pve.bosses.attacks.BossAttack;
 import net.minecraft.server.v1_8_R3.*;
@@ -9,6 +10,8 @@ import org.bukkit.entity.LivingEntity;
 
 
 public class BossSlime extends EntitySlime implements Boss {
+
+    private final BossTracker bossTracker = new BossTracker();
 
     public BossSlime(Location location) {
         super(((CraftWorld) location.getWorld()).getHandle());

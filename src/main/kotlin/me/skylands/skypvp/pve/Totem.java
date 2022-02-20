@@ -2,7 +2,7 @@ package me.skylands.skypvp.pve;
 
 import me.skylands.skypvp.SkyLands;
 import me.skylands.skypvp.pve.bosses.BossSlime;
-import me.skylands.skypvp.pve.bosses.attacks.AreaMultiAttack;
+import me.skylands.skypvp.pve.data.BossData;
 import me.skylands.skypvp.task.pve.BossAttackTask;
 import org.bukkit.*;
 import org.bukkit.entity.*;
@@ -22,6 +22,7 @@ public class Totem {
     final World world;
     final String bossType;
     final int totemIdentifier;
+    final BossTracker bossTracker = new BossTracker();
 
     public Totem(Location centerLocation, int difficulty, int spawnRadius, List<EntityType> enemies, String bossType, int totemIdentifier) {
         this.centerLocation = centerLocation;
@@ -59,6 +60,8 @@ public class Totem {
             bossAttackTask.runTaskTimer(SkyLands.plugin, 20, 20);
 
             if(Helper.getDebugMode()) Bukkit.getLogger().info("Slime boss spawned. Selected Boss Attack: " + bossSlime.getBossAttack().toString());
+
+            bossTracker.initBoss(bossTracker.getIDbyUUID(bossSlime.getUniqueID().toString()), bossSlime);
         }
     }
 

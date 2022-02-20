@@ -48,3 +48,4 @@ commands:
   pve:
   acceptoffer:
   denyoffer:
+  bstats:

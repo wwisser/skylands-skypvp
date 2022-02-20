@@ -1,4 +1,4 @@
-package me.skylands.skypvp.pve;
+package me.skylands.skypvp.pve.data;
 
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;

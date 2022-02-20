@@ -1,15 +1,27 @@
 package me.skylands.skypvp.pve;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+import me.skylands.skypvp.Messages;
 import me.skylands.skypvp.SkyLands;
+import me.skylands.skypvp.pve.data.BossData;
+import me.skylands.skypvp.pve.data.CacheData;
+import me.skylands.skypvp.pve.data.StatsData;
+import me.skylands.skypvp.user.UserService;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.minecraft.server.v1_8_R3.EntityInsentient;
 import net.minecraft.server.v1_8_R3.EntityTypes;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class Helper {
@@ -19,15 +31,15 @@ public class Helper {
     private static boolean totemsToggled = true;
     private static boolean silentRemoval = false;
     private static boolean debugMode = false;
+    private static LinkedList<String> frozenPlayers = new LinkedList<String>();
 
-    public void createBossHologram(int bossID) {
-        BossData bossData = Helper.bossData.get(bossID);
-        Location totemCenterLoc = bossData.getTotemCenterLocation();
-        Location holoLoc = new Location(SkyLands.WORLD_SKYPVP, totemCenterLoc.getX(),totemCenterLoc.getY() + 3,totemCenterLoc.getZ());
+    private static int dataStatus = 0; // 0 = To be processed | 1 = Processed
+    private static HashMap<String, CacheData> unprocessedData;
+    private static HashMap<String, StatsData> processedData = new HashMap<>();
 
-        Hologram hologram = HologramsAPI.createHologram(SkyLands.plugin, holoLoc);
-        hologram.appendTextLine("LOADING..");
-    }
+    private static LinkedList<String> bpConverterPotion = new LinkedList<>();
+
+    private final UserService userService = SkyLands.userService;
 
     public Hologram getHologramAt(Location location) {
         for(Hologram holo : HologramsAPI.getHolograms(SkyLands.plugin)) {
@@ -37,6 +49,96 @@ public class Helper {
         }
 
         return null;
+    }
+
+    public void addPlayerToConverterPotion(String player) {
+        bpConverterPotion.add(player);
+    }
+
+    public void removePlayerFromConverterPotion(String player) {
+        bpConverterPotion.remove(player);
+    }
+
+    public boolean hasConverterPotion(String player) {
+        return bpConverterPotion.contains(player);
+    }
+
+    public int getDataStatus() {
+        return dataStatus;
+    }
+
+    public void setDataStatus(int newStatus) {
+        dataStatus = newStatus;
+    }
+
+    public HashMap<String, StatsData> getProcessedData() {
+        if(dataStatus == 1) {
+            return processedData;
+        }
+        return null;
+    }
+
+    public List<String> getParticipants() {
+        if(getDataStatus() == 1) {
+            return new ArrayList<String>(getProcessedData().keySet());
+        }
+        return null;
+    }
+
+    public void setUnprocessedData(HashMap<String, CacheData> data) {
+        unprocessedData = data;
+    }
+
+    public HashMap<String, CacheData> getUnprocessedData() {
+        if(getDataStatus() == 0) {
+            return unprocessedData;
+        }
+        return null;
+    }
+
+    public void issueRewards() {
+        if(getDataStatus() == 1) {
+            getParticipants().forEach(entry -> {
+                if(Bukkit.getServer().getPlayerExact(entry) != null) {
+                    Bukkit.getServer().getPlayerExact(entry).sendMessage(Messages.PREFIX + "Du hast erfolgreich am §eBosskampf§7 teilgenommen. §e+350 Level");
+                    userService.getUserByName(entry).setLevel(userService.getUserByName(entry).getLevel() + 350);
+                }
+            });
+
+            String participants = String.join("§7,§e ", getParticipants());
+            BaseComponent[] msg = new ComponentBuilder(Messages.PREFIX + "Der §eSlimekönig§7 der §aZone 1§7 wurde von §e" + participants + " §7besiegt! ").append("[STATISTIKEN]").color(ChatColor.GREEN).bold(true).event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/bstats")).create();
+            Bukkit.getServer().spigot().broadcast(msg);
+        }
+    }
+
+    public void processData() {
+        if(dataStatus == 0) {
+            processedData.clear();
+            HashMap<String, CacheData> results = unprocessedData;
+            double totalDamageDealt = 0;
+            DecimalFormat decimalFormatPercentage = new DecimalFormat("#.##");
+            DecimalFormat decimalFormatDamageDealt = new DecimalFormat("#.#");
+
+            for (CacheData value : results.values()) {
+                double damageDealt = value.getDamage();
+                totalDamageDealt += damageDealt;
+            }
+
+            for (Map.Entry<String, CacheData> entry : results.entrySet()) {
+                String player = entry.getKey();
+                CacheData value = entry.getValue();
+                double damageDealt = value.getDamage() / 2;
+                String formattedPercentage = decimalFormatPercentage.format((damageDealt / (totalDamageDealt / 2)) * 100);
+                Bukkit.getLogger().info(player + " formattedPercentage = " + formattedPercentage);
+                String formattedDamageDealt = decimalFormatDamageDealt.format(damageDealt);
+
+                if(!(damageDealt <= 3)) {// If done enough dmg
+                    processedData.put(player, new StatsData(formattedPercentage, formattedDamageDealt));
+                }
+            }
+            dataStatus = 1;
+            issueRewards();
+        }
     }
 
     public static boolean getTotemsToggled() {
@@ -56,6 +158,18 @@ public class Helper {
             return witchCache.get(pName);
         }
         return -1;
+    }
+
+    public static LinkedList<String> getFrozenPlayers() {
+        return frozenPlayers;
+    }
+
+    public static void freeze(String player) {
+        frozenPlayers.add(player);
+    }
+
+    public static void unfreeze(String player) {
+        frozenPlayers.remove(player);
     }
 
     public static void toggleDebugMode() {

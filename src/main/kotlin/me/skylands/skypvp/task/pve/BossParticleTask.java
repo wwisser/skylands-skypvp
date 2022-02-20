@@ -6,6 +6,10 @@ import me.skylands.skypvp.pve.BossTracker;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 
@@ -33,6 +37,16 @@ public class BossParticleTask extends BukkitRunnable {
             Bukkit.getScheduler().scheduleSyncRepeatingTask(SkyLands.plugin, () -> {
                 if(secondsPassed <= 14) { // 7
                     pulseSequence(boss);
+
+                    for(Entity nearby : boss.getNearbyEntities(20,5,20)) {
+                        if(nearby instanceof Player) {
+                            if(!((Player) nearby).hasPotionEffect(PotionEffectType.POISON)) {
+                                ((Player) nearby).addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20*9, 3, true, false));
+                                nearby.sendMessage("§a§lGIFTATTACKE! §r§eDu wurdest vergiftet.");
+                            }
+                        }
+                    }
+
                     ++secondsPassed;
                 } else {
                     cancel();

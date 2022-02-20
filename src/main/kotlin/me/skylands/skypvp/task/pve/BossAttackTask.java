@@ -50,7 +50,7 @@ public class BossAttackTask extends BukkitRunnable {
                     case 43:
                         this.bossAttack.attack(this.selectedPlayer, this.boss);
                         break;
-                    case 50:
+                    case 52: // 50
                         this.bossAttack.postAttack(this.selectedPlayer, this.boss);
                 }
             } else {

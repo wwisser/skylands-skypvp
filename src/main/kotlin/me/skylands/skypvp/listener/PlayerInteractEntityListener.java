@@ -4,6 +4,7 @@ import me.skylands.skypvp.Messages;
 import me.skylands.skypvp.SkyLands;
 import me.skylands.skypvp.container.legacy.InventoryKit;
 import me.skylands.skypvp.container.legacy.InventoryTrade;
+import me.skylands.skypvp.container.template.impl.pve.MelisandreContainerTemplate;
 import me.skylands.skypvp.container.template.impl.pve.SelectZoneContainerTemplate;
 import me.skylands.skypvp.container.template.impl.pve.TradeTokensContainerTemplate;
 import me.skylands.skypvp.item.ItemBuilder;
@@ -29,6 +30,7 @@ public class PlayerInteractEntityListener implements Listener {
     private final UserService userService = SkyLands.userService;
     private final String witchPrefix = "§8[§5§lHexe§r§8] §bMelisandre§7: ";
     private final ItemStack catalysator = new ItemBuilder(Material.TRIPWIRE_HOOK).name("§3Katalysator").modifyLore().add(" ").add("§7Seltener §eBraugestand").add("§7Bringe diesen §eKatalysator").add("§7zu §eMelisandre.").finish().glow().build();
+    private final MelisandreContainerTemplate melisandreContainerTemplate = new MelisandreContainerTemplate(SkyLands.containerManager);
     private final BaseComponent[] offerMessage = new ComponentBuilder(Messages.PREFIX + "§eAngebot annehmen? ")
             .append("[ANNEHMEN]")
             .bold(true)
@@ -73,7 +75,7 @@ public class PlayerInteractEntityListener implements Listener {
             if (entityType == EntityType.WITCH) {
 
                 if (userService.getUser(player).getWitchUnlocked()) {
-                    player.sendMessage(Messages.PREFIX + "§cDu hast mich bereits freigeschaltet!");
+                    melisandreContainerTemplate.openContainer(player);
                     return;
                 }
 
