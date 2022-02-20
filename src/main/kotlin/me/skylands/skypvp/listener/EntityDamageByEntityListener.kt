@@ -5,6 +5,7 @@ import me.skylands.skypvp.SkyLands
 import me.skylands.skypvp.combat.CombatService
 import me.skylands.skypvp.config.PeaceConfig
 import me.skylands.skypvp.nms.ActionBar
+import me.skylands.skypvp.pve.Helper
 import me.skylands.skypvp.stats.LastHitCache
 import me.skylands.skypvp.user.UserService
 import org.bukkit.Bukkit
@@ -18,6 +19,7 @@ class EntityDamageByEntityListener : Listener {
 
     private val peaceConfig: PeaceConfig = SkyLands.peaceConfig
     private val userService: UserService = SkyLands.userService
+    private val helper: Helper = Helper()
 
     @EventHandler
     fun onEntityDamageByEntity(event: EntityDamageByEntityEvent) {
@@ -43,16 +45,31 @@ class EntityDamageByEntityListener : Listener {
 
                                     10 -> {
                                         damager.sendMessage(Messages.PREFIX + "§aGlückwunsch§7! Du hast die Challenge '§eSpinnenphobie I§7' erfolgreich abgeschlossen und §c5 Blutpunkte§7 erhalten.")
+                                        if (helper.hasConverterPotion(damager.name)) {
+                                            damager.level = damager.level + 5
+                                            ActionBar.send("§aUmgewandelt§7! Du hast §a5 Level§7 erhalten", damager)
+                                            return
+                                        }
                                         user.bloodPoints = user.bloodPoints + 5
                                     }
 
                                     30 -> {
                                         damager.sendMessage(Messages.PREFIX + "§aGlückwunsch§7! Du hast die Challenge '§eSpinnenphobie II§7' erfolgreich abgeschlossen und §c10 Blutpunkte§7 erhalten.")
+                                        if (helper.hasConverterPotion(damager.name)) {
+                                            damager.level = damager.level + 10
+                                            ActionBar.send("§aUmgewandelt§7! Du hast §a10 Level§7 erhalten", damager)
+                                            return
+                                        }
                                         user.bloodPoints = user.bloodPoints + 10
                                     }
 
                                     50 -> {
                                         damager.sendMessage(Messages.PREFIX + "§aGlückwunsch§7! Du hast die Challenge '§eSpinnenphobie III§7' erfolgreich abgeschlossen und §c20 Blutpunkte§7 erhalten.")
+                                        if (helper.hasConverterPotion(damager.name)) {
+                                            damager.level = damager.level + 20
+                                            ActionBar.send("§aUmgewandelt§7! Du hast §a20 Level§7 erhalten", damager)
+                                            return
+                                        }
                                         user.bloodPoints = user.bloodPoints + 20
                                     }
 
@@ -64,16 +81,37 @@ class EntityDamageByEntityListener : Listener {
 
                                     50 -> {
                                         damager.sendMessage(Messages.PREFIX + "§aGlückwunsch§7! Du hast die Challenge '§eMonsterjagd I§7' erfolgreich abgeschlossen und §c10 Blutpunkte§7 erhalten.")
+
+                                        if (helper.hasConverterPotion(damager.name)) {
+                                            damager.level = damager.level + 5
+                                            ActionBar.send("§aUmgewandelt§7! Du hast §a5 Level§7 erhalten", damager)
+                                            return
+                                        }
+
                                         user.bloodPoints = user.bloodPoints + 5
                                     }
 
                                     100 -> {
                                         damager.sendMessage(Messages.PREFIX + "§aGlückwunsch§7! Du hast die Challenge '§eMonsterjagd II§7' erfolgreich abgeschlossen und §c30 Blutpunkte§7 erhalten.")
+
+                                        if (helper.hasConverterPotion(damager.name)) {
+                                            damager.level = damager.level + 10
+                                            ActionBar.send("§aUmgewandelt§7! Du hast §a10 Level§7 erhalten", damager)
+                                            return
+                                        }
+
                                         user.bloodPoints = user.bloodPoints + 10
                                     }
 
                                     500 -> {
                                         damager.sendMessage(Messages.PREFIX + "§aGlückwunsch§7! Du hast die Challenge '§eMonsterjagd III§7' erfolgreich abgeschlossen und §c100 Blutpunkte§7 erhalten.")
+
+                                        if (helper.hasConverterPotion(damager.name)) {
+                                            damager.level = damager.level + 100
+                                            ActionBar.send("§aUmgewandelt§7! Du hast §a100 Level§7 erhalten", damager)
+                                            return
+                                        }
+
                                         user.bloodPoints = user.bloodPoints + 100
                                     }
 
