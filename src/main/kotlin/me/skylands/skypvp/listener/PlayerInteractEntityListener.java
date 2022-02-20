@@ -69,7 +69,7 @@ public class PlayerInteractEntityListener implements Listener {
                     selectZoneContainerTemplate.open(player);
                 }
             }
-            if (entityType == EntityType.SHEEP) {
+            if (entityType == EntityType.VILLAGER) {
                 tradeTokensContainerTemplate.open(player);
             }
             if (entityType == EntityType.WITCH) {
