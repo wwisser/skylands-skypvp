@@ -20,3 +20,9 @@
   - Blockshop
   - Upgrades and Island Effects 
   - Challenges
+
+## Release v0.5
+- Outlands Update
+  - PvE area on the Map
+  - Bossfight
+  - New Items/Potions

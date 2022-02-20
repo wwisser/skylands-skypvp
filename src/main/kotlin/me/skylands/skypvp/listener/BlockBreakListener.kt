@@ -3,9 +3,9 @@ package me.skylands.skypvp.listener
 import me.skylands.skypvp.Messages
 import me.skylands.skypvp.Permissions
 import me.skylands.skypvp.SkyLands
-import net.minecraft.server.v1_8_R3.BlockWood
+import me.skylands.skypvp.nms.ActionBar.send
+import me.skylands.skypvp.pve.Helper
 import org.bukkit.Material
-import org.bukkit.block.Block
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
@@ -18,6 +18,7 @@ class BlockBreakListener : Listener {
         val player = ev.player
         val user = userService.getUser(player)
         val block = ev.block
+        val helper = Helper()
 
         if (player.world.name.equals(
                 "ASkyBlock_nether",
@@ -37,16 +38,31 @@ class BlockBreakListener : Listener {
 
                     100 -> {
                         player.sendMessage(Messages.PREFIX + "§aGlückwunsch§7! Du hast die Challenge '§eHolzfäller I§7' erfolgreich abgeschlossen und §c15 Blutpunkte§7 erhalten.")
+                        if (helper.hasConverterPotion(player.name)) {
+                            player.level = player.level + 15
+                            send("§aUmgewandelt§7! Du hast §a15 Level§7 erhalten", player)
+                            return
+                        }
                         user.bloodPoints = user.bloodPoints + 15
                     }
 
                     250 -> {
                         player.sendMessage(Messages.PREFIX + "§aGlückwunsch§7! Du hast die Challenge '§eHolzfäller II§7' erfolgreich abgeschlossen und §c30 Blutpunkte§7 erhalten.")
+                        if (helper.hasConverterPotion(player.name)) {
+                            player.level = player.level + 30
+                            send("§aUmgewandelt§7! Du hast §a30 Level§7 erhalten", player)
+                            return
+                        }
                         user.bloodPoints = user.bloodPoints + 30
                     }
 
                     500 -> {
                         player.sendMessage(Messages.PREFIX + "§aGlückwunsch§7! Du hast die Challenge '§eHolzfäller III§7' erfolgreich abgeschlossen und §c50 Blutpunkte§7 erhalten.")
+                        if (helper.hasConverterPotion(player.name)) {
+                            player.level = player.level + 50
+                            send("§aUmgewandelt§7! Du hast §50 Level§7 erhalten", player)
+                            return
+                        }
                         user.bloodPoints = user.bloodPoints + 50
                     }
 

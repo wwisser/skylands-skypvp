@@ -2,8 +2,7 @@ package me.skylands.skypvp.listener;
 
 import me.skylands.skypvp.nms.ActionBar;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -15,20 +14,20 @@ public class EntityDamageByEntityListenerLegacy implements Listener {
     public void onDamage(final EntityDamageByEntityEvent ev) {
         if (ev.getDamager() instanceof Projectile) {
             final Projectile bullit = (Projectile) ev.getDamager();
-            if (bullit.getShooter() instanceof Player && ev.getEntity() instanceof Player) {
-                final Player pl = (Player) ev.getEntity();
+            if (bullit.getShooter() instanceof Player && ev.getEntity() instanceof LivingEntity) {
+                final LivingEntity pl = (LivingEntity) ev.getEntity();
                 final Player to = (Player) bullit.getShooter();
                 showHeal(pl, to);
             }
         }
-        if (ev.getDamager() instanceof Player && ev.getEntity() instanceof Player) {
-            final Player pl2 = (Player) ev.getEntity();
-            final Player to2 = (Player) ev.getDamager();
-            showHeal(pl2, to2);
+        if(ev.getDamager() instanceof Player && ev.getEntity() instanceof LivingEntity) {
+            final Player player = (Player) ev.getDamager();
+            final LivingEntity entity = (LivingEntity) ev.getEntity();
+            showHeal(entity, player);
         }
     }
 
-    private void showHeal(final Player entity, final Player receiver) {
+    private void showHeal(final LivingEntity entity, final Player receiver) {
         final double maxHealth = entity.getMaxHealth();
 
         double health = entity.getHealth();

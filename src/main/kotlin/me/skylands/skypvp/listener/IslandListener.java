@@ -6,6 +6,8 @@ import com.wasteofplastic.askyblock.events.IslandJoinEvent;
 import com.wasteofplastic.askyblock.events.IslandPostLevelEvent;
 import me.skylands.skypvp.Messages;
 import me.skylands.skypvp.SkyLands;
+import me.skylands.skypvp.nms.ActionBar;
+import me.skylands.skypvp.pve.Helper;
 import me.skylands.skypvp.user.User;
 import me.skylands.skypvp.user.UserService;
 import org.bukkit.Bukkit;
@@ -18,6 +20,7 @@ import org.bukkit.potion.PotionEffectType;
 public class IslandListener implements Listener {
 
     private final UserService userService = SkyLands.userService;
+    private final Helper helper = new Helper();
 
     @EventHandler
     public void onIslandEnter(IslandEnterEvent event) {
@@ -75,9 +78,17 @@ public class IslandListener implements Listener {
 
         if (event.getIsland().getMembers().size() >= 3 && !islandOwnerAsUser.getTeamWorkChallengeCompleted()) {
             islandOwnerAsUser.setTeamWorkChallengeCompleted(true);
-            islandOwnerAsUser.setBloodPoints(islandOwnerAsUser.getBloodPoints() + 20);
 
-            if (islandOwner != null) islandOwner.sendMessage(Messages.PREFIX + "§aGlückwunsch§7! Du hast die Challenge '§eTeamwork§7' erfolgreich abgeschlossen und §c20 Blutpunkte§7 erhalten.");
+            if (helper.hasConverterPotion(event.getIslandOwner().toString())) {
+                islandOwnerAsUser.setLevel(islandOwnerAsUser.getLevel() + 20);
+            } else {
+                islandOwnerAsUser.setBloodPoints(islandOwnerAsUser.getBloodPoints() + 20);
+            }
+
+            if (islandOwner != null) {
+                islandOwner.sendMessage(Messages.PREFIX + "§aGlückwunsch§7! Du hast die Challenge '§eTeamwork§7' erfolgreich abgeschlossen und §c20 Blutpunkte§7 erhalten.");
+                if(helper.hasConverterPotion(Bukkit.getOfflinePlayer(event.getIslandOwner().toString()).getName())) ActionBar.INSTANCE.send("§aUmgewandelt§7! Du hast §a20 Level§7 erhalten", islandOwner);
+            }
         }
     }
 
@@ -89,14 +100,19 @@ public class IslandListener implements Listener {
         long newLevel = event.getLongLevel();
         Bukkit.getLogger().info(Long.toString(newLevel));
 
-        if(newLevel >= 1000 && !islandOwnerAsUser.getTeamWorkChallengeCompleted()) {
-            Bukkit.getLogger().info("reqs met!");
+        if (newLevel >= 1000 && !islandOwnerAsUser.getTeamWorkChallengeCompleted()) {
             islandOwnerAsUser.setIslandLevelChallengeCompleted(true);
-            islandOwnerAsUser.setBloodPoints(islandOwnerAsUser.getBloodPoints() + 250);
 
-            if (islandOwner != null) islandOwner.sendMessage(Messages.PREFIX + "§aGlückwunsch§7! Du hast die Challenge '§eUnglaublich!§7' erfolgreich abgeschlossen und §c250 Blutpunkte§7 erhalten.");
-        } else {
-            Bukkit.getLogger().info("reqs not met");
+            if (helper.hasConverterPotion(event.getIslandOwner().toString())) {
+                islandOwnerAsUser.setLevel(islandOwnerAsUser.getLevel() + 250);
+            } else {
+                islandOwnerAsUser.setBloodPoints(islandOwnerAsUser.getBloodPoints() + 250);
+            }
+
+            if (islandOwner != null) {
+                islandOwner.sendMessage(Messages.PREFIX + "§aGlückwunsch§7! Du hast die Challenge '§eUnglaublich!§7' erfolgreich abgeschlossen und §c250 Blutpunkte§7 erhalten.");
+                if(helper.hasConverterPotion(Bukkit.getOfflinePlayer(event.getIslandOwner().toString()).getName())) ActionBar.INSTANCE.send("§aUmgewandelt§7! Du hast §a250 Level§7 erhalten", islandOwner);
+            }
         }
     }
 }

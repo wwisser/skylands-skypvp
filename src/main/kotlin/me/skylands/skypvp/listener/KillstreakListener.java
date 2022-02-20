@@ -2,6 +2,8 @@ package me.skylands.skypvp.listener;
 
 import me.skylands.skypvp.Messages;
 import me.skylands.skypvp.SkyLands;
+import me.skylands.skypvp.nms.ActionBar;
+import me.skylands.skypvp.pve.Helper;
 import me.skylands.skypvp.user.User;
 import me.skylands.skypvp.user.UserService;
 import org.bukkit.Bukkit;
@@ -12,8 +14,11 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 
 public class KillstreakListener implements Listener {
 
+    private final Helper helper = new Helper();
+
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
+
         UserService userService = SkyLands.userService;
         Player victim = event.getEntity();
         User victimUser = userService.getUser(victim);
@@ -34,6 +39,12 @@ public class KillstreakListener implements Listener {
         } else if(victimKillstreak > 30) {
             int pointsToAdd = (int)Math.ceil( 0.20 * victimKillstreak);
             killer.sendMessage(Messages.PREFIX + "Du hast die §eKillstreak§7 von §e" + victim.getName() + " §7beendet! §7+§c" + pointsToAdd + " Blutpunkte");
+
+            if(helper.hasConverterPotion(killer.getName())) {
+                killer.setLevel(killer.getLevel() + pointsToAdd);
+                ActionBar.INSTANCE.send("§aUmgewandelt§7! Du hast §a" + pointsToAdd + "Level§7 erhalten", killer);
+                return;
+            }
             killerUser.setBloodPoints(killerUser.getBloodPoints() + pointsToAdd);
         }
 
@@ -52,6 +63,11 @@ public class KillstreakListener implements Listener {
 
         } else if(killerUser.getCurrentKillstreak() % 20 == 0) {
             killer.sendMessage(Messages.PREFIX + "Du hast eine Killstreak von §e" + killerUser.getCurrentKillstreak() + " §7erreicht! +§c2 Blutpunkte");
+            if(helper.hasConverterPotion(killer.getName())) {
+                killer.setLevel(killer.getLevel() + 2);
+                ActionBar.INSTANCE.send("§aUmgewandelt§7! Du hast §a2 Level§7 erhalten", killer);
+                return;
+            }
             killerUser.setBloodPoints(killerUser.getBloodPoints() + 2);
         }
     }

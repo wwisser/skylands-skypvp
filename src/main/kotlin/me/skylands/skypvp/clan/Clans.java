@@ -44,7 +44,7 @@ public class Clans {
         registerClanCommand(new CommandInfo()); //check
         registerClanCommand(new CommandStats()); //check
 
-        //registerClanCommand(new CommandTest());
+
 
         plugin.getServer().getPluginManager().registerEvents(new InventoryEdit(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new AsyncPlayerChat(), plugin);
