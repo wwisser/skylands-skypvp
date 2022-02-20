@@ -89,9 +89,9 @@ class SkyLands : JavaPlugin() {
 
             vaultChat = Bukkit.getServer().servicesManager.getRegistration(Chat::class.java).provider
             particleAPI = ParticleNativePlugin.getAPI()
-            WORLD_SKYPVP = Bukkit.getWorld("sl_pve")
+            WORLD_SKYPVP = Bukkit.getWorld("Map")
             WORLD_SKYBLOCK = Bukkit.getWorld("ASkyBlock")
-            LOCATION_SPAWN = Location(WORLD_SKYPVP, 57.5, 123.0, 137.5, 0f, 0f)
+            LOCATION_SPAWN = Location(WORLD_SKYPVP, 57.5, 123.0, 137.5, 180f, 0f)
 
             PackageClassIndexer.resolveInstances("me.skylands.skypvp.listener", Listener::class.java)
                 .forEach { super.getServer().pluginManager.registerEvents(it, this) }
@@ -187,7 +187,7 @@ class SkyLands : JavaPlugin() {
 
             val worldBorder = WORLD_SKYPVP.worldBorder
             worldBorder.center = LOCATION_SPAWN
-            worldBorder.size = 500.0
+            worldBorder.size = 900.0
 
             Clans().onEnable(this)
         } catch (e: Exception) {

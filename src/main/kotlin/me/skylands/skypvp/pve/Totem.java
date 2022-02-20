@@ -6,7 +6,9 @@ import me.skylands.skypvp.pve.data.BossData;
 import me.skylands.skypvp.task.pve.BossAttackTask;
 import org.bukkit.*;
 import org.bukkit.entity.*;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -23,6 +25,7 @@ public class Totem {
     final String bossType;
     final int totemIdentifier;
     final BossTracker bossTracker = new BossTracker();
+    final String[] mobLoadouts = {"CHAIN", "GOLD", "IRON", "DIAMOND"};
 
     public Totem(Location centerLocation, int difficulty, int spawnRadius, List<EntityType> enemies, String bossType, int totemIdentifier) {
         this.centerLocation = centerLocation;
@@ -44,7 +47,18 @@ public class Totem {
             entity.setMaxHealth(20 + 10 * difficulty);
             entity.setHealth(entity.getMaxHealth());
             entity.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, -1 + difficulty, false, false));
-            entity.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, -1 + difficulty, false, false));
+            entity.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, difficulty, false, false));
+            entity.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, -1 + difficulty/2, false, false));
+
+            /*if(Math.random() < .25 && (entity.getType() == EntityType.SKELETON || entity.getType() == EntityType.ZOMBIE)) {
+                String str = mobLoadouts[(int) (Math.random() * mobLoadouts.length)];
+                entity.getEquipment().setArmorContents(new ItemStack[]{
+                        new ItemStack(Material.getMaterial(str + "BOOTS"), 1),
+                        new ItemStack(Material.getMaterial(str + "LEGGINGS"), 1),
+                        new ItemStack(Material.getMaterial(str + "CHESTPLATE"), 1),
+                        new ItemStack(Material.getMaterial(str + "HELMET"), 1)
+                });
+            }*/
         }
     }
 

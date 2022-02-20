@@ -7,6 +7,7 @@ import me.skylands.skypvp.pve.Helper;
 import me.skylands.skypvp.pve.Totem;
 import me.skylands.skypvp.user.User;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -31,11 +32,7 @@ public class PreventBossIslandEnterTask extends BukkitRunnable {
                 if (totem.getCenterLocation().distance(player.getLocation()) < (totem.getSpawnRadius() + 25)) {
                     if (!Helper.hasItem(player, z1EnterBossIslandTicket, 1)) {
                         if(!knownPlayers.contains(player.getName())) {
-                            player.setVelocity(player.getLocation().getDirection()
-                                    .setY(.3).multiply(.3)
-                                    .setX(-.1).multiply(1.5)
-                                    .setZ(0.75).multiply(3)
-                            );
+                            player.teleport(new Location(player.getWorld(), 238.5, 80, -51.5, 295, 0));
                             player.sendMessage(Messages.PREFIX + "Du besitzt keine §ePassiererlaubnis§7. Sammle §e25 Monstermarken§7 von jeder Insel.");
                         }
                     } else {

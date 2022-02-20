@@ -36,7 +36,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
-public class PvEListener implements Listener {
+public class PvEBossListener implements Listener {
 
     private final String[] couponItemLore = {" ", "§eRechtsklick, um Gutschein einzulösen"};
     private final ItemStack bpCoupon = new ItemBuilder(Material.REDSTONE).name("§cBlutpunkt").modifyLore().set(couponItemLore).finish().glow().build();

@@ -35,7 +35,7 @@ class TotemConfig {
 
     fun getCenterLocation(id: String): Location {
         return Location(
-            Bukkit.getWorld("sl_pve"),
+            Bukkit.getWorld("Map"),
             config["$id.centerlocation.x"] as Double,
             config["$id.centerlocation.y"] as Double,
             config["$id.centerlocation.z"] as Double
