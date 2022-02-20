@@ -70,7 +70,7 @@ public class BossAttackTask extends BukkitRunnable {
 
         this.timePassed++;
 
-        if (this.timePassed == 51) {
+        if (this.timePassed == 53) {
             this.timePassed = 0;
         }
     }
