@@ -25,7 +25,7 @@ public class SelectZoneContainerTemplate extends ContainerTemplate {
         ItemStack Zone2 = new ItemBuilder(Material.BARRIER).glow().name("§eZone 2").modifyLore().add("§7Bald verfügbar").finish().build();
         ItemStack Zone3 = new ItemBuilder(Material.BARRIER).glow().name("§cZone 3").modifyLore().add("§7Bald verfügbar").finish().build();
 
-        final Container.ContainerBuilder builder = new Container.ContainerBuilder("§0§lPvE §0> §0§lZonenauswahl").setStorageLevel(ContainerStorageLevel.NEW);
+        final Container.ContainerBuilder builder = new Container.ContainerBuilder("§0§lOutlands §0> §0§lZonen").setStorageLevel(ContainerStorageLevel.NEW);
 
         builder.addAction(10, Zone1,
                 player -> {
