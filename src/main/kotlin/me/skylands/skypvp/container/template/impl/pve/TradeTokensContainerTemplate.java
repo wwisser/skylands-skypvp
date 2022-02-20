@@ -25,7 +25,7 @@ public class TradeTokensContainerTemplate extends ContainerTemplate {
         ItemStack tradeButton = new ItemBuilder(Material.BOOK_AND_QUILL).name("§eJetzt tauschen!").modifyLore().add(" ").add("§7Tausche deine §eMonstermarken §7ein").add("§7und erhalte eine §ePassiererlaubnis.").finish().glow().build();
         ItemStack explanation = new ItemBuilder(Material.PAPER).name("§aHilfe").modifyLore().add(" ").add("§7Um zum §eBosskampf §7zugelassen zu werden,").add("§7benötigst du §e25 Monstermarken").add("§7von jeder regulären Insel.").add(" ").add("§7Du erhältst §eMonstermarken§7, indem").add("§7du §eMonster§7 tötest.").add(" ").add("§7Melde dich zum §eBosskampf§7 an").add("§7und erhalte §etolle Belohnungen§7!").finish().build();
 
-        final Container.ContainerBuilder builder = new Container.ContainerBuilder("§0§lOutlands §0> §0§lDorfbewohner").setStorageLevel(ContainerStorageLevel.NEW);
+        final Container.ContainerBuilder builder = new Container.ContainerBuilder("§0§lOutlands §0> §0§lHändler").setStorageLevel(ContainerStorageLevel.NEW);
 
         builder.addAction(13, tradeButton,
                 player -> {
