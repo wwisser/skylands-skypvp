@@ -32,15 +32,15 @@ public class PlayerInteractEntityListener implements Listener {
     private final ItemStack catalysator = new ItemBuilder(Material.TRIPWIRE_HOOK).name("§3Katalysator").modifyLore().add(" ").add("§7Seltener §eBraugestand").add("§7Bringe diesen §eKatalysator").add("§7zu §eMelisandre.").finish().glow().build();
     private final MelisandreContainerTemplate melisandreContainerTemplate = new MelisandreContainerTemplate(SkyLands.containerManager);
     private final BaseComponent[] offerMessage = new ComponentBuilder(Messages.PREFIX + "§eAngebot annehmen? ")
-        .append("[ANNEHMEN]")
-        .bold(true)
-        .color(ChatColor.GREEN)
-        .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptoffer"))
-        .append(" ")
-        .append("[ABLEHNEN]")
-        .bold(true)
-        .color(ChatColor.RED)
-        .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/denyoffer")).create();
+            .append("[ANNEHMEN]")
+            .bold(true)
+            .color(ChatColor.GREEN)
+            .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptoffer"))
+            .append(" ")
+            .append("[ABLEHNEN]")
+            .bold(true)
+            .color(ChatColor.RED)
+            .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/denyoffer")).create();
 
 
     @EventHandler
@@ -69,7 +69,7 @@ public class PlayerInteractEntityListener implements Listener {
                     selectZoneContainerTemplate.open(player);
                 }
             } else {
-                if (entityType == EntityType.VILLAGER) {
+                if (entityType == EntityType.SHEEP) {
                     tradeTokensContainerTemplate.open(player);
                 }
                 if (entityType == EntityType.WITCH) {
@@ -89,19 +89,21 @@ public class PlayerInteractEntityListener implements Listener {
                             player.sendMessage(witchPrefix + "Bringe mir einen §dKatalysator§7 und ich biete Dir meine Dienste an.");
                             Helper.setWitchCacheData(player.getName(), 1);
 
-                            Bukkit.getScheduler().scheduleSyncDelayedTask(SkyLands.plugin, () - > {
-                                if (Helper.getWitchCacheStatus(player.getName()) <= 1) Helper.setWitchCacheData(player.getName(), 0);
+                            Bukkit.getScheduler().scheduleSyncDelayedTask(SkyLands.plugin, () -> {
+                                if (Helper.getWitchCacheStatus(player.getName()) <= 1)
+                                    Helper.setWitchCacheData(player.getName(), 0);
                             }, 20 * 60);
                         } else if (Helper.getWitchCacheStatus(player.getName()) == 2) {
                             player.spigot().sendMessage(offerMessage);
                             Helper.setWitchCacheData(player.getName(), 3);
 
-                            Bukkit.getScheduler().scheduleSyncDelayedTask(SkyLands.plugin, () - > {
+                            Bukkit.getScheduler().scheduleSyncDelayedTask(SkyLands.plugin, () -> {
                                 if (Helper.getWitchCacheStatus(player.getName()) == -1) return;
                                 Helper.setWitchCacheData(player.getName(), 2);
                             }, 20 * 15);
                         } else {
-                            if (Helper.getWitchCacheStatus(player.getName()) == 3 || Helper.getWitchCacheStatus(player.getName()) == 1) return;
+                            if (Helper.getWitchCacheStatus(player.getName()) == 3 || Helper.getWitchCacheStatus(player.getName()) == 1)
+                                return;
 
                             player.sendMessage(witchPrefix + "Psst, §d" + player.getName() + "§7! Kannst Du mir einen Gefallen tun? Für meine neuartigen Tränke brauche ich dringend einen §dKatalysator§7.. aber gegen den §dSlimekönig§7 komme selbst ich nicht an. Um Deine legendären Kampfkünste jedoch weiß jede Hexe im Dorf. Bitte, §dbesiege den Slimekönig§7 und bringe mir einen §dKatalysator§7. Ich würde Dich reich belohnen..");
                             Helper.setWitchCacheData(player.getName(), 0);
