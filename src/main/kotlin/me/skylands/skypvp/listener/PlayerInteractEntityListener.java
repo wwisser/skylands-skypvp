@@ -25,7 +25,6 @@ import org.bukkit.inventory.ItemStack;
 
 public class PlayerInteractEntityListener implements Listener {
 
-    private final SelectZoneContainerTemplate selectZoneContainerTemplate = new SelectZoneContainerTemplate(SkyLands.containerManager);
     private final TradeTokensContainerTemplate tradeTokensContainerTemplate = new TradeTokensContainerTemplate(SkyLands.containerManager);
     private final UserService userService = SkyLands.userService;
     private final String witchPrefix = "§8[§5§lHexe§r§8] §bMelisandre§7: ";
@@ -66,7 +65,7 @@ public class PlayerInteractEntityListener implements Listener {
                     player.performCommand("is warps");
                 }
                 if (entityType == EntityType.ZOMBIE) {
-                    selectZoneContainerTemplate.open(player);
+                    player.performCommand("outlands");
                 }
             } else {
                 if (entityType == EntityType.VILLAGER) {
