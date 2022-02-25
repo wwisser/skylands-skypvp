@@ -100,8 +100,9 @@ public class Helper {
         if(getDataStatus() == 1) {
             getParticipants().forEach(entry -> {
                 if(Bukkit.getServer().getPlayerExact(entry) != null) {
-                    Bukkit.getServer().getPlayerExact(entry).sendMessage(Messages.PREFIX + "Du hast erfolgreich am §eBosskampf§7 teilgenommen. §e+350 Level");
-                    userService.getUserByName(entry).setLevel(userService.getUserByName(entry).getLevel() + 350);
+                    Player ePlayer = Bukkit.getServer().getPlayerExact(entry);
+                    ePlayer.sendMessage(Messages.PREFIX + "Du hast erfolgreich am §eBosskampf§7 teilgenommen. §e+150 Level");
+                    ePlayer.setLevel(ePlayer.getLevel() + 150);
                 }
             });
 
